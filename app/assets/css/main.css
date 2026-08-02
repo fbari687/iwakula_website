@@ -1,1 +1,18 @@
 @import "tailwindcss";
+@import "@nuxt/ui";
+
+@theme {
+  --font-sans: "Plus Jakarta Sans", "Inter", sans-serif;
+  --font-heading: "Plus Jakarta Sans", sans-serif;
+  --font-body: "Inter", sans-serif;
+  --color-primary: #c84b31;
+  --color-secondary: #1d3557;
+  --color-accent: #ffb703;
+  --color-bone: #fdfbf7;
+  --color-nottooblack: #2d3142;
+  --color-graysubtitle: #d1d5db;
+}
+
+body {
+  font-family: var(--font-body);
+}
