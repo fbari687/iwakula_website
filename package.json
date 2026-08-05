@@ -38,6 +38,7 @@
     "drizzle-orm": "^0.45.2",
     "mysql2": "^3.23.0",
     "nuxt": "^4.5.0",
+    "nuxt-easy-lightbox": "^1.1.0",
     "tailwindcss": "^4.3.3",
     "typescript": "^6.0.3",
     "vue": "^3.5.40",
@@ -53,6 +54,7 @@
     "vue-demi@0.14.10": true
   },
   "devDependencies": {
+    "@tailwindcss/typography": "^0.5.20",
     "@types/node": "^26.1.1",
     "drizzle-kit": "^0.31.10",
     "tsx": "^4.23.1"

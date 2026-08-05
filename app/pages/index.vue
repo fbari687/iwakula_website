@@ -64,7 +64,7 @@
     <div class="w-full container mx-auto flex flex-col gap-12">
       <!-- Title Section -->
       <div class="flex flex-col gap-4 items-center justify-center">
-        <h2 class="text-[32px] font-sans font-semibold text-center">Mengapa Memilih Iwakula?</h2>
+        <h2 class="text-[32px] font-sans font-semibold text-center text-nottooblack">Mengapa Memilih Iwakula?</h2>
         <div class="h-1 w-24 bg-primary rounded-full"></div>
       </div>
       <!-- Title Section -->
@@ -81,7 +81,7 @@
     <div class="w-full container mx-auto flex flex-col gap-8">
       <!-- Title Section -->
       <div class="flex flex-col gap-4 items-center justify-center">
-        <h2 class="text-[24px] font-sans font-semibold text-center">Jaminan Mutu & Kualitas Terbina</h2>
+        <h2 class="text-[24px] font-sans font-semibold text-center text-nottooblack">Jaminan Mutu & Kualitas Terbina</h2>
       </div>
       <!-- Title Section -->
 
@@ -98,7 +98,7 @@
       <!-- Title Section -->
       <div class="w-full flex items-end justify-between">
         <div class="flex flex-col gap-4">
-          <h2 class="text-[32px] font-semibold font-sans">Rekomendasi Iwakula</h2>
+          <h2 class="text-[32px] font-semibold font-sans text-nottooblack">Rekomendasi Iwakula</h2>
           <div class="w-24 h-1 bg-primary rounded-full"></div>
         </div>
         <NuxtLink to="/products" class="flex items-center justify-end gap-2 text-primary text-base transition-all duration-150 hover:gap-2.5">

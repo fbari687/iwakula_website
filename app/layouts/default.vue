@@ -2,9 +2,7 @@
 
 <template>
   <Navbar />
-  <div class="text-nottooblack">
-    <slot />
-  </div>
+  <slot />
   <Footer />
 </template>
 

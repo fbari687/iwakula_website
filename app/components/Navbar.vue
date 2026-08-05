@@ -1,5 +1,11 @@
 <template>
-  <header :class="['w-full py-4 px-6 lg:px-10 flex flex-row justify-between items-center fixed top-0 left-0 z-50 transition-all duration-300', isScrolled ? 'bg-slate-900/85 backdrop-blur-md shadow-lg py-3' : 'bg-transparent py-4']">
+  <header
+    :class="[
+      'w-full py-4 px-6 lg:px-10 flex flex-row justify-between items-center fixed top-0 left-0 z-50 transition-all duration-300',
+      // Jika di halaman detail produk ATAU sedang di-scroll, gunakan background gelap + blur
+      shouldHaveBackground ? 'bg-slate-900/85 backdrop-blur-md shadow-lg py-3' : 'bg-transparent py-4',
+    ]"
+  >
     <!-- Brand Logo -->
     <NuxtLink to="/">
       <NuxtImg src="/images/logo.png" class="h-10 md:h-12 lg:h-17.5 transition-all duration-300" />
@@ -21,21 +27,24 @@
       </NuxtLink>
 
       <!-- Dropdown Bahasa Desktop -->
-      <UDropdownMenu
-        :items="languages"
-        :modal="false"
-        :content="{
-          align: 'start',
-          side: 'bottom',
-          sideOffset: 8,
-        }"
-        :ui="{
-          content: 'w-48 bg-white dark:bg-white text-black',
-          item: 'bg-white hover:bg-black/80 cursor-pointer text-black hover:text-black',
-        }"
-      >
-        <UButton label="ID" trailing-icon="i-lucide-chevron-down" icon="flag:id-4x3" color="neutral" variant="ghost" class="hover:bg-white/10 text-base font-bold text-white cursor-pointer" />
-      </UDropdownMenu>
+      <div class="flex flex-col gap-1">
+        <UDropdownMenu
+          :items="languages"
+          :modal="false"
+          :content="{
+            align: 'start',
+            side: 'bottom',
+            sideOffset: 8,
+          }"
+          :ui="{
+            content: 'w-48 bg-white dark:bg-white text-black',
+            item: 'bg-white hover:bg-black/80 cursor-pointer text-black hover:text-black',
+          }"
+        >
+          <UButton label="ID" trailing-icon="i-lucide-chevron-down" icon="flag:id-4x3" color="neutral" variant="ghost" class="hover:bg-white/10 text-base font-bold text-white cursor-pointer" />
+        </UDropdownMenu>
+        <div class="h-px"></div>
+      </div>
 
       <NuxtLink to="https://wa.me/" target="_blank" class="text-white bg-primary py-2 px-4 rounded-lg font-semibold text-base flex flex-col items-center justify-center gap-1 transition duration-150 hover:bg-primary/90">
         <span>Pesan Sekarang</span>
@@ -103,6 +112,13 @@
 
 <script lang="ts" setup>
 import type { DropdownMenuItem } from "@nuxt/ui";
+
+const route = useRoute();
+const isProductDetail = computed(() => {
+  return /^\/products\/.+/.test(route.path);
+});
+
+const shouldHaveBackground = computed(() => isScrolled.value || isProductDetail.value);
 
 const isMobileMenuOpen = ref(false);
 const isScrolled = ref(false);

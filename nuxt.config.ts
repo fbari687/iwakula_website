@@ -14,7 +14,12 @@ export default defineNuxtConfig({
     plugins: [tailwindcss()],
   },
 
-  modules: ["@nuxt/image", "@nuxt/fonts", "@nuxt/ui"],
+  modules: [
+    "@nuxt/image",
+    "@nuxt/fonts",
+    "@nuxt/ui",
+    "nuxt-easy-lightbox",
+  ],
   fonts: {
     families: [
       { name: "Plus Jakarta Sans", provider: "google" },
