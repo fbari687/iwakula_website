@@ -1,25 +1,25 @@
 <!-- components/product/ProductTabComposition.vue -->
 <template>
-  <div class="grid grid-cols-1 md:grid-cols-2 gap-6 text-[#58413C]">
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-6 text-darkprimary">
     <!-- Kiri: Komposisi & Allergen Info -->
     <div class="bg-[#F6F5FF] rounded-xl p-6 border border-[#EBE8FF] flex flex-col justify-between gap-6">
       <div>
         <h3 class="text-base font-semibold text-[#171B2B] mb-4">Komposisi</h3>
         <ul class="space-y-3 pl-1">
           <li class="flex items-center gap-2.5 text-sm font-medium">
-            <span class="w-1.5 h-1.5 rounded-full bg-[#58413C]"></span>
+            <span class="w-1.5 h-1.5 rounded-full bg-darkprimary"></span>
             <span>Daging Ikan Tenggiri Segar</span>
           </li>
           <li class="flex items-center gap-2.5 text-sm font-medium">
-            <span class="w-1.5 h-1.5 rounded-full bg-[#58413C]"></span>
+            <span class="w-1.5 h-1.5 rounded-full bg-darkprimary"></span>
             <span>Tepung Tapioka Premium</span>
           </li>
           <li class="flex items-center gap-2.5 text-sm font-medium">
-            <span class="w-1.5 h-1.5 rounded-full bg-[#58413C]"></span>
+            <span class="w-1.5 h-1.5 rounded-full bg-darkprimary"></span>
             <span>Telur Ayam</span>
           </li>
           <li class="flex items-center gap-2.5 text-sm font-medium">
-            <span class="w-1.5 h-1.5 rounded-full bg-[#58413C]"></span>
+            <span class="w-1.5 h-1.5 rounded-full bg-darkprimary"></span>
             <span>Garam & Bumbu Rempah</span>
           </li>
         </ul>
@@ -59,7 +59,7 @@
       </div>
 
       <!-- Catatan Kaki / Note -->
-      <p class="text-xs italic text-[#58413C]/80">*Jangan dibekukan kembali setelah dicairkan.</p>
+      <p class="text-xs italic text-darkprimary/80">*Jangan dibekukan kembali setelah dicairkan.</p>
     </div>
   </div>
 </template>

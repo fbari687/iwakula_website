@@ -13,7 +13,7 @@
           <h4 class="text-sm sm:text-base font-bold text-[#171B2B]">
             {{ cert.title }}
           </h4>
-          <span class="text-xs text-[#58413C]/70 font-medium">
+          <span class="text-xs text-darkprimary/70 font-medium">
             {{ cert.code }}
           </span>
         </div>
@@ -49,7 +49,7 @@
           <!-- Certificate Meta Info -->
           <div class="text-center flex flex-col gap-1">
             <p class="text-sm font-bold text-[#171B2B]">Berlaku hingga: {{ selectedCert.validUntil }}</p>
-            <span class="text-xs text-[#58413C]/70">
+            <span class="text-xs text-darkprimary/70">
               {{ selectedCert.code }}
             </span>
           </div>

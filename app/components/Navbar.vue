@@ -13,17 +13,21 @@
 
     <!-- DESKTOP MENU -->
     <div class="hidden md:flex flex-row gap-6 items-center justify-start">
+      <NuxtLink to="/" class="text-white font-semibold flex flex-col gap-1 group">
+        <span>Beranda</span>
+        <div :class="['h-0.5 bg-white transition-all duration-300 group-hover:w-full', route.path === '/' ? 'w-full' : 'w-0']"></div>
+      </NuxtLink>
       <NuxtLink to="/products" class="text-white font-semibold flex flex-col gap-1 group">
         <span>Katalog Produk</span>
-        <div class="h-px bg-white transition-all duration-150 w-0 group-hover:w-full"></div>
+        <div :class="['h-0.5 bg-white transition-all duration-300 group-hover:w-full', route.path.startsWith('/products') ? 'w-full' : 'w-0']"></div>
       </NuxtLink>
       <NuxtLink to="/services" class="text-white font-semibold flex flex-col gap-1 group">
         <span>Layanan & Kemitraan</span>
-        <div class="h-px bg-white transition-all duration-150 w-0 group-hover:w-full"></div>
+        <div :class="['h-0.5 bg-white transition-all duration-300 group-hover:w-full', route.path.startsWith('/services') ? 'w-full' : 'w-0']"></div>
       </NuxtLink>
       <NuxtLink to="/about" class="text-white font-semibold flex flex-col gap-1 group">
         <span>Tentang Kami</span>
-        <div class="h-px bg-white transition-all duration-150 w-0 group-hover:w-full"></div>
+        <div :class="['h-0.5 bg-white transition-all duration-300 group-hover:w-full', route.path.startsWith('/about') ? 'w-full' : 'w-0']"></div>
       </NuxtLink>
 
       <!-- Dropdown Bahasa Desktop -->
@@ -92,6 +96,7 @@
 
             <!-- Links Navigasi Mobile -->
             <nav class="flex flex-col gap-4 font-semibold text-lg text-gray-800">
+              <NuxtLink to="/" class="hover:text-primary transition-colors py-2" @click="isMobileMenuOpen = false"> Beranda </NuxtLink>
               <NuxtLink to="/products" class="hover:text-primary transition-colors py-2" @click="isMobileMenuOpen = false"> Katalog Produk </NuxtLink>
               <NuxtLink to="/services" class="hover:text-primary transition-colors py-2" @click="isMobileMenuOpen = false"> Layanan & Kemitraan </NuxtLink>
               <NuxtLink to="/about" class="hover:text-primary transition-colors py-2" @click="isMobileMenuOpen = false"> Tentang Kami </NuxtLink>

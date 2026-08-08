@@ -11,7 +11,9 @@
     "db:generate": "drizzle-kit generate --config=drizzle.config.ts",
     "db:migrate": "drizzle-kit migrate --config=drizzle.config.ts",
     "db:seed": "tsx server/database/seed.ts",
-    "db:studio": "drizzle-kit studio"
+    "db:studio": "drizzle-kit studio",
+    "db:reset": "drizzle-kit drop && drizzle-kit generate --config=drizzle.config.ts && drizzle-kit migrate --config=drizzle.config.ts && npm run db:seed",
+    "db:fresh": "drizzle-kit push --force && npm run db:seed"
   },
   "dependencies": {
     "@nuxt/fonts": "^0.14.0",

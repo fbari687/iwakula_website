@@ -57,10 +57,10 @@
           <div class="p-6 bg-[#F3F2FF] border border-[#E0BFB94D] rounded-md">
             <div class="flex flex-col gap-1">
               <div class="flex gap-4 items-end justify-start">
-                <span class="text-primary font-sans font-semibold text-[32px]">Rp 65.000</span>
-                <span class="text-[#58413C] font-body font-semibold text-sm tracking-[0.7px] line-through pb-1.5">Rp 78.000</span>
+                <span class="text-primary font-sans font-semibold text-[2rem]">Rp 65.000</span>
+                <span class="text-darkprimary font-body font-semibold text-sm tracking-[0.7px] line-through pb-1.5">Rp 78.000</span>
               </div>
-              <span class="italic font-body text-xs text-[#58413C] font-medium">*Harga belum termasuk ongkir</span>
+              <span class="italic font-body text-xs text-darkprimary font-medium">*Harga belum termasuk ongkir</span>
             </div>
           </div>
           <NuxtLink to="" class="bg-primary py-4 w-full flex items-center justify-center text-white rounded-md font-bold font-sans text-lg cursor-pointer transition-colors duration-150 hover:bg-primary/90">
@@ -97,7 +97,7 @@
             root: 'w-full flex flex-col gap-6 sm:gap-8',
             list: 'border-b border-[#E0BFB94D] dark:border-[#E0BFB94D] gap-6 sm:gap-8 flex flex-row overflow-x-auto scrollbar-none w-full max-w-full pb-px',
             trigger: 'group px-1 py-3 font-sans tracking-[1.4px] font-bold text-sm cursor-pointer transition-colors shrink-0',
-            label: 'data-[state=inactive]:text-[#58413C] data-[state=inactive]:hover:text-[#3e2d29] data-[state=active]:text-primary transition-colors whitespace-nowrap',
+            label: 'data-[state=inactive]:text-darkprimary data-[state=inactive]:hover:text-[#3e2d29] data-[state=active]:text-primary transition-colors whitespace-nowrap',
             indicator: 'bg-primary h-0.5 -bottom-px',
           }"
         >
@@ -121,7 +121,7 @@
       <div class="w-full container mx-auto flex flex-col gap-8">
         <div class="w-full flex items-end justify-between">
           <div class="flex flex-col">
-            <h2 class="text-[32px] font-semibold font-sans text-nottooblack">Rekomendasi Menu Lainnya</h2>
+            <h2 class="text-[2rem] font-semibold font-sans text-nottooblack">Rekomendasi Menu Lainnya</h2>
             <p class="hidden md:block">Lengkapi hidangan Anda dengan produk unggulan kami</p>
           </div>
           <NuxtLink to="/products" class="flex items-center justify-end gap-2 text-primary text-base transition-all duration-150 hover:gap-2.5">
@@ -237,17 +237,17 @@ const breadcrumbItems = ref<BreadcrumbItem[]>([
   {
     label: "Home",
     to: "/",
-    ui: { link: "text-[#58413C] hover:text-primary/80 font-medium" },
+    ui: { link: "text-darkprimary hover:text-primary/80 font-medium" },
   },
   {
     label: "Produk",
     to: "/products",
-    ui: { link: "text-[#58413C] hover:text-primary/80 font-medium" },
+    ui: { link: "text-darkprimary hover:text-primary/80 font-medium" },
   },
   {
     label: "Frozen Food Berkuah",
     to: "/products?category=frozen-food-berkuah",
-    ui: { link: "text-[#58413C] hover:text-primary/80 font-medium" },
+    ui: { link: "text-darkprimary hover:text-primary/80 font-medium" },
   },
   {
     label: "Pempek Ikan Tenggiri",

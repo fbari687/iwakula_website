@@ -1,14 +1,14 @@
 <template>
-  <div class="flex flex-col gap-8 bg-bone">
+  <div class="flex flex-col gap-4 sm:gap-8 bg-bone overflow-x-hidden">
     <!-- Hero Section -->
-    <main class="relative min-h-100 h-full w-full">
-      <NuxtImg src="/images/bg.jpg" alt="Background" preload fetchpriority="high" loading="eager" class="absolute inset-0 -z-10 h-full w-full object-cover object-center" />
+    <main class="relative min-h-[320px] md:min-h-100 h-full w-full overflow-hidden">
+      <NuxtImg src="/images/bg.jpg" alt="Background" preload fetchpriority="high" loading="eager" class="absolute inset-0 h-full w-full object-cover object-center" />
 
-      <div class="bg-black/40 min-h-100 h-full">
+      <div class="relative bg-black/40 min-h-[320px] md:min-h-100 h-full flex items-center">
         <div class="container w-full h-full mx-auto flex items-center justify-center">
-          <div class="py-32 px-8 lg:px-0 max-w-160 text-white flex flex-col gap-6">
-            <h1 class="font-bold text-4xl lg:text-5xl leading-12 lg:leading-14 font-heading text-center">Katalog Menu Olahan Ikan</h1>
-            <p class="text-base lg:text-lg font-body font-normal leading-6 text-graysubtitle text-center">Praktis, lezat, dan kaya gizi. Temukan pilihan hidangan olahan ikan terbaik untuk keluarga Anda.</p>
+          <div class="py-16 md:py-32 px-4 sm:px-8 lg:px-0 max-w-160 text-white flex flex-col gap-4 md:gap-6">
+            <h1 class="font-bold text-3xl sm:text-4xl lg:text-5xl leading-tight lg:leading-14 font-heading text-center">Katalog Menu Olahan Ikan</h1>
+            <p class="text-sm sm:text-base lg:text-lg font-body font-normal leading-relaxed text-graysubtitle text-center">Praktis, lezat, dan kaya gizi. Temukan pilihan hidangan olahan ikan terbaik untuk keluarga Anda.</p>
           </div>
         </div>
       </div>
@@ -16,16 +16,17 @@
     <!-- Hero Section -->
 
     <!-- Catalog Section -->
-    <section class="w-full bg-bone px-2 lg:px-10 py-8">
-      <div class="w-full container mx-auto flex flex-col gap-6">
+    <!-- Category 1: Frozen Food Berkuah -->
+    <section class="w-full bg-bone px-4 sm:px-6 md:px-10 py-6 sm:py-8">
+      <div class="w-full container mx-auto flex flex-col gap-4 sm:gap-6">
         <!-- Title Section -->
-        <div class="w-full flex items-center justify-start gap-4">
-          <h2 class="text-3xl font-semibold font-sans">Frozen Food Berkuah</h2>
-          <div class="w-12 h-1 bg-primary rounded-full"></div>
+        <div class="w-full flex items-center justify-start gap-3 sm:gap-4">
+          <h2 class="text-xl sm:text-2xl md:text-3xl font-semibold font-sans text-nottooblack">Frozen Food Berkuah</h2>
+          <div class="w-8 sm:w-12 h-1 bg-primary rounded-full shrink-0"></div>
         </div>
         <!-- Title Section -->
 
-        <div class="w-full grid grid-cols-1 lg:grid-cols-2 gap-6">
+        <div class="w-full grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6">
           <ProductTile
             v-for="item in berkuahProducts"
             :key="item.slug"
@@ -41,16 +42,18 @@
         </div>
       </div>
     </section>
-    <section class="w-full bg-bone px-2 lg:px-10 py-8">
-      <div class="w-full container mx-auto flex flex-col gap-6">
+
+    <!-- Category 2: Camilan Kering -->
+    <section class="w-full bg-bone px-4 sm:px-6 md:px-10 py-6 sm:py-8">
+      <div class="w-full container mx-auto flex flex-col gap-4 sm:gap-6">
         <!-- Title Section -->
-        <div class="w-full flex items-center justify-start gap-4">
-          <h2 class="text-3xl font-semibold font-sans">Camilan Kering</h2>
-          <div class="w-12 h-1 bg-primary rounded-full"></div>
+        <div class="w-full flex items-center justify-start gap-3 sm:gap-4">
+          <h2 class="text-xl sm:text-2xl md:text-3xl font-semibold font-sans text-nottooblack">Camilan Kering</h2>
+          <div class="w-8 sm:w-12 h-1 bg-primary rounded-full shrink-0"></div>
         </div>
         <!-- Title Section -->
 
-        <div class="w-full grid grid-cols-1 lg:grid-cols-2 gap-6">
+        <div class="w-full grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6">
           <ProductTile
             v-for="item in camilanProducts"
             :key="item.slug"
@@ -66,16 +69,18 @@
         </div>
       </div>
     </section>
-    <section class="w-full bg-bone px-2 lg:px-10 py-8">
-      <div class="w-full container mx-auto flex flex-col gap-6">
+
+    <!-- Category 3: Frozen Food Kukus & Goreng -->
+    <section class="w-full bg-bone px-4 sm:px-6 md:px-10 py-6 sm:py-8 pb-12 sm:pb-16">
+      <div class="w-full container mx-auto flex flex-col gap-4 sm:gap-6">
         <!-- Title Section -->
-        <div class="w-full flex items-center justify-start gap-4">
-          <h2 class="text-3xl font-semibold font-sans">Frozen Food Kukus & Goreng</h2>
-          <div class="w-12 h-1 bg-primary rounded-full"></div>
+        <div class="w-full flex items-center justify-start gap-3 sm:gap-4">
+          <h2 class="text-xl sm:text-2xl md:text-3xl font-semibold font-sans text-nottooblack">Frozen Food Kukus & Goreng</h2>
+          <div class="w-8 sm:w-12 h-1 bg-primary rounded-full shrink-0"></div>
         </div>
         <!-- Title Section -->
 
-        <div class="w-full grid grid-cols-1 lg:grid-cols-2 gap-6">
+        <div class="w-full grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6">
           <ProductTile
             v-for="item in kukusProducts"
             :key="item.slug"
@@ -155,5 +160,3 @@ const kukusProducts = [
   },
 ];
 </script>
-
-<style></style>

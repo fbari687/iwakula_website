@@ -51,8 +51,9 @@ async function seed() {
     // ----------------------------------------------------
     console.log("📦 Seeding categories...");
     await db.insert(schema.categories).values([
-      { id: 1, name: "Frozen Food Berkuah", slug: "frozen-food-berkuah" },
-      { id: 2, name: "Cemilan", slug: "cemilan" },
+      { id: 1, name: "Frozen Food Berkuah", slug: "frozen-food-berkuah", description: "Pempek, Tekwan", image: "/uploads/categories/frozen_food_berkuah.webp" },
+      { id: 2, name: "Cemilan", slug: "cemilan", description: "Seafood Eggrolls: Udang dan Rumput Laut", image: "/uploads/categories/camilan.webp" },
+      { id: 3, name: "Frozen Food Kukus & Goreng", slug: "frozen-food-kukus-goreng", description: "Siomay Ikan, Dimsum, dan Tahu Baso", image: "/uploads/categories/frozen_food_kukus.webp" },
     ]);
 
     // ----------------------------------------------------

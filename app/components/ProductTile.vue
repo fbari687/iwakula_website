@@ -15,7 +15,7 @@
         <NuxtLink :to="`/products/${slug}`" class="font-sans text-secondary font-semibold text-base sm:text-2xl transition-all duration-150 hover:text-secondary/80 line-clamp-1"> {{ name }} </NuxtLink>
 
         <!-- Gramasi -->
-        <span class="text-[#58413C] font-body text-xs sm:text-base">{{ subtitle }}</span>
+        <span class="text-darkprimary font-body text-xs sm:text-base">{{ subtitle }}</span>
       </div>
 
       <!-- Harga & Tombol -->
