@@ -8,6 +8,11 @@ export default defineNuxtConfig({
 
   compatibilityDate: "2025-07-15",
   devtools: { enabled: true },
+
+  runtimeConfig: {
+    sessionSecret: process.env.NUXT_SESSION_SECRET || 'fallback_secret_must_be_32_chars_long_123',
+  },
+
   css: ["@/assets/css/main.css"],
 
   vite: {

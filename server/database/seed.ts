@@ -2,6 +2,7 @@ import "dotenv/config";
 import mysql from "mysql2/promise";
 import { drizzle } from "drizzle-orm/mysql2";
 import * as schema from "./schema";
+import { hashPassword } from "../utils/auth";
 
 async function seed() {
   console.log("🌱 Memulai proses seeding database Iwakula...");
@@ -14,6 +15,19 @@ async function seed() {
   const db = drizzle(connection, { schema, mode: "default" });
 
   try {
+    // ----------------------------------------------------
+    // A0. SEED ADMIN USER
+    // ----------------------------------------------------
+    console.log("📦 Seeding admin user...");
+    const adminPassword = process.env.ADMIN_PASSWORD || "rahasia";
+    const hashedPassword = await hashPassword(adminPassword);
+    
+    await db.insert(schema.users).values([{
+      name: "Super Admin",
+      email: "admin@iwakula.com",
+      password: hashedPassword
+    }]);
+
     // ----------------------------------------------------
     // A. SEED CONTACTS (Pengaturan Kontak & Sosmed Global)
     // ----------------------------------------------------

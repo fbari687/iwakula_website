@@ -37,6 +37,7 @@
     "@tiptap/starter-kit": "^3.29.0",
     "@tiptap/suggestion": "^3.29.0",
     "@tiptap/vue-3": "^3.29.0",
+    "bcrypt": "^6.0.0",
     "drizzle-orm": "^0.45.2",
     "mysql2": "^3.23.0",
     "nuxt": "^4.5.0",
@@ -53,10 +54,12 @@
     "esbuild@0.25.12": true,
     "esbuild@0.27.7": true,
     "sharp@0.34.5": true,
-    "vue-demi@0.14.10": true
+    "vue-demi@0.14.10": true,
+    "bcrypt@6.0.0": true
   },
   "devDependencies": {
     "@tailwindcss/typography": "^0.5.20",
+    "@types/bcrypt": "^6.0.0",
     "@types/node": "^26.1.1",
     "drizzle-kit": "^0.31.10",
     "tsx": "^4.23.1"
