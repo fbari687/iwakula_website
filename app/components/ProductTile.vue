@@ -1,15 +1,15 @@
 <template>
-  <div class="group w-full flex flex-row rounded-md bg-white overflow-hidden" style="border: 1.2px solid rgba(23, 27, 43, 0.05)">
+  <div class="group w-full flex flex-row rounded-md bg-white overflow-hidden shadow-lg transition-transform duration-500 hover:scale-[101%]" style="border: 1.2px solid rgba(23, 27, 43, 0.05)">
     <!-- Gambar: Menggunakan w-2/5 (40% lebar) di mobile dan dibatasi max-w-72.5 di desktop -->
-    <div class="w-2/5 sm:w-1/2 md:max-w-72.5 aspect-square md:aspect-299/233 shrink-0">
-      <NuxtImg :src="mainImage" :alt="name" loading="lazy" format="webp" class="w-full h-full object-cover object-center transition-transform duration-500 group-hover:scale-105" />
-    </div>
+    <NuxtLink :to="`/products/${slug}`" class="w-2/5 sm:w-1/2 md:max-w-72.5 aspect-square md:aspect-299/233 shrink-0">
+      <NuxtImg :src="mainImage" :alt="name" loading="lazy" format="webp" class="w-full h-full object-cover object-center" />
+    </NuxtLink>
 
     <!-- Kontainer Teks & Informasi: Mengisi sisa 60% lebar -->
     <div class="w-3/5 sm:w-1/2 sm:flex-1 flex flex-col justify-between p-3 sm:p-6 gap-2 sm:gap-4">
       <div class="flex flex-col gap-1 sm:gap-2">
         <!-- Badge -->
-        <div class="bg-accent px-2 py-0.5 sm:px-3 sm:py-1 w-fit rounded-full text-[10px] sm:text-xs font-medium">{{ legality }}</div>
+        <div class="bg-accent px-2 py-0.5 sm:px-3 sm:py-1 w-fit rounded-full text-[10px] sm:text-xs font-medium flex items-center justify-center text-darkprimary">{{ category.name }}</div>
 
         <!-- Judul Produk -->
         <NuxtLink :to="`/products/${slug}`" class="font-sans text-secondary font-semibold text-base sm:text-2xl transition-all duration-150 hover:text-secondary/80 line-clamp-1"> {{ name }} </NuxtLink>
@@ -34,13 +34,14 @@
 </template>
 
 <script lang="ts" setup>
+import type { Category } from "~~/server/database/schema";
+
 interface Props {
   name: string;
   slug: string;
   subtitle: string;
   mainImage: string;
-  category: string;
-  legality: string;
+  category: Category;
   price: number;
   originalPrice?: number | null;
 }

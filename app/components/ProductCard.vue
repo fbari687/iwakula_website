@@ -1,14 +1,13 @@
 <template>
   <div class="h-144.5 flex flex-col bg-white rounded-[12px] overflow-hidden border border-black/10 shadow-xs group">
-    <NuxtLink :to="`/products/${slug}`" class="w-full h-71.5 relative">
-      <NuxtImg :src="mainImage" :alt="name" loading="lazy" format="webp" class="absolute inset-0 w-full h-full object-cover object-center transition-transform duration-500 group-hover:scale-105" />
-      <!-- <div class="w-full h-full p-2 flex flex-col gap-2 justify-start items-start relative z-10">
-        <div class="bg-accent px-3 py-1 w-fit rounded-sm text-xs font-medium">{{ category }}</div>
-      </div> -->
+    <NuxtLink :to="`/products/${slug}`" class="w-full h-71.5">
+      <div class="w-full h-full">
+        <NuxtImg :src="mainImage" :alt="name" loading="lazy" format="webp" class="inset-0 w-full h-full object-cover object-center transition-transform duration-500 group-hover:scale-105" />
+      </div>
     </NuxtLink>
     <div class="w-full grow p-6 flex flex-col justify-between gap-4">
       <div class="flex flex-col gap-2">
-        <div class="bg-accent px-3 py-1 w-fit rounded-full text-xs font-medium flex items-center justify-center text-darkprimary">{{ category }}</div>
+        <NuxtLink :to="`/products?category=${category.slug}`" class="bg-accent px-3 py-1 w-fit rounded-full text-xs font-medium flex items-center justify-center text-darkprimary">{{ category.name }}</NuxtLink>
         <NuxtLink :to="`/products/${slug}`" class="font-sans text-secondary font-semibold text-2xl transition-all duration-150 hover:text-secondary/80">{{ name }}</NuxtLink>
         <span class="text-darkprimary font-body">{{ subtitle }}</span>
       </div>
@@ -27,13 +26,14 @@
 </template>
 
 <script lang="ts" setup>
+import type { Category } from "~~/server/database/schema";
+
 interface Props {
   name: string;
   slug: string;
   subtitle: string;
   mainImage: string;
-  category: string;
-  legality: string;
+  category: Category;
   price: number;
   originalPrice?: number | null;
 }

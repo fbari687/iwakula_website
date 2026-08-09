@@ -42,12 +42,12 @@ export const products = mysqlTable("products", {
   // Deskripsi & Cara Penyajian
   description: text("description").notNull(),
   highlights: json("highlights").$type<string[]>().notNull(),
-  servingSteps: json("serving_steps").$type<ServingStep[]>().notNull(),
-  servingTip: varchar("serving_tip", { length: 255 }),
+  // servingSteps: json("serving_steps").$type<ServingStep[]>().notNull(),
+  // servingTip: varchar("serving_tip", { length: 255 }),
 
   // Komposisi & Informasi Alergen
-  composition: json("composition").$type<string[]>().notNull(),
-  allergenWarning: varchar("allergen_warning", { length: 255 }),
+  // composition: json("composition").$type<string[]>().notNull(),
+  // allergenWarning: varchar("allergen_warning", { length: 255 }),
 
   // Integrasi Marketplace
   shopeeUrl: varchar("shopee_url", { length: 255 }),
@@ -65,47 +65,58 @@ export const productImages = mysqlTable("product_images", {
   createdAt: timestamp("created_at").defaultNow().notNull(),
 });
 
-// Tabel storages
-export const storages = mysqlTable("storages", {
+// Tabel Achievements
+export const achievements = mysqlTable("achievements", {
   id: serial("id").primaryKey(),
-  name: varchar("name", { length: 100 }).notNull(),
-  type: varchar("type", { length: 50 }).notNull(), // freezer, chiller, room
-  createdAt: timestamp("created_at").defaultNow().notNull(),
-});
-
-// Tabel product_storages
-export const productStorages = mysqlTable("product_storages", {
-  id: serial("id").primaryKey(),
-  productId: int("product_id").notNull(),
-  storageId: int("storage_id").notNull(),
-  duration: varchar("duration", { length: 50 }).notNull(),
-});
-
-// Tabel credentials (sertifikasi)
-export const credentials = mysqlTable("credentials", {
-  id: serial("id").primaryKey(),
-  name: varchar("name", { length: 100 }).notNull(),
-  type: varchar("type", { length: 50 }).notNull(), // halal, bpom, pirt, skp
-  number: varchar("number", { length: 100 }).notNull(),
-  certificateUrl: varchar("certificate_url", { length: 255 }).notNull(),
-  expiredAt: timestamp("expired_at"),
+  badge: varchar("badge", { length: 100 }).notNull(), // Contoh: "Penghargaan 2024"
+  title: varchar("title", { length: 200 }).notNull(), // Contoh: "Top 350 UMKM PFpreneur"
+  description: text("description").notNull(),
+  image: varchar("image", { length: 255 }).notNull(), // Path gambar sertifikat/foto
   createdAt: timestamp("created_at").defaultNow().notNull(),
   updatedAt: timestamp("updated_at").defaultNow().onUpdateNow().notNull(),
 });
 
+// Tabel storages
+// export const storages = mysqlTable("storages", {
+//   id: serial("id").primaryKey(),
+//   name: varchar("name", { length: 100 }).notNull(),
+//   type: varchar("type", { length: 50 }).notNull(), // freezer, chiller, room
+//   createdAt: timestamp("created_at").defaultNow().notNull(),
+// });
+
+// Tabel product_storages
+// export const productStorages = mysqlTable("product_storages", {
+//   id: serial("id").primaryKey(),
+//   productId: int("product_id").notNull(),
+//   storageId: int("storage_id").notNull(),
+//   duration: varchar("duration", { length: 50 }).notNull(),
+// });
+
+// Tabel credentials (sertifikasi)
+// export const credentials = mysqlTable("credentials", {
+//   id: serial("id").primaryKey(),
+//   name: varchar("name", { length: 100 }).notNull(),
+//   type: varchar("type", { length: 50 }).notNull(), // halal, bpom, pirt, skp
+//   number: varchar("number", { length: 100 }).notNull(),
+//   certificateUrl: varchar("certificate_url", { length: 255 }).notNull(),
+//   expiredAt: timestamp("expired_at"),
+//   createdAt: timestamp("created_at").defaultNow().notNull(),
+//   updatedAt: timestamp("updated_at").defaultNow().onUpdateNow().notNull(),
+// });
+
 // Tabel product_credentials
-export const productCredentials = mysqlTable("product_credentials", {
-  id: serial("id").primaryKey(),
-  productId: int("product_id").notNull(),
-  credentialId: int("credential_id").notNull(),
-});
+// export const productCredentials = mysqlTable("product_credentials", {
+//   id: serial("id").primaryKey(),
+//   productId: int("product_id").notNull(),
+//   credentialId: int("credential_id").notNull(),
+// });
 
 // Tabel contacts
 export const contacts = mysqlTable("contacts", {
   id: serial("id").primaryKey(),
-  name: varchar("name", { length: 100 }).notNull(),
-  key: varchar("key", { length: 50 }).notNull().unique(),
-  value: text("value").notNull(),
+  key: varchar("key", { length: 100 }).notNull(),
+  value: varchar("value", { length: 200 }).notNull(),
+  icon: varchar("icon", { length: 100 }),
   createdAt: timestamp("created_at").defaultNow().notNull(),
   updatedAt: timestamp("updated_at").defaultNow().onUpdateNow().notNull(),
 });
@@ -121,8 +132,8 @@ export const productsRelations = relations(products, ({ one, many }) => ({
     references: [categories.id],
   }),
   images: many(productImages),
-  productStorages: many(productStorages),
-  productCredentials: many(productCredentials),
+  // productStorages: many(productStorages),
+  // productCredentials: many(productCredentials),
 }));
 
 export const productImagesRelations = relations(productImages, ({ one }) => ({
@@ -132,37 +143,38 @@ export const productImagesRelations = relations(productImages, ({ one }) => ({
   }),
 }));
 
-export const productStoragesRelations = relations(productStorages, ({ one }) => ({
-  product: one(products, {
-    fields: [productStorages.productId],
-    references: [products.id],
-  }),
-  storage: one(storages, {
-    fields: [productStorages.storageId],
-    references: [storages.id],
-  }),
-}));
+// export const productStoragesRelations = relations(productStorages, ({ one }) => ({
+//   product: one(products, {
+//     fields: [productStorages.productId],
+//     references: [products.id],
+//   }),
+//   storage: one(storages, {
+//     fields: [productStorages.storageId],
+//     references: [storages.id],
+//   }),
+// }));
 
-export const credentialsRelations = relations(credentials, ({ many }) => ({
-  productCredentials: many(productCredentials),
-}));
+// export const credentialsRelations = relations(credentials, ({ many }) => ({
+//   productCredentials: many(productCredentials),
+// }));
 
-export const productCredentialsRelations = relations(productCredentials, ({ one }) => ({
-  product: one(products, {
-    fields: [productCredentials.productId],
-    references: [products.id],
-  }),
-  credential: one(credentials, {
-    fields: [productCredentials.credentialId],
-    references: [credentials.id],
-  }),
-}));
+// export const productCredentialsRelations = relations(productCredentials, ({ one }) => ({
+//   product: one(products, {
+//     fields: [productCredentials.productId],
+//     references: [products.id],
+//   }),
+//   credential: one(credentials, {
+//     fields: [productCredentials.credentialId],
+//     references: [credentials.id],
+//   }),
+// }));
 
 // Inferensi Tipe Data
 export type User = typeof users.$inferSelect;
 export type Category = typeof categories.$inferSelect;
 export type Product = typeof products.$inferSelect;
 export type ProductImage = typeof productImages.$inferSelect;
-export type Storage = typeof storages.$inferSelect;
-export type Credential = typeof credentials.$inferSelect;
+// export type Storage = typeof storages.$inferSelect;
+// export type Credential = typeof credentials.$inferSelect;
 export type Contact = typeof contacts.$inferSelect;
+export type Achievement = typeof achievements.$inferSelect;

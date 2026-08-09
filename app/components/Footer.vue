@@ -8,6 +8,7 @@
         <p class="text-white text-sm font-body">Wisma Harapan 2 Blok H2 No. 14, RT. 03 RW. 20, Kel. Mekarsari, Kec Cimanggis, Kota Depok, Jawa Barat.</p>
       </div>
       <!-- Logo and Description -->
+
       <!-- Navigation -->
       <div class="flex flex-col gap-4">
         <h3 class="font-body text-accent text-sm font-bold">Navigasi</h3>
@@ -15,8 +16,6 @@
           <NuxtLink to="/products" class="text-base text-white">Katalog Produk</NuxtLink>
           <NuxtLink to="/services" class="text-base text-white">Layanan & Kemitraan</NuxtLink>
           <NuxtLink to="/about" class="text-base text-white">Tentang Kami</NuxtLink>
-          <NuxtLink to="/policy" class="text-base text-white">Kebijakan Privasi</NuxtLink>
-          <NuxtLink to="/terms" class="text-base text-white">Syarat & Ketentuan</NuxtLink>
         </div>
       </div>
       <!-- Navigation -->
@@ -25,15 +24,17 @@
       <div class="flex flex-col gap-4">
         <h3 class="font-body text-accent text-sm font-bold">Hubungi Kami</h3>
         <div class="flex flex-col gap-2">
-          <span class="text-base text-white">WhatsApp: 0811-9844-941</span>
-          <span class="text-base text-white">Email: iwakulafood@gmail.com</span>
+          <!-- WhatsApp (Kanal Komunikasi Utama) -->
+          <NuxtLink v-if="contactMap.whatsapp" :to="contactMap.whatsapp.link" target="_blank" class="text-base text-white hover:text-accent transition-colors"> WhatsApp: {{ contactMap.whatsapp.formattedValue }} </NuxtLink>
+
+          <!-- Email -->
+          <NuxtLink v-if="contactMap.email" :to="contactMap.email.link" class="text-base text-white hover:text-accent transition-colors"> Email: {{ contactMap.email.value }} </NuxtLink>
         </div>
-        <div class="flex gap-4 items-center justify-start">
-          <NuxtLink to="/tiktok" class="transition-all duration-150 hover:text-[#EE1D52]">
-            <Icon name="i-ic-baseline-tiktok" size="24" />
-          </NuxtLink>
-          <NuxtLink to="/instagram" class="transition-all duration-150 hover:text-[#E1306C]">
-            <Icon name="i-mdi-instagram" size="24" />
+
+        <!-- Social Media Icons (Dinamis v-for untuk semua sosial media selain whatsapp & email) -->
+        <div class="flex gap-4 items-center justify-start flex-wrap">
+          <NuxtLink v-for="social in socialMediaList" :key="social.id" :to="social.link" target="_blank" class="transition-all duration-150 hover:text-primary">
+            <Icon :name="social.icon || 'i-lucide-link'" size="24" />
           </NuxtLink>
         </div>
       </div>
@@ -61,6 +62,76 @@
   </footer>
 </template>
 
-<script lang="ts" setup></script>
+<script lang="ts" setup>
+import type { Contact } from "~~/server/database/schema";
+
+const { fetchContacts } = useContacts();
+const { data: response } = await fetchContacts();
+
+const contacts = computed<Contact[]>(() => response.value?.data || []);
+
+// Helper untuk WhatsApp & Email
+const contactMap = computed(() => {
+  const map: Record<string, { value: string; formattedValue?: string; link: string; icon?: string }> = {};
+
+  contacts.value.forEach((item) => {
+    let link = item.value;
+    let formattedValue = item.value;
+
+    if (item.key === "whatsapp") {
+      const cleanPhone = item.value.replace(/\D/g, "");
+      link = `https://wa.me/${cleanPhone}`;
+
+      if (cleanPhone.startsWith("62")) {
+        const localNum = "0" + cleanPhone.slice(2);
+        formattedValue = localNum.replace(/(\d{4})(\d{4})(\d+)/, "$1-$2-$3");
+      }
+    } else if (item.key === "email") {
+      link = `mailto:${item.value}`;
+    }
+
+    map[item.key] = {
+      value: item.value,
+      formattedValue,
+      link,
+      icon: item.icon ?? undefined,
+    };
+  });
+
+  return map;
+});
+
+// Computed khusus untuk daftar Social Media (Memfilter semua item KECUALI whatsapp & email)
+const socialMediaList = computed(() => {
+  return contacts.value
+    .filter((item) => item.key !== "whatsapp" && item.key !== "email")
+    .map((item) => {
+      let link = item.value;
+
+      if (item.key === "instagram") {
+        const handle = item.value.replace("@", "");
+        link = `https://instagram.com/${handle}`;
+      } else if (item.key === "tiktok") {
+        const handle = item.value.startsWith("@") ? item.value : `@${item.value}`;
+        link = `https://tiktok.com/${handle}`;
+      } else if (item.key === "youtube") {
+        const handle = item.value.startsWith("@") ? item.value : `@${item.value}`;
+        link = `https://youtube.com/${handle}`;
+      } else if (item.key === "facebook") {
+        link = item.value.startsWith("http") ? item.value : `https://facebook.com/${item.value}`;
+      } else if (!item.value.startsWith("http")) {
+        // Fallback jika memasukkan domain/link tanpa https://
+        link = `https://${item.value}`;
+      }
+
+      return {
+        id: item.id,
+        key: item.key,
+        icon: item.icon ?? undefined,
+        link,
+      };
+    });
+});
+</script>
 
 <style></style>

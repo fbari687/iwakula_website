@@ -1,12 +1,44 @@
+import type { Product, Category, ProductImage } from "~~/server/database/schema";
+
+// Interface tipe data hasil Join Produk & Kategori
+export type ProductWithCategory = Product & {
+  category: Category;
+};
+
+// Interface tipe data Detail Produk (termasuk Galeri Gambar)
+export type ProductDetail = ProductWithCategory & {
+  images?: ProductImage[];
+  galleryImages?: string[];
+};
+
+interface ApiResponse<T> {
+  success: boolean;
+  message: string;
+  data: T;
+}
+
+export interface FetchProductsOptions {
+  category?: string;
+  limit?: number;
+}
+
 export const useProducts = () => {
-  const fetchProducts = async () => {
-    return await useFetch("/api/products", {
-      key: "products-list",
+  // 1. Fetch Daftar Produk (Dukungan Filter Category & Limit)
+  const fetchProducts = (options: FetchProductsOptions = {}) => {
+    const { category, limit } = options;
+
+    return useFetch<ApiResponse<ProductWithCategory[]>>("/api/products", {
+      key: `products-list-${category || "all"}-${limit || "all"}`,
+      query: {
+        category,
+        limit,
+      },
     });
   };
 
-  const fetchProductBySlug = async (slug: string) => {
-    return await useFetch(`/api/products/${slug}`, {
+  // 2. Fetch Detail Produk berdasarkan Slug
+  const fetchProductBySlug = (slug: string) => {
+    return useFetch<ApiResponse<ProductDetail>>(`/api/products/${slug}`, {
       key: `product-detail-${slug}`,
     });
   };

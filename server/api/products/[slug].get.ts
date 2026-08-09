@@ -12,20 +12,10 @@ export default defineEventHandler(async (event) => {
 
   try {
     const product = await db.query.products.findFirst({
-      where: eq(schema.products.slug, slug),
+      where: (products, { eq }) => eq(products.slug, slug),
       with: {
-        category: true,
-        images: true,
-        productStorages: {
-          with: {
-            storage: true,
-          },
-        },
-        productCredentials: {
-          with: {
-            credential: true,
-          },
-        },
+        category: true, // Ambil info kategori (name, slug, image, description)
+        images: true, // Ambil galeri gambar produk dari tabel product_images
       },
     });
 

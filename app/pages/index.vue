@@ -9,11 +9,7 @@
           <div class="max-w-160 text-white flex flex-col items-center sm:items-start text-center sm:text-left gap-4 sm:gap-6">
             <h1 class="font-bold text-3xl sm:text-4xl lg:text-5xl leading-tight lg:leading-14 font-heading">Solusi Praktis & Lezat Makan Ikan Bergizi Setiap Hari</h1>
             <p class="text-sm sm:text-base lg:text-lg font-body font-normal leading-relaxed text-graysubtitle">Menghadirkan aneka olahan ikan tenggiri segar dan camilan high-protein siap saji tanpa repot untuk keluarga tercinta.</p>
-            <NuxtLink
-              to="https://wa.me/"
-              target="_blank"
-              class="text-white bg-primary py-3 px-6 rounded-lg font-semibold text-sm sm:text-base flex items-center justify-center gap-2 transition duration-150 hover:bg-primary/90 w-full sm:w-fit mt-2"
-            >
+            <NuxtLink to="/products" class="text-white bg-primary py-3 px-6 rounded-lg font-semibold text-sm sm:text-base flex items-center justify-center gap-2 transition duration-150 hover:bg-primary/90 w-full sm:w-fit mt-2">
               <span>Lihat Katalog Produk</span>
             </NuxtLink>
           </div>
@@ -108,19 +104,13 @@
           </NuxtLink>
         </div>
 
-        <div class="w-full grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-          <ProductCard
-            v-for="item in products"
-            :key="item.slug"
-            :name="item.name"
-            :slug="item.slug"
-            :subtitle="item.subtitle"
-            :main-image="item.mainImage"
-            :category="item.category"
-            :legality="item.legality"
-            :price="item.price"
-            :original-price="item.originalPrice"
-          />
+        <!-- Product Cards (Dinamis dari Backend API) -->
+        <div v-if="productsPending" class="w-full flex justify-center py-12">
+          <UIcon name="i-lucide-loader-2" class="w-8 h-8 animate-spin text-primary" />
+        </div>
+
+        <div v-else class="w-full grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          <ProductCard v-for="item in products" :key="item.id" :name="item.name" :slug="item.slug" :subtitle="item.subTitle" :main-image="item.mainImage" :category="item.category" :price="item.price" :original-price="item.originalPrice" />
         </div>
       </div>
     </section>
@@ -167,10 +157,32 @@
 
 <script setup lang="ts">
 const { fetchCategories } = useCategories();
+const { fetchProducts } = useProducts();
 
-const { data: response, pending, error } = await fetchCategories();
+const { data: categoryResponse } = await fetchCategories();
+const categories = computed(() => categoryResponse.value?.data || []);
 
-const categories = computed(() => response.value?.data || []);
+const { data: productResponse, pending: productsPending } = await fetchProducts({ limit: 4 });
+const products = computed(() => productResponse.value?.data || []);
+
+const legalities = [
+  {
+    title: "Tersertifikasi BADAN POM",
+    image: "/images/BADAN_POM.png",
+  },
+  {
+    title: "Tersertifikasi Halal Indonesia",
+    image: "/images/Halal_Indonesia.webp",
+  },
+  {
+    title: "Tersertifikasi Kementerian Kelautan dan Perikanan",
+    image: "images/Logo_Kementerian_Kelautan_dan_Perikanan.png",
+  },
+  {
+    title: "Binaan Pemkot Depok",
+    image: "/images/Lambang_Kota_Depok.png",
+  },
+];
 
 const partnerships = [
   {
@@ -186,68 +198,6 @@ const partnerships = [
     button: "Hubungi Sales B2B",
     icon: "i-lucide-utensils",
     isColorPrimary: false,
-  },
-];
-
-const products = [
-  {
-    name: "Pempek Ikan Tenggiri",
-    slug: "pempek-ikan-tenggiri",
-    subtitle: "250 gram",
-    mainImage: "/images/frozen_food_berkuah.webp",
-    category: "Frozen Food Berkuah",
-    legality: "P-IRT & Halal MUI",
-    price: 65000,
-    originalPrice: 75000,
-  },
-  {
-    name: "Eggroll Udang",
-    slug: "eggroll-udang",
-    subtitle: "75 gram",
-    mainImage: "/images/eggroll_udang.webp",
-    category: "Camilan",
-    legality: "P-IRT & Halal MUI",
-    price: 27000,
-    originalPrice: 35000,
-  },
-  {
-    name: "Eggroll Rumput Laut",
-    slug: "eggroll-rumput-laut",
-    subtitle: "75 gram",
-    mainImage: "/images/eggroll_rumput_laut.webp",
-    category: "Camilan",
-    legality: "P-IRT & Halal MUI",
-    price: 27000,
-    originalPrice: 35000,
-  },
-  {
-    name: "Tekwan Ikan Tenggiri",
-    slug: "tekwan-ikan-tenggiri",
-    subtitle: "390 gram",
-    mainImage: "/images/tekwan.webp",
-    category: "Frozen Food Berkuah",
-    legality: "P-IRT & Halal MUI",
-    price: 50000,
-    originalPrice: 65000,
-  },
-];
-
-const legalities = [
-  {
-    title: "Tersertifikasi BADAN POM",
-    image: "/images/BADAN_POM.png",
-  },
-  {
-    title: "Tersertifikasi Halal Indonesia",
-    image: "/images/Halal_Indonesia.webp",
-  },
-  {
-    title: "Tersertifikasi Kementerian Kelautan dan Perikanan",
-    image: "images/Logo_Kementerian_Kelautan_dan_Perikanan.jpg",
-  },
-  {
-    title: "Binaan Pemkot Depok",
-    image: "/images/Lambang_Kota_Depok.png",
   },
 ];
 

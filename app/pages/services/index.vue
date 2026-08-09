@@ -213,7 +213,7 @@ const legalities = [
   },
   {
     title: "Tersertifikasi Kementerian Kelautan dan Perikanan",
-    image: "images/Logo_Kementerian_Kelautan_dan_Perikanan.jpg",
+    image: "images/Logo_Kementerian_Kelautan_dan_Perikanan.png",
   },
   {
     title: "Binaan Pemkot Depok",

@@ -6,7 +6,7 @@ import * as schema from "./schema";
 async function seed() {
   console.log("🌱 Memulai proses seeding database Iwakula...");
 
-  // 1. Inisialisasi Koneksi Langsung untuk Script Seeder
+  // 1. Inisialisasi Koneksi
   const connection = await mysql.createConnection({
     uri: process.env.DATABASE_URL,
   });
@@ -20,29 +20,24 @@ async function seed() {
     console.log("📦 Seeding contacts...");
     await db.insert(schema.contacts).values([
       {
-        name: "WhatsApp Main Admin",
         key: "whatsapp",
-        value: "https://wa.me/628119844941",
+        value: "628119844941",
+        icon: "i-ic-baseline-whatsapp",
       },
       {
-        name: "Shopee Official Store",
-        key: "shopee",
-        value: "https://shopee.co.id/iwakula.official",
+        key: "email",
+        value: "iwakulafood@gmail.com",
+        icon: "i-ic-baseline-email",
       },
       {
-        name: "Tokopedia Official Store",
-        key: "tokopedia",
-        value: "https://tokopedia.com/iwakula",
-      },
-      {
-        name: "Instagram Official",
         key: "instagram",
-        value: "https://instagram.com/iwakulafood",
+        value: "iwakulafood",
+        icon: "i-mdi-instagram",
       },
       {
-        name: "TikTok Official",
         key: "tiktok",
-        value: "https://tiktok.com/@iwakulafood",
+        value: "@iwakulafood",
+        icon: "i-ic-baseline-tiktok",
       },
     ]);
 
@@ -51,58 +46,46 @@ async function seed() {
     // ----------------------------------------------------
     console.log("📦 Seeding categories...");
     await db.insert(schema.categories).values([
-      { id: 1, name: "Frozen Food Berkuah", slug: "frozen-food-berkuah", description: "Pempek, Tekwan", image: "/uploads/categories/frozen_food_berkuah.webp" },
-      { id: 2, name: "Cemilan", slug: "cemilan", description: "Seafood Eggrolls: Udang dan Rumput Laut", image: "/uploads/categories/camilan.webp" },
-      { id: 3, name: "Frozen Food Kukus & Goreng", slug: "frozen-food-kukus-goreng", description: "Siomay Ikan, Dimsum, dan Tahu Baso", image: "/uploads/categories/frozen_food_kukus.webp" },
-    ]);
-
-    // ----------------------------------------------------
-    // C. SEED STORAGES (Master Tempat Penyimpanan)
-    // ----------------------------------------------------
-    console.log("📦 Seeding storages...");
-    await db.insert(schema.storages).values([
-      { id: 1, name: "Freezer (-18°C)", type: "freezer" },
-      { id: 2, name: "Chiller (4°C)", type: "chiller" },
-      { id: 3, name: "Suhu Ruang (25°C)", type: "room" },
-    ]);
-
-    // ----------------------------------------------------
-    // D. SEED CREDENTIALS (Master Sertifikasi Resmi)
-    // ----------------------------------------------------
-    console.log("📦 Seeding credentials...");
-    await db.insert(schema.credentials).values([
       {
         id: 1,
-        name: "Halal Indonesia",
-        type: "halal",
-        number: "ID00110000234580721",
-        certificateUrl: "/images/certificates/halal-certificate.jpg",
+        name: "Frozen Food Berkuah",
+        slug: "frozen-food-berkuah",
+        description: "Aneka olahan ikan tenggiri gurih yang disajikan lengkap dengan kuah/cuko khas Iwakula.",
+        image: "/uploads/categories/frozen_food_berkuah.webp",
       },
       {
         id: 2,
-        name: "BPOM MD Official",
-        type: "bpom",
-        number: "MD 243210001234",
-        certificateUrl: "/images/certificates/bpom-certificate.jpg",
+        name: "Cemilan",
+        slug: "cemilan",
+        description: "Seafood Eggrolls renyah isi udang dan rumput laut, cocok untuk teman santai keluarga.",
+        image: "/uploads/categories/camilan.webp",
       },
       {
         id: 3,
-        name: "P-IRT Official",
-        type: "pirt",
-        number: "P-IRT 2023271010048-28",
-        certificateUrl: "/images/certificates/pirt-certificate.jpg",
-      },
-      {
-        id: 4,
-        name: "Sertifikat Kelayakan Pengolahan (SKP)",
-        type: "skp",
-        number: "SKP-KKP-2024-001",
-        certificateUrl: "/images/certificates/skp-certificate.jpg",
+        name: "Frozen Food Kukus & Goreng",
+        slug: "frozen-food-kukus-goreng",
+        description: "Sajian siomay ikan, dimsum, dan tahu baso berkualitas tinggi yang praktis tinggal kukus atau goreng.",
+        image: "/uploads/categories/frozen_food_kukus.webp",
       },
     ]);
 
     // ----------------------------------------------------
-    // E. SEED PRODUCTS (Data Produk Detail)
+    // C. SEED ACHIEVEMENTS (Data Penghargaan)
+    // ----------------------------------------------------
+
+    console.log("📦 Seeding achievements...");
+    await db.insert(schema.achievements).values([
+      {
+        id: 1,
+        badge: "Penghargaan 2024",
+        title: "Top 350 UMKM PFpreneur",
+        description: "Iwakula terpilih sebagai bagian dari Top 350 UMKM dalam program PFpreneur 2024, menyeleksi lebih dari 13.000 pendaftar di bawah naungan Pertamina Foundation.",
+        image: "/images/sertif.png",
+      },
+    ]);
+
+    // ----------------------------------------------------
+    // D. SEED PRODUCTS (Data Produk)
     // ----------------------------------------------------
     console.log("📦 Seeding products...");
     await db.insert(schema.products).values([
@@ -111,84 +94,58 @@ async function seed() {
         categoryId: 1, // Frozen Food Berkuah
         name: "Pempek Ikan Tenggiri",
         slug: "pempek-ikan-tenggiri",
-        subTitle: "Frozen Food Berkuah • 270 gram",
+        subTitle: "270 gram",
         price: 65000,
-        originalPrice: 75000, // Menghasilkan status diskon otomatis
-        mainImage: "/images/products/pempek-tenggiri-main.jpg",
-        description: "Nikmati keaslian cita rasa Pempek Palembang dari Iwakula. Dibuat dengan 100% daging ikan Tenggiri pilihan tanpa pengawet.",
-        highlights: ["100% Daging Ikan Tenggiri Pilihan", "Tanpa Bahan Pengawet & Pewarna", "Cuko Autentik Gula Aren Asli", "Kemasan Vacuum Food Grade"],
-        servingSteps: [
-          {
-            title: "Thawing",
-            desc: "Thawing di suhu ruang hingga tidak beku.",
-          },
-          {
-            title: "Goreng / Kukus",
-            desc: "Goreng dengan api sedang hingga kuning keemasan, atau kukus selama 5-8 menit.",
-          },
-        ],
-        servingTip: "Saran: Sajikan selagi hangat dengan Cuko asli Iwakula.",
-        composition: ["Daging Ikan Tenggiri Segar", "Tepung Tapioka Premium", "Telur Ayam", "Garam & Bumbu Rempah"],
-        allergenWarning: "Mengandung ikan dan telur",
-        shopeeUrl: "https://shopee.co.id/pempek-tenggiri-iwakula",
-        tokopediaUrl: "https://tokopedia.com/iwakula/pempek-tenggiri",
+        originalPrice: 75000,
+        mainImage: "/uploads/products/pempek.webp",
+        description:
+          "Terbuat dari ikan tenggiri segar dan diolah dengan bahan-bahan pilihan, rasa gurih ikannya sangat terasa, disajikan dengan saus cuko dengan perpaduan rasa manis, asam, asin dan pedas. Pempek merupakan makanan khas Palembang yang popular dan banyak di gemari masyarakat.",
+        highlights: ["100% Daging Ikan Tenggiri", "Tanpa Bahan Pengawet & Pewarna", "Cuko Autentik Gula Aren Asli", "Kemasan Vacuum Food Grade Higienis"],
+        shopeeUrl: null,
+        tokopediaUrl: "https://www.tokopedia.com/iwakula-olahan-ikan",
       },
       {
         id: 2,
         categoryId: 2, // Cemilan
         name: "Eggroll Udang",
         slug: "eggroll-udang",
-        subTitle: "Cemilan • 75 gram",
+        subTitle: "75 gram",
         price: 27000,
         originalPrice: 35000,
-        mainImage: "/images/products/eggroll-udang-main.jpg",
-        description: "Eggroll krispi dengan isian daging udang segar pilihan yang gurih dan renyah.",
-        highlights: ["Daging Udang Olahan Segar", "Tekstur Renyah & Gurih"],
-        servingSteps: [
-          {
-            title: "Siap Santap",
-            desc: "Dapat langsung dinikmati sebagai cemilan keluarga.",
-          },
-        ],
-        servingTip: "Simpan di wadah kedap udara setelah dibuka.",
-        composition: ["Daging Udang", "Tepung Terigu", "Telur", "Bumbu Halus"],
-        allergenWarning: "Mengandung udang dan telur",
-        shopeeUrl: "https://shopee.co.id/eggroll-udang-iwakula",
-        tokopediaUrl: "https://tokopedia.com/iwakula/eggroll-udang",
+        mainImage: "/images/eggroll_udang.webp",
+        description:
+          "Eggroll adalah camilan kekinian yang bergizi, Terbuat dari bahan - bahan pilihan dengan kearifan local. Dengan penambahan udang menjadikan eggroll lwakula high protein dibandingkan dengan eggroll komersial biasa. Memiliki cita rasa yang enak dan special, teksturnya renyah, diproses dengan cara digulung dan dipanggang.",
+        highlights: ["Daging Udang Olahan Segar Pilihan", "Tekstur Renyah & Gurih Alami", "Praktis Siap Santap"],
+        shopeeUrl: null,
+        tokopediaUrl: "https://www.tokopedia.com/iwakula-olahan-ikan",
+      },
+      {
+        id: 3,
+        categoryId: 3, // Frozen Food Kukus
+        name: "Siomay Ikan Tenggiri",
+        slug: "siomay-ikan-tenggiri",
+        subTitle: "400 gram",
+        price: 40000,
+        originalPrice: 50000,
+        mainImage: "/uploads/products/siomay.webp",
+        description:
+          "Terbuat dari daging ikan tenggiri dicampur dengan tepung tapioka dan bahan - bahan pilihan lainnya, rasanya enak dengan tekstur empuk dan lembut , dibalut dengan kulit dpangsit dan disajikan dengan bumbu kacang yang nikmat.",
+        highlights: ["100% Daging Ikan Tenggiri", "Tanpa Bahan Pengawet & Pewarna"],
+        shopeeUrl: null,
+        tokopediaUrl: "https://www.tokopedia.com/iwakula-olahan-ikan",
       },
     ]);
 
     // ----------------------------------------------------
-    // F. SEED PRODUCT IMAGES (Galeri Foto Tambahan)
+    // D. SEED PRODUCT IMAGES (Galeri Foto Tambahan)
     // ----------------------------------------------------
     console.log("📦 Seeding product_images...");
     await db.insert(schema.productImages).values([
-      { productId: 1, imageUrl: "/images/products/pempek-detail-1.jpg" },
-      { productId: 1, imageUrl: "/images/products/pempek-detail-2.jpg" },
-      { productId: 1, imageUrl: "/images/products/pempek-detail-video-thumb.jpg" },
-    ]);
-
-    // ----------------------------------------------------
-    // G. SEED PRODUCT STORAGES (Panduan Durasi Penyimpanan)
-    // ----------------------------------------------------
-    console.log("📦 Seeding product_storages...");
-    await db.insert(schema.productStorages).values([
-      { productId: 1, storageId: 1, duration: "6 Bulan" }, // Pempek di Freezer
-      { productId: 1, storageId: 2, duration: "3 Hari" }, // Pempek di Chiller
-      { productId: 2, storageId: 3, duration: "3 Bulan" }, // Eggroll di Suhu Ruang
-    ]);
-
-    // ----------------------------------------------------
-    // H. SEED PRODUCT CREDENTIALS (Relasi Sertifikasi Produk)
-    // ----------------------------------------------------
-    console.log("📦 Seeding product_credentials...");
-    await db.insert(schema.productCredentials).values([
-      { productId: 1, credentialId: 1 }, // Pempek -> Halal
-      { productId: 1, credentialId: 2 }, // Pempek -> BPOM MD
-      { productId: 1, credentialId: 3 }, // Pempek -> P-IRT
-      { productId: 1, credentialId: 4 }, // Pempek -> SKP
-      { productId: 2, credentialId: 1 }, // Eggroll -> Halal
-      { productId: 2, credentialId: 3 }, // Eggroll -> P-IRT
+      { productId: 1, imageUrl: "/uploads/products/pempek2.webp" },
+      { productId: 1, imageUrl: "/uploads/products/pempek3.webp" },
+      { productId: 2, imageUrl: "/uploads/products/eggroll_udang2.webp" },
+      { productId: 3, imageUrl: "/uploads/products/siomay2.webp" },
+      { productId: 3, imageUrl: "/uploads/products/siomay3.webp" },
     ]);
 
     console.log("✅ Seeding selesai dengan sukses!");

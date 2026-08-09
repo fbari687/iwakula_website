@@ -1,10 +1,10 @@
 <template>
   <div class="flex flex-col bg-bone overflow-x-hidden">
     <!-- Hero Section -->
-    <main class="relative min-h-[360px] md:min-h-100 h-full w-full overflow-hidden">
+    <main class="relative min-h-90 md:min-h-100 h-full w-full overflow-hidden">
       <NuxtImg src="/images/laut.jpg" alt="Background" preload fetchpriority="high" loading="eager" format="webp" class="absolute inset-0 h-full w-full object-cover object-center" />
 
-      <div class="relative bg-black/40 min-h-[360px] md:min-h-100 h-full flex items-center">
+      <div class="relative bg-black/40 min-h-90 md:min-h-100 h-full flex items-center">
         <div class="container w-full h-full mx-auto flex items-center justify-center">
           <div class="py-16 md:py-32 px-4 md:px-8 lg:px-0 max-w-160 text-white flex flex-col gap-4 md:gap-6">
             <h1 class="font-bold text-3xl sm:text-4xl lg:text-5xl leading-tight lg:leading-14 font-heading text-center">Kisah Di Balik Iwakula</h1>
@@ -75,25 +75,20 @@
     </section>
     <!-- Vision and Mission Section -->
 
-    <!-- Achievement Section -->
+    <!-- Achievement Section (Dinamis dari Backend API) -->
     <section class="w-full px-4 sm:px-6 md:px-10 py-12 md:py-20 bg-bone">
       <div class="w-full container mx-auto flex flex-col gap-8 md:gap-12">
         <div class="flex flex-col gap-2 md:gap-4 items-center justify-center">
           <h2 class="text-2xl sm:text-3xl md:text-[2rem] font-sans font-semibold text-center text-nottooblack">Pencapaian & Kemitraan Strategis</h2>
+          <div class="h-1 w-20 sm:w-24 bg-primary rounded-full"></div>
         </div>
-        <div class="w-full">
-          <div class="w-full flex flex-col md:flex-row items-stretch justify-center rounded-2xl overflow-hidden shadow-md bg-white">
-            <div class="w-full md:w-1/3 shrink-0 bg-gray-50 flex items-center justify-center p-4 md:p-0">
-              <NuxtImg src="/images/sertif.png" class="w-full h-auto max-h-64 md:max-h-none md:h-full object-contain md:object-cover" />
-            </div>
-            <div class="w-full md:w-2/3 p-6 sm:p-8 flex flex-col gap-3 justify-center">
-              <h5 class="text-[#795500] font-bold text-xs sm:text-sm tracking-wider uppercase">Penghargaan 2024</h5>
-              <h3 class="font-sans font-semibold text-nottooblack text-xl sm:text-2xl">Top 350 UMKM PFpreneur</h3>
-              <p class="font-body text-sm sm:text-base text-nottooblack text-left sm:text-justify leading-relaxed">
-                Iwakula terpilih sebagai bagian dari Top 350 UMKM dalam program PFpreneur 2024, menyeleksi lebih dari 13.000 pendaftar di bawah naungan Pertamina Foundation.
-              </p>
-            </div>
-          </div>
+
+        <div v-if="achievementsPending" class="flex justify-center py-8">
+          <UIcon name="i-lucide-loader-2" class="w-8 h-8 animate-spin text-primary" />
+        </div>
+
+        <div v-else class="w-full flex flex-col gap-6">
+          <AchievementCard v-for="item in achievements" :key="item.id" :badge="item.badge" :title="item.title" :description="item.description" :image="item.image" @open-lightbox="openLightbox(item.image)" />
         </div>
       </div>
     </section>
@@ -132,13 +127,16 @@
             </div>
           </div>
 
-          <!-- Sisi Kanan: Fasilitas Produksi -->
+          <!-- Sisi Kanan: Fasilitas Produksi (Bisa diklik untuk Zoom Lightbox) -->
           <div class="w-full flex flex-col gap-6 p-6 sm:p-8 bg-white rounded-2xl shadow-lg border border-gray-100">
             <h2 class="text-xl sm:text-2xl font-bold font-sans text-nottooblack">Fasilitas Produksi</h2>
 
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              <div v-for="(img, index) in facilityImages" :key="index" class="relative w-full aspect-[4/3] rounded-xl sm:rounded-2xl overflow-hidden bg-gray-100 group cursor-pointer">
+              <div v-for="(img, index) in facilityImages" :key="index" class="relative w-full aspect-4/3 rounded-xl sm:rounded-2xl overflow-hidden bg-gray-100 group cursor-pointer" @click="openLightbox(img.src)">
                 <NuxtImg :src="img.src" :alt="img.alt" class="w-full h-full object-cover object-center transition-transform duration-300 group-hover:scale-105" />
+                <div class="absolute inset-0 bg-black/15 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                  <UIcon name="i-lucide-maximize-2" class="w-6 h-6 text-white drop-shadow-md shrink-0" />
+                </div>
               </div>
             </div>
           </div>
@@ -146,10 +144,20 @@
       </div>
     </section>
     <!-- Corporate Profile Section -->
+
+    <!-- Lightbox Component Universal Halaman About -->
+    <ClientOnly>
+      <VueEasyLightbox :visible="visibleRef" :imgs="allLightboxImages" :index="indexRef" @hide="visibleRef = false" />
+    </ClientOnly>
   </div>
 </template>
 
 <script lang="ts" setup>
+const { fetchAchievements } = useAchievements();
+const { data: achievementResponse, pending: achievementsPending } = await fetchAchievements();
+
+const achievements = computed(() => achievementResponse.value?.data || []);
+
 const kitchenZoning = ["Area Penerimaan & Sortir Bahan Baku", "Area Penimbangan & Formulasi", "Laboratorium Pengolahan Higienis", "Sterilisasi Pengemasan & Kontrol Kualitas"];
 
 const facilityImages = ref([
@@ -158,4 +166,26 @@ const facilityImages = ref([
   { src: "/images/fasilitas(3).jpg", alt: "Area Pengolahan dan Adonan" },
   { src: "/images/fasilitas(4).jpg", alt: "Sertifikasi dan Dokumen Mutu" },
 ]);
+
+// Lightbox State Management
+const visibleRef = ref(false);
+const indexRef = ref(0);
+
+// Array gabungan seluruh gambar di halaman About (Foto Sertifikat + Foto Fasilitas)
+const allLightboxImages = computed(() => {
+  const certImages = achievements.value.map((item) => item.image);
+  const facilitySrcs = facilityImages.value.map((img) => img.src);
+  return [...certImages, ...facilitySrcs];
+});
+
+// Fungsi membuka Lightbox sesuai gambar yang diklik
+const openLightbox = (imageSrc: string) => {
+  const targetIndex = allLightboxImages.value.indexOf(imageSrc);
+  if (targetIndex !== -1) {
+    indexRef.value = targetIndex;
+    visibleRef.value = true;
+  }
+};
 </script>
+
+<style></style>

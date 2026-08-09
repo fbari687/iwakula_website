@@ -2,18 +2,11 @@
   <div class="flex flex-col gap-8 text-gray-700 font-body">
     <div class="grid grid-cols-1 gap-8">
       <!-- Left Column: Keunggulan Produk -->
-      <div class="flex flex-col text-nottooblack prose text-justify max-w-none">
-        <h3>Nikmati keaslian cita rasa Pempek Palembang dari Iwakula. Dibuat dengan 100% daging ikan Tenggiri pilihan tanpa pengawet.</h3>
-        <ul>
-          <li>Rasa ikan yang kuat dan gurih alami</li>
-          <li>Tekstur kenyal pas, tidak keras</li>
-          <li>Lengkap dengan Cuko otentik yang pedas, asam, manis</li>
-        </ul>
-      </div>
+      <div class="flex flex-col text-nottooblack prose text-justify max-w-none" v-html="description"></div>
     </div>
 
     <!-- Highlight Box / Callout -->
-    <div class="bg-[#FFDEA933] border border-[#FFDEA94D] rounded-xl p-4 flex flex-col gap-4">
+    <!-- <div class="bg-[#FFDEA933] border border-[#FFDEA94D] rounded-xl p-4 flex flex-col gap-4">
       <div class="flex items-center gap-3">
         <UIcon name="i-lucide-lightbulb" class="w-5 h-5 text-[#795500] shrink-0" />
         <p class="text-base sm:text-lg font-semibold text-[#795500]">Saran Penyajian</p>
@@ -34,10 +27,16 @@
           </div>
         </div>
       </div>
-    </div>
+    </div> -->
   </div>
 </template>
 
-<script lang="ts" setup></script>
+<script lang="ts" setup>
+interface Props {
+  description: string;
+}
+
+const props = withDefaults(defineProps<Props>(), {});
+</script>
 
 <style></style>
