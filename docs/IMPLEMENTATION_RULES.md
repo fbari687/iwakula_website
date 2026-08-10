@@ -9,7 +9,7 @@ Dokumen ini berisi batasan operasional mutlak (*hard rules*) yang **wajib dipatu
 5. **Integritas Database:** **Dilarang** memodifikasi `server/database/schema.ts` secara sepihak tanpa persetujuan. Setiap perubahan skema wajib diikuti dengan migrasi baru.
 6. **Laporan Pasca-Implementasi:** **Selalu tampilkan** daftar lengkap (*list*) file apa saja yang telah berhasil diubah/dibuat di akhir setiap *sprint*.
 7. **Tindakan Destruktif:** **Dilarang** menjalankan *command terminal* yang bersifat destruktif (contoh: `drop`, `delete`, `force push`) tanpa konfirmasi eksplisit dari pengguna.
-8. **Standar Komponen UI:** **Wajib** menggunakan library **Nuxt UI** untuk merakit antarmuka halaman CMS (hindari membuat komponen murni dari nol jika Nuxt UI sudah menyediakannya).
+8. **Standar Komponen UI:** Gunakan Nuxt UI sebagai komponen utama (form, button, modal, table, navigation, alert, dropdown, dll.), namun diperbolehkan menggunakan elemen HTML + Tailwind untuk komponen yang membutuhkan kontrol visual penuh agar konsisten dengan identitas desain Iwakula.
 9. **Konsistensi Desain:** Desain CMS **harus** mempertahankan konsistensi palet warna, tipografi, dan responsivitas (*mobile-friendly*) selaras dengan desain *frontend* publik.
 10. **Anti-Ambiguitas:** **Hentikan** implementasi saat itu juga dan ajukan pertanyaan kepada pengguna jika menemukan ambiguitas arsitektur, instruksi yang saling bentrok, atau risiko keamanan (*blocker*).
 11. **Migration Safety:** Setiap perubahan yang memerlukan migrasi database harus terlebih dahulu dijelaskan dampaknya terhadap data yang sudah ada, lalu menghasilkan file migrasi baru. Tidak boleh mengedit file migrasi lama yang sudah pernah dijalankan.

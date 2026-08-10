@@ -81,3 +81,9 @@ Struktur folder ini mengacu pada standar Nuxt 4:
 - **Tabel** harus memiliki tampilan mobile-friendly.
 - **Form** harus dapat digunakan dengan nyaman pada viewport sempit.
 - **Dashboard cards** harus responsif (1 kolom mobile, 2 tablet, 4 desktop).
+
+## 12. Framework Version Awareness
+
+- Project menggunakan **Nuxt UI v4**.
+- Jangan mengasumsikan API Nuxt UI v2 atau v3.
+- Selalu verifikasi komponen, props, dan konfigurasi theme berdasarkan versi yang terpasang di `package.json` sebelum mengimplementasikan UI.
