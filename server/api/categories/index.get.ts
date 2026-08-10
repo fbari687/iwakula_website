@@ -1,13 +1,13 @@
+import { categoryRepository } from '~~/server/repositories/categoryRepository'
+
 export default defineEventHandler(async (event) => {
   try {
-    const categories = await db.query.categories.findMany({
-      orderBy: (categories, { asc }) => [asc(categories.name)],
-    });
+    const categoriesList = await categoryRepository.getAll();
 
     return {
       success: true,
       message: "Berhasil mengambil daftar kategori",
-      data: categories,
+      data: categoriesList,
     };
   } catch (error) {
     throw createError({
