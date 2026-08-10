@@ -15,7 +15,7 @@
         :to="item.path"
         class="flex items-center gap-3 px-4 py-3 rounded-2xl transition-all duration-200 group"
         :class="[
-          $route.path === item.path 
+          (item.path === '/admin' ? $route.path === item.path : $route.path.startsWith(item.path))
             ? 'bg-[#C65A3A] text-white shadow-sm' 
             : 'text-[#24324A] hover:bg-[#E7E1D8]'
         ]"
@@ -24,7 +24,7 @@
           :name="item.icon" 
           class="w-5 h-5 flex-shrink-0 transition-colors duration-200"
           :class="[
-            $route.path === item.path 
+            (item.path === '/admin' ? $route.path === item.path : $route.path.startsWith(item.path))
               ? 'text-white' 
               : 'text-[#6B7280] group-hover:text-[#24324A]'
           ]"

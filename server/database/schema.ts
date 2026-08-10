@@ -39,6 +39,9 @@ export const products = mysqlTable("products", {
   originalPrice: int("original_price").notNull(),
   mainImage: varchar("main_image", { length: 255 }).notNull(),
 
+  isAvailable: boolean("is_available").default(true).notNull(),
+  isFeatured: boolean("is_featured").default(false).notNull(),
+
   // Deskripsi & Cara Penyajian
   description: text("description").notNull(),
   highlights: json("highlights").$type<string[]>().notNull(),
