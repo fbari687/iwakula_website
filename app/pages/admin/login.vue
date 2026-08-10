@@ -98,7 +98,18 @@ import { ref } from 'vue'
 import { useRouter } from 'vue-router'
 
 definePageMeta({
-  layout: false // Gunakan layout kosong atau custom (karena admin belum ada layout.vue)
+  layout: false, // Gunakan layout kosong atau custom (karena admin belum ada layout.vue)
+  middleware: [
+    async function (to, from) {
+      const { user, fetchUser } = useAuth()
+      if (!user.value) {
+        await fetchUser()
+      }
+      if (user.value) {
+        return navigateTo('/admin')
+      }
+    }
+  ]
 })
 
 const email = ref('')
