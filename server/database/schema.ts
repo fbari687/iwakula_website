@@ -1,4 +1,4 @@
-import { mysqlTable, serial, varchar, int, boolean, text, timestamp, json } from "drizzle-orm/mysql-core";
+import { mysqlTable, serial, varchar, int, boolean, text, timestamp, json, index } from "drizzle-orm/mysql-core";
 import { relations } from "drizzle-orm";
 
 // Tabel Users
@@ -63,10 +63,15 @@ export const products = mysqlTable("products", {
 // Tabel product_images
 export const productImages = mysqlTable("product_images", {
   id: serial("id").primaryKey(),
-  productId: int("product_id").notNull(),
+  productId: int("product_id")
+    .notNull()
+    .references(() => products.id, { onDelete: "cascade" }),
   imageUrl: varchar("image_url", { length: 255 }).notNull(),
+  displayOrder: int("display_order").default(0).notNull(),
   createdAt: timestamp("created_at").defaultNow().notNull(),
-});
+}, (table) => ({
+  productIdx: index("product_images_product_id_idx").on(table.productId)
+}));
 
 // Tabel Achievements
 export const achievements = mysqlTable("achievements", {

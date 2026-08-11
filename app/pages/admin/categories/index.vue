@@ -21,7 +21,7 @@
         v-for="(stat, index) in statistics" 
         :key="index"
         class="bg-[#FBFAF8] border-[#E7E1D8] rounded-[20px] shadow-sm"
-        :ui="{ body: { padding: 'p-5 sm:p-6' }, ring: 'ring-1 ring-[#E7E1D8]' }"
+        :ui="{ body: 'p-5 sm:p-6', root: 'ring-1 ring-[#E7E1D8]' }"
       >
         <div class="flex items-center gap-4">
           <div class="h-12 w-12 rounded-full bg-[#F7F6F2] flex items-center justify-center border border-[#E7E1D8]">
@@ -38,7 +38,7 @@
     <!-- 3 & 4. Panel Utama & Custom Table -->
     <UCard 
       class="bg-[#FBFAF8] border-[#E7E1D8] rounded-[20px] shadow-sm overflow-hidden flex flex-col"
-      :ui="{ body: { padding: 'p-0' }, header: { padding: 'p-4 sm:px-6 sm:py-5' }, footer: { padding: 'p-4 sm:px-6' }, ring: 'ring-1 ring-[#E7E1D8]' }"
+      :ui="{ body: 'p-0', header: 'p-4 sm:px-6 sm:py-5', footer: 'p-4 sm:px-6', root: 'ring-1 ring-[#E7E1D8]' }"
     >
       <template #header>
         <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
@@ -47,15 +47,9 @@
             placeholder="Cari kategori..."
             class="w-full sm:w-72"
             :ui="{ 
-              rounded: 'rounded-[14px]',
-              placeholder: 'placeholder:text-[#9CA3AF]',
-              icon: { base: 'text-[#6B7280]' },
-              base: 'bg-[#FBFAF8] text-[#24324A]',
-              color: { 
-                white: { 
-                  outline: 'shadow-none ring-1 ring-inset ring-[#E7E1D8] hover:ring-[#D6CEC2] focus:ring-2 focus:ring-[#C65A3A]' 
-                } 
-              } 
+              root: 'rounded-[14px] shadow-none ring-1 ring-inset ring-[#E7E1D8] hover:ring-[#D6CEC2] focus-within:ring-2 focus-within:ring-[#C65A3A]',
+              base: 'bg-[#FBFAF8] text-[#24324A] placeholder:text-[#9CA3AF]',
+              leadingIcon: 'text-[#6B7280]'
             }"
           />
           <USelect 
@@ -63,24 +57,8 @@
             model-value="Terbaru"
             class="w-full sm:w-48"
             :ui="{ 
-              rounded: 'rounded-[14px]',
-              icon: { base: 'text-[#6B7280]' },
-              base: 'bg-[#FBFAF8] text-[#24324A]',
-              color: { 
-                white: { 
-                  outline: 'shadow-none ring-1 ring-inset ring-[#E7E1D8] hover:ring-[#D6CEC2] focus:ring-2 focus:ring-[#C65A3A]' 
-                } 
-              },
-              /* Fallback Dropdown Overrides (Nuxt UI v3+) */
-              content: 'bg-[#FBFAF8] border border-[#E7E1D8]',
-              item: {
-                base: '!text-[#24324A] hover:!bg-[#F3EEE8]',
-                label: '!text-[#24324A]',
-                active: '!bg-[#C65A3A] !text-white',
-                selected: '!bg-[#C65A3A] !text-white',
-                icon: { base: '!text-[#24324A]' },
-                trailingIcon: { base: '!text-[#24324A]' }
-              }
+              base: 'rounded-[14px] bg-[#FBFAF8] text-[#24324A] shadow-none ring-1 ring-inset ring-[#E7E1D8] hover:ring-[#D6CEC2] focus:ring-2 focus:ring-[#C65A3A]',
+              item: 'bg-[#FBFAF8] text-[#24324A]'
             }"
           />
         </div>
@@ -148,14 +126,14 @@
                 <div class="flex items-center justify-end gap-2 opacity-100 xl:opacity-0 xl:group-hover:opacity-100 transition-opacity duration-200">
                   <UButton 
                     :to="`/admin/categories/${cat.id}`" 
-                    color="gray" 
+                    color="neutral" 
                     variant="soft" 
                     icon="i-heroicons-pencil-square" 
                     class="bg-[#F7F6F2] hover:bg-white text-[#24324A] ring-1 ring-inset ring-[#E7E1D8] shadow-sm"
                     title="Edit Kategori"
                   />
                   <UButton 
-                    color="red" 
+                    color="error" 
                     variant="soft" 
                     icon="i-heroicons-trash"
                     class="hover:bg-red-50 text-red-600 ring-1 ring-inset ring-red-100 shadow-sm"
@@ -176,9 +154,9 @@
             Menampilkan 1 sampai <span class="font-medium text-[#24324A]">{{ categories.length }}</span> dari <span class="font-medium text-[#24324A]">{{ categories.length }}</span> kategori
           </div>
           <div class="flex items-center gap-1.5">
-            <UButton color="gray" variant="ghost" icon="i-heroicons-chevron-left" disabled class="text-[#6B7280]" />
-            <UButton color="gray" variant="solid" class="bg-[#24324A] text-white hover:bg-[#24324A] rounded-lg px-3">1</UButton>
-            <UButton color="gray" variant="ghost" icon="i-heroicons-chevron-right" disabled class="text-[#6B7280]" />
+            <UButton color="neutral" variant="ghost" icon="i-heroicons-chevron-left" disabled class="text-[#6B7280]" />
+            <UButton color="neutral" variant="solid" class="bg-[#24324A] text-white hover:bg-[#24324A] rounded-lg px-3">1</UButton>
+            <UButton color="neutral" variant="ghost" icon="i-heroicons-chevron-right" disabled class="text-[#6B7280]" />
           </div>
         </div>
       </template>
@@ -205,7 +183,7 @@ const statistics = computed(() => {
   let latestDate = '-'
   if (total > 0 && categories.value[0]?.createdAt) {
     // Diasumsikan array categories sudah berurutan descending (Terbaru di index 0) berdasarkan getAll di Backend
-    latestDate = formatDate(categories.value[0].createdAt as string)
+    latestDate = formatDate(categories.value[0].createdAt)
   }
 
   return [
@@ -216,9 +194,9 @@ const statistics = computed(() => {
   ]
 })
 
-const formatDate = (dateString: string) => {
-  if (!dateString) return '-'
-  const d = new Date(dateString)
+const formatDate = (dateInput: string | Date) => {
+  if (!dateInput) return '-'
+  const d = typeof dateInput === 'string' ? new Date(dateInput) : dateInput
   return d.toLocaleDateString('id-ID', { day: 'numeric', month: 'short', year: 'numeric' })
 }
 

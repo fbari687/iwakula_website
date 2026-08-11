@@ -155,11 +155,11 @@ async function seed() {
     // ----------------------------------------------------
     console.log("📦 Seeding product_images...");
     await db.insert(schema.productImages).values([
-      { productId: 1, imageUrl: "/uploads/products/pempek2.webp" },
-      { productId: 1, imageUrl: "/uploads/products/pempek3.webp" },
-      { productId: 2, imageUrl: "/uploads/products/eggroll_udang2.webp" },
-      { productId: 3, imageUrl: "/uploads/products/siomay2.webp" },
-      { productId: 3, imageUrl: "/uploads/products/siomay3.webp" },
+      { productId: 1, imageUrl: "/uploads/products/pempek2.webp", displayOrder: 0 },
+      { productId: 1, imageUrl: "/uploads/products/pempek3.webp", displayOrder: 1 },
+      { productId: 2, imageUrl: "/uploads/products/eggroll_udang2.webp", displayOrder: 0 },
+      { productId: 3, imageUrl: "/uploads/products/siomay2.webp", displayOrder: 0 },
+      { productId: 3, imageUrl: "/uploads/products/siomay3.webp", displayOrder: 1 },
     ]);
 
     console.log("✅ Seeding selesai dengan sukses!");

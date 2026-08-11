@@ -1,7 +1,7 @@
 {
   "version": "5",
   "dialect": "mysql",
-  "id": "c9d9261f-e2a0-4950-9726-e8b97502d1d5",
+  "id": "d9aa916d-dfa8-4d99-9bff-8ead5230e6e9",
   "prevId": "b42fcc31-262f-4318-b21b-cd6297df87b6",
   "tables": {
     "achievements": {
@@ -235,6 +235,14 @@
           "notNull": true,
           "autoincrement": false
         },
+        "display_order": {
+          "name": "display_order",
+          "type": "int",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false,
+          "default": 0
+        },
         "created_at": {
           "name": "created_at",
           "type": "timestamp",
@@ -244,8 +252,30 @@
           "default": "(now())"
         }
       },
-      "indexes": {},
-      "foreignKeys": {},
+      "indexes": {
+        "product_images_product_id_idx": {
+          "name": "product_images_product_id_idx",
+          "columns": [
+            "product_id"
+          ],
+          "isUnique": false
+        }
+      },
+      "foreignKeys": {
+        "product_images_product_id_products_id_fk": {
+          "name": "product_images_product_id_products_id_fk",
+          "tableFrom": "product_images",
+          "tableTo": "products",
+          "columnsFrom": [
+            "product_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        }
+      },
       "compositePrimaryKeys": {
         "product_images_id": {
           "name": "product_images_id",

@@ -16,7 +16,7 @@ export default defineEventHandler(async (event) => {
       categoryId = foundCategory.id
     }
 
-    const products = await productRepository.getAll({ categoryId, limit })
+    const products = await productRepository.getAll({ categoryId, limit, isAvailable: true })
 
     return {
       success: true,

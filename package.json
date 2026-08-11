@@ -42,7 +42,7 @@
     "mysql2": "^3.23.0",
     "nuxt": "^4.5.0",
     "nuxt-easy-lightbox": "^1.1.0",
-    "sharp": "^0.35.3",
+    "sharp": "0.32.6",
     "tailwindcss": "^4.3.3",
     "typescript": "^6.0.3",
     "vue": "^3.5.40",
@@ -55,7 +55,7 @@
     "esbuild@0.18.20": true,
     "esbuild@0.25.12": true,
     "esbuild@0.27.7": true,
-    "sharp@0.34.5": true,
+    "sharp@0.32.6": true,
     "vue-demi@0.14.10": true,
     "bcrypt@6.0.0": true
   },
@@ -65,5 +65,8 @@
     "@types/node": "^26.1.1",
     "drizzle-kit": "^0.31.10",
     "tsx": "^4.23.1"
+  },
+  "overrides": {
+    "sharp": "0.32.6"
   }
 }

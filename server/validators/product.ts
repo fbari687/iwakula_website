@@ -13,7 +13,8 @@ export const productCreateSchema = z.object({
   shopeeUrl: z.string().url('URL tidak valid').max(255).optional().or(z.literal('')),
   tokopediaUrl: z.string().url('URL tidak valid').max(255).optional().or(z.literal('')),
   isAvailable: z.boolean().default(true),
-  isFeatured: z.boolean().default(false)
+  isFeatured: z.boolean().default(false),
+  extraImages: z.array(z.string()).optional()
 })
 
 export const productUpdateSchema = productCreateSchema.partial()

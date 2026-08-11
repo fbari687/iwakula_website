@@ -17,7 +17,7 @@
     <!-- Card Form Utama -->
     <UCard 
       class="bg-[#FBFAF8] border-[#E7E1D8] rounded-[20px] shadow-sm overflow-hidden"
-      :ui="{ body: { padding: 'p-0' }, ring: 'ring-1 ring-[#E7E1D8]' }"
+      :ui="{ body: 'p-0 ring-1 ring-[#E7E1D8]' }"
     >
       <form @submit.prevent="handleSubmit" class="flex flex-col">
         
@@ -55,20 +55,40 @@
             <p class="text-sm text-[#6B7280]">Visual pendukung yang merepresentasikan kategori.</p>
           </div>
 
-          <UFormField label="URL Gambar" required description="Tautkan URL teks manual. Integrasi unggah gambar akan hadir pada Sprint 5." :ui="formFieldUi">
-            <div class="flex flex-col sm:flex-row sm:items-start gap-4 w-full">
-              <!-- Image Preview Box (80x80) -->
-              <div class="shrink-0 w-20 h-20 bg-[#F7F6F2] rounded-[14px] border border-[#E7E1D8] overflow-hidden flex items-center justify-center shadow-sm">
-                <img v-if="form.image" :src="form.image" class="w-full h-full object-cover" alt="Preview Gambar" />
-                <UIcon v-else name="i-heroicons-photo" class="text-3xl text-[#9CA3AF]" />
+          <UFormField label="Gambar Kategori" required description="Unggah gambar kategori (Max 5MB). Format akan dikonversi ke WebP otomatis." :ui="formFieldUi">
+            <div class="flex flex-col gap-4 w-full">
+              <div 
+                v-if="imagePreview || form.image"
+                class="relative w-40 h-40 rounded-[14px] border border-[#E7E1D8] overflow-hidden shadow-sm group"
+              >
+                <img :src="imagePreview || form.image" class="w-full h-full object-cover" alt="Preview Gambar" />
+                <div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                  <UButton color="neutral" variant="ghost" icon="i-heroicons-trash" @click="removeMainImage" />
+                </div>
               </div>
-              <!-- Input URL -->
-              <UInput 
-                v-model="form.image" 
-                placeholder="https://contoh.com/gambar.webp" 
-                class="flex-1 w-full"
-                :ui="inputUi"
-              />
+              <div v-else class="w-full">
+                <label 
+                  class="flex flex-col items-center justify-center w-full h-40 border-2 border-dashed border-[#D6CEC2] hover:border-[#C65A3A] hover:bg-[#F3EEE8] rounded-[14px] cursor-pointer transition-colors"
+                  :class="{ 'opacity-50 cursor-not-allowed': isUploading }"
+                >
+                  <div class="flex flex-col items-center justify-center pt-5 pb-6">
+                    <UIcon v-if="isUploading" name="i-heroicons-arrow-path" class="w-8 h-8 mb-3 text-[#C65A3A] animate-spin" />
+                    <UIcon v-else name="i-heroicons-cloud-arrow-up" class="w-8 h-8 mb-3 text-[#9CA3AF]" />
+                    <p class="mb-2 text-sm text-[#6B7280]">
+                      <span v-if="isUploading">Mengunggah...</span>
+                      <span v-else class="font-semibold text-[#C65A3A]">Klik untuk unggah</span> atau seret dan lepas
+                    </p>
+                    <p v-if="!isUploading" class="text-xs text-[#9CA3AF]">JPG, PNG, WEBP (Maks. 5MB)</p>
+                  </div>
+                  <input 
+                    type="file" 
+                    class="hidden" 
+                    accept="image/jpeg,image/png,image/webp"
+                    @change="handleFileUpload"
+                    :disabled="isUploading"
+                  />
+                </label>
+              </div>
             </div>
           </UFormField>
         </div>
@@ -121,6 +141,7 @@ definePageMeta({ layout: 'admin' })
 
 const router = useRouter()
 const { createCategory } = useAdminCategories()
+const toast = useToast()
 
 // Objek Reusable Konfigurasi Tema (Anti-Duplikasi)
 const formFieldUi = {
@@ -150,6 +171,39 @@ const form = ref({
 
 const isSubmitting = ref(false)
 const isSlugEdited = ref(false)
+const isUploading = ref(false)
+const imageFile = ref<File | null>(null)
+const imagePreview = ref<string>('')
+
+const handleFileUpload = (event: Event) => {
+  const target = event.target as HTMLInputElement
+  if (!target.files || target.files.length === 0) return
+  
+  const file = target.files[0]
+  if (!file) return
+  if (file.size > 5 * 1024 * 1024) {
+    toast.add({ title: 'Gagal', description: 'Ukuran file melebihi 5MB', color: 'error' })
+    return
+  }
+
+  if (imagePreview.value) {
+    URL.revokeObjectURL(imagePreview.value)
+  }
+
+  imageFile.value = file
+  imagePreview.value = URL.createObjectURL(file)
+  form.value.image = '' // Clear existing URL if any
+  target.value = ''
+}
+
+const removeMainImage = () => {
+  if (imagePreview.value) {
+    URL.revokeObjectURL(imagePreview.value)
+  }
+  imageFile.value = null
+  imagePreview.value = ''
+  form.value.image = ''
+}
 
 // Auto-Slug Logic (Hanya jika user belum pernah mengedit field slug manual)
 watch(() => form.value.name, (newName) => {
@@ -164,15 +218,43 @@ const handleSlugInput = () => {
 }
 
 const handleSubmit = async () => {
-  isSubmitting.value = true
-  const payload = { ...form.value }
-  if (!payload.slug) delete payload.slug // Fallback Backend Auto-Generate jika di-clear
+  if (!form.value.image && !imageFile.value) {
+    toast.add({ title: 'Gagal', description: 'Gambar kategori wajib diisi', color: 'error' })
+    return
+  }
 
-  const success = await createCategory(payload)
-  isSubmitting.value = false
+  isSubmitting.value = true
   
-  if (success) {
-    router.push('/admin/categories')
+  const { slug, ...rest } = form.value
+  const payload = slug ? { ...form.value } : rest
+
+  try {
+    if (imageFile.value) {
+      isUploading.value = true
+      const formData = new FormData()
+      formData.append('image', imageFile.value)
+      
+      const uploadRes = await $fetch<any>('/api/admin/upload', {
+        method: 'POST',
+        body: formData
+      })
+      
+      if (uploadRes.success && uploadRes.data?.url) {
+        payload.image = uploadRes.data.url
+      } else {
+        throw new Error('Gagal mengunggah gambar kategori')
+      }
+    }
+    
+    const success = await createCategory(payload as any)
+    if (success) {
+      router.push('/admin/categories')
+    }
+  } catch (error: any) {
+    toast.add({ title: 'Error', description: error.message || 'Terjadi kesalahan saat menyimpan kategori', color: 'error' })
+  } finally {
+    isSubmitting.value = false
+    isUploading.value = false
   }
 }
 </script>

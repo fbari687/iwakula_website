@@ -3,20 +3,35 @@ import type { Product, Category } from '~~/server/database/schema'
 export interface AdminProduct extends Omit<Product, 'mainImage'> {
   image: string
   category?: Category
+  extraImages?: string[]
 }
 
 export const useAdminProducts = () => {
   const products = ref<AdminProduct[]>([])
+  const product = ref<AdminProduct | null>(null)
+  const categories = ref<Category[]>([])
+  
   const isLoading = ref(false)
   const error = ref<any>(null)
   
   const toast = useToast()
 
-  const fetchProducts = async () => {
+  const fetchCategories = async () => {
+    try {
+      const { data } = await $fetch<{ success: boolean; data: Category[] }>('/api/categories')
+      categories.value = data
+    } catch (err: any) {
+      console.error('Failed to fetch categories:', err)
+    }
+  }
+
+  const fetchProducts = async (filters?: { categoryId?: number; search?: string }) => {
     isLoading.value = true
     error.value = null
     try {
-      const { data } = await $fetch<{ success: boolean; data: AdminProduct[] }>('/api/products')
+      const { data } = await $fetch<{ success: boolean; data: AdminProduct[] }>('/api/admin/products', {
+        query: filters
+      })
       products.value = data
     } catch (err: any) {
       error.value = err
@@ -27,10 +42,19 @@ export const useAdminProducts = () => {
   }
 
   const fetchProduct = async (id: number) => {
-    if (!products.value.length) {
-      await fetchProducts()
+    isLoading.value = true
+    error.value = null
+    try {
+      const { data } = await $fetch<{ success: boolean; data: AdminProduct }>(`/api/admin/products/${id}`)
+      product.value = data
+      return data
+    } catch (err: any) {
+      error.value = err
+      toast.add({ title: 'Gagal', description: 'Gagal memuat data produk', color: 'error' })
+      return null
+    } finally {
+      isLoading.value = false
     }
-    return products.value.find(p => p.id === id) || null
   }
 
   const createProduct = async (payload: any) => {
@@ -40,7 +64,6 @@ export const useAdminProducts = () => {
         body: payload
       })
       toast.add({ title: 'Berhasil', description: 'Produk baru disimpan', color: 'success' })
-      await fetchProducts()
       return true
     } catch (err: any) {
       toast.add({ title: 'Gagal', description: err.data?.statusMessage || err.message, color: 'error' })
@@ -55,7 +78,6 @@ export const useAdminProducts = () => {
         body: payload
       })
       toast.add({ title: 'Berhasil', description: 'Produk diperbarui', color: 'success' })
-      await fetchProducts()
       return true
     } catch (err: any) {
       toast.add({ title: 'Gagal', description: err.data?.statusMessage || err.message, color: 'error' })
@@ -69,7 +91,6 @@ export const useAdminProducts = () => {
         method: 'DELETE'
       })
       toast.add({ title: 'Berhasil', description: 'Produk dihapus permanen', color: 'success' })
-      await fetchProducts()
       return true
     } catch (err: any) {
       toast.add({ title: 'Gagal', description: err.data?.statusMessage || err.message, color: 'error' })
@@ -79,10 +100,13 @@ export const useAdminProducts = () => {
 
   return {
     products,
+    product,
+    categories,
     isLoading,
     error,
     fetchProducts,
     fetchProduct,
+    fetchCategories,
     createProduct,
     updateProduct,
     deleteProduct

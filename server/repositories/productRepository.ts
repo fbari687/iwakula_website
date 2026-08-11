@@ -1,6 +1,6 @@
-import { eq, desc } from 'drizzle-orm'
+import { eq, desc, like, asc } from 'drizzle-orm'
 import { db } from '~~/server/utils/db'
-import { products } from '~~/server/database/schema'
+import { products, productImages } from '~~/server/database/schema'
 
 // Tipe payload yang diterima dari form CMS
 export interface ProductPayload {
@@ -17,26 +17,54 @@ export interface ProductPayload {
   tokopediaUrl?: string | null
   isAvailable?: boolean
   isFeatured?: boolean
+  extraImages?: string[]
 }
 
-// Transform output to map mainImage to image
+// Transform output to map mainImage to image and extract extraImages
 const mapOutput = (product: any) => {
   if (!product) return product
   return {
     ...product,
-    image: product.mainImage
+    image: product.mainImage,
+    extraImages: product.images?.map((i: any) => i.imageUrl) || []
   }
 }
 
 export const productRepository = {
-  getAll: async (filters?: { categoryId?: number; limit?: number }) => {
+  getAll: async (filters?: { categoryId?: number; limit?: number; search?: string; isAvailable?: boolean }) => {
     const query: any = {
       orderBy: [desc(products.createdAt)],
-      with: { category: true }
+      with: { 
+        category: true,
+        images: { orderBy: (images: any, { asc }: any) => [asc(images.displayOrder)] }
+      }
     }
-    if (filters?.categoryId) {
-      query.where = eq(products.categoryId, filters.categoryId)
+    
+    let conditions = undefined;
+    
+    const { and } = await import('drizzle-orm')
+    const condList = []
+    
+    if (filters?.categoryId !== undefined) {
+      condList.push(eq(products.categoryId, filters.categoryId))
     }
+    if (filters?.search) {
+      condList.push(like(products.name, `%${filters.search}%`))
+    }
+    if (filters?.isAvailable !== undefined) {
+      condList.push(eq(products.isAvailable, filters.isAvailable))
+    }
+
+    if (condList.length > 1) {
+      conditions = and(...condList)
+    } else if (condList.length === 1) {
+      conditions = condList[0]
+    }
+
+    if (conditions) {
+      query.where = conditions
+    }
+
     if (filters?.limit) {
       query.limit = filters.limit
     }
@@ -45,10 +73,14 @@ export const productRepository = {
   },
 
   getFeatured: async () => {
+    const { and } = await import('drizzle-orm')
     const result = await db.query.products.findMany({
-      where: eq(products.isFeatured, true),
+      where: and(eq(products.isFeatured, true), eq(products.isAvailable, true)),
       orderBy: [desc(products.createdAt)],
-      with: { category: true }
+      with: { 
+        category: true,
+        images: { orderBy: (images: any, { asc }: any) => [asc(images.displayOrder)] }
+      }
     })
     return result.map(mapOutput)
   },
@@ -56,7 +88,10 @@ export const productRepository = {
   getById: async (id: number) => {
     const result = await db.query.products.findFirst({
       where: eq(products.id, id),
-      with: { category: true }
+      with: { 
+        category: true,
+        images: { orderBy: (images: any, { asc }: any) => [asc(images.displayOrder)] }
+      }
     })
     return mapOutput(result)
   },
@@ -64,9 +99,24 @@ export const productRepository = {
   getBySlug: async (slug: string) => {
     const result = await db.query.products.findFirst({
       where: eq(products.slug, slug),
-      with: { category: true }
+      with: { 
+        category: true,
+        images: { orderBy: (images: any, { asc }: any) => [asc(images.displayOrder)] }
+      }
     })
     return mapOutput(result)
+  },
+
+  getByCategory: async (categoryId: number) => {
+    const result = await db.query.products.findMany({
+      where: eq(products.categoryId, categoryId),
+      orderBy: [desc(products.createdAt)],
+      with: { 
+        category: true,
+        images: { orderBy: (images: any, { asc }: any) => [asc(images.displayOrder)] }
+      }
+    })
+    return result.map(mapOutput)
   },
 
   create: async (data: ProductPayload) => {
@@ -86,8 +136,22 @@ export const productRepository = {
       tokopediaUrl: data.tokopediaUrl || null,
     }
     
-    const [result] = await db.insert(products).values(insertData)
-    return result.insertId
+    return await db.transaction(async (tx) => {
+      const [result] = await tx.insert(products).values(insertData)
+      const productId = result.insertId
+
+      if (data.extraImages && data.extraImages.length > 0) {
+        await tx.insert(productImages).values(
+          data.extraImages.map((url, index) => ({
+            productId: productId,
+            imageUrl: url,
+            displayOrder: index
+          }))
+        )
+      }
+
+      return productId
+    })
   },
 
   update: async (id: number, data: Partial<ProductPayload>) => {
@@ -112,7 +176,26 @@ export const productRepository = {
     if (data.isAvailable !== undefined) updateData.isAvailable = data.isAvailable
     if (data.isFeatured !== undefined) updateData.isFeatured = data.isFeatured
 
-    await db.update(products).set(updateData).where(eq(products.id, id))
+    await db.transaction(async (tx) => {
+      if (Object.keys(updateData).length > 0) {
+        await tx.update(products).set(updateData).where(eq(products.id, id))
+      }
+
+      if (data.extraImages !== undefined) {
+        await tx.delete(productImages).where(eq(productImages.productId, id))
+        
+        if (data.extraImages.length > 0) {
+          await tx.insert(productImages).values(
+            data.extraImages.map((url, index) => ({
+              productId: id,
+              imageUrl: url,
+              displayOrder: index
+            }))
+          )
+        }
+      }
+    })
+
     return id
   },
 

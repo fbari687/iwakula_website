@@ -26,7 +26,7 @@
     <UCard 
       v-else
       class="bg-[#FBFAF8] border-[#E7E1D8] rounded-[20px] shadow-sm overflow-hidden"
-      :ui="{ body: { padding: 'p-0' }, ring: 'ring-1 ring-[#E7E1D8]' }"
+      :ui="{ body: 'p-0 ring-1 ring-[#E7E1D8]' }"
     >
       <form @submit.prevent="handleSubmit" class="flex flex-col">
         
@@ -50,7 +50,7 @@
             <UFormField label="Kategori" required :ui="formFieldUi">
               <USelect 
                 v-model="form.categoryId" 
-                :options="categoryOptions"
+                :items="categoryOptions"
                 placeholder="Pilih Kategori"
                 class="w-full"
                 :ui="selectUi"
@@ -129,20 +129,81 @@
             <p class="text-sm text-[#6B7280]">Visual utama yang merepresentasikan produk.</p>
           </div>
 
-          <UFormField label="URL Gambar WebP" required description="Tautkan URL teks manual. Integrasi unggah gambar akan hadir pada tahap selanjutnya." :ui="formFieldUi">
-            <div class="flex flex-col sm:flex-row sm:items-start gap-4 w-full">
-              <!-- Image Preview Box (80x80) -->
-              <div class="shrink-0 w-20 h-20 bg-[#F7F6F2] rounded-[14px] border border-[#E7E1D8] overflow-hidden flex items-center justify-center shadow-sm">
-                <img v-if="form.image" :src="form.image" class="w-full h-full object-cover" alt="Preview Gambar" />
-                <UIcon v-else name="i-heroicons-photo" class="text-3xl text-[#9CA3AF]" />
+          <UFormField label="Gambar Produk Utama (Thumbnail)" required description="Unggah gambar produk (Max 5MB). Format akan dikonversi ke WebP otomatis." :ui="formFieldUi">
+            <div class="flex flex-col gap-4">
+              <div 
+                v-if="imagePreview || form.image"
+                class="relative w-40 h-40 rounded-[14px] border border-[#E7E1D8] overflow-hidden shadow-sm group"
+              >
+                <img :src="imagePreview || form.image" class="w-full h-full object-cover" alt="Preview Gambar" />
+                <div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                  <UButton color="neutral" variant="ghost" icon="i-heroicons-trash" @click="removeMainImage" />
+                </div>
               </div>
-              <!-- Input URL -->
-              <UInput 
-                v-model="form.image" 
-                placeholder="https://contoh.com/gambar.webp" 
-                class="flex-1 w-full"
-                :ui="inputUi"
-              />
+              <div v-else class="w-full">
+                <label 
+                  class="flex flex-col items-center justify-center w-full h-40 border-2 border-dashed border-[#D6CEC2] hover:border-[#C65A3A] hover:bg-[#F3EEE8] rounded-[14px] cursor-pointer transition-colors"
+                  :class="{ 'opacity-50 cursor-not-allowed': isUploading }"
+                >
+                  <div class="flex flex-col items-center justify-center pt-5 pb-6">
+                    <UIcon v-if="isUploading" name="i-heroicons-arrow-path" class="w-8 h-8 mb-3 text-[#C65A3A] animate-spin" />
+                    <UIcon v-else name="i-heroicons-cloud-arrow-up" class="w-8 h-8 mb-3 text-[#9CA3AF]" />
+                    <p class="mb-2 text-sm text-[#6B7280]">
+                      <span class="font-semibold text-[#24324A]">{{ isUploading ? 'Mengunggah...' : 'Klik untuk mengunggah' }}</span>
+                    </p>
+                    <p class="text-xs text-[#9CA3AF]">PNG, JPG, JPEG (Max 5MB)</p>
+                  </div>
+                  <input type="file" class="hidden" accept="image/png, image/jpeg, image/jpg, image/webp" @change="handleFileUpload" :disabled="isUploading" />
+                </label>
+              </div>
+            </div>
+          </UFormField>
+
+          <UFormField label="Galeri Gambar Tambahan" description="Opsional. Unggah gambar tambahan produk (Max 5MB per gambar). Format otomatis WebP." :ui="formFieldUi">
+            <div class="flex flex-col gap-4">
+              <!-- Grid Preview -->
+              <div v-if="form.extraImages.length > 0 || extraImageFiles.length > 0" class="flex flex-wrap gap-4">
+                <!-- Existing -->
+                <div 
+                  v-for="(img, idx) in form.extraImages" 
+                  :key="`existing-${idx}`"
+                  class="relative w-32 h-32 rounded-[14px] border border-[#E7E1D8] overflow-hidden shadow-sm group"
+                >
+                  <img :src="img" class="w-full h-full object-cover" alt="Preview Gambar Tambahan" />
+                  <div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                    <UButton color="error" variant="ghost" icon="i-heroicons-trash" @click="form.extraImages.splice(idx, 1)" />
+                  </div>
+                </div>
+                <!-- New -->
+                <div 
+                  v-for="(item, idx) in extraImageFiles" 
+                  :key="`new-${idx}`"
+                  class="relative w-32 h-32 rounded-[14px] border border-[#E7E1D8] overflow-hidden shadow-sm group"
+                >
+                  <img :src="item.preview" class="w-full h-full object-cover" alt="Preview Gambar Tambahan" />
+                  <div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                    <UButton color="error" variant="ghost" icon="i-heroicons-trash" @click="removeExtraImage(idx)" />
+                  </div>
+                </div>
+              </div>
+
+              <!-- Upload Button (Multi) -->
+              <div class="w-full">
+                <label 
+                  class="flex flex-col items-center justify-center w-full h-32 border-2 border-dashed border-[#D6CEC2] hover:border-[#C65A3A] hover:bg-[#F3EEE8] rounded-[14px] cursor-pointer transition-colors"
+                  :class="{ 'opacity-50 cursor-not-allowed': isUploadingExtra }"
+                >
+                  <div class="flex flex-col items-center justify-center pt-5 pb-6">
+                    <UIcon v-if="isUploadingExtra" name="i-heroicons-arrow-path" class="w-6 h-6 mb-2 text-[#C65A3A] animate-spin" />
+                    <UIcon v-else name="i-heroicons-cloud-arrow-up" class="w-6 h-6 mb-2 text-[#9CA3AF]" />
+                    <p class="mb-1 text-sm text-[#6B7280]">
+                      <span class="font-semibold text-[#24324A]">{{ isUploadingExtra ? 'Mengunggah...' : 'Klik untuk tambah gambar' }}</span>
+                    </p>
+                  </div>
+                  <!-- multiple attribute allowed -->
+                  <input type="file" class="hidden" multiple accept="image/png, image/jpeg, image/jpg, image/webp" @change="handleExtraFileUpload" :disabled="isUploadingExtra" />
+                </label>
+              </div>
             </div>
           </UFormField>
         </div>
@@ -183,13 +244,7 @@
           </div>
 
           <UFormField label="Deskripsi Produk" required :ui="formFieldUi">
-            <UTextarea 
-              v-model="form.description" 
-              placeholder="Jelaskan spesifikasi, rasa, dan keunggulan produk..." 
-              :rows="6" 
-              class="w-full"
-              :ui="inputUi"
-            />
+            <TiptapEditor v-model="form.description" />
           </UFormField>
         </div>
 
@@ -287,13 +342,77 @@ const form = ref({
   shopeeUrl: '',
   tokopediaUrl: '',
   isAvailable: true,
-  isFeatured: false
+  isFeatured: false,
+  extraImages: [] as string[]
 })
 
 const isLoadingData = ref(true)
 const isSubmitting = ref(false)
 const isSlugEdited = ref(true) 
 const isPromo = ref(false)
+const isUploading = ref(false)
+const isUploadingExtra = ref(false)
+
+const imageFile = ref<File | null>(null)
+const imagePreview = ref<string>('')
+const extraImageFiles = ref<{ file: File, preview: string }[]>([])
+
+const handleFileUpload = (event: Event) => {
+  const target = event.target as HTMLInputElement
+  if (!target.files || target.files.length === 0) return
+  
+  const file = target.files[0]
+  if (!file) return
+  if (file.size > 5 * 1024 * 1024) {
+    toast.add({ title: 'Gagal', description: 'Ukuran file melebihi 5MB', color: 'error' })
+    return
+  }
+
+  if (imagePreview.value) {
+    URL.revokeObjectURL(imagePreview.value)
+  }
+
+  imageFile.value = file
+  imagePreview.value = URL.createObjectURL(file)
+  form.value.image = '' // Clear existing URL if any
+  target.value = ''
+}
+
+const removeMainImage = () => {
+  if (imagePreview.value) {
+    URL.revokeObjectURL(imagePreview.value)
+  }
+  imageFile.value = null
+  imagePreview.value = ''
+  form.value.image = ''
+}
+
+const removeExtraImage = (idx: number) => {
+  const item = extraImageFiles.value[idx]
+  if (item && item.preview) {
+    URL.revokeObjectURL(item.preview)
+  }
+  extraImageFiles.value.splice(idx, 1)
+}
+
+const handleExtraFileUpload = (event: Event) => {
+  const target = event.target as HTMLInputElement
+  if (!target.files || target.files.length === 0) return
+  
+  const files = Array.from(target.files)
+  
+  for (const file of files) {
+    if (file.size > 5 * 1024 * 1024) {
+      toast.add({ title: 'Gagal', description: `Ukuran file ${file.name} melebihi 5MB`, color: 'error' })
+      continue
+    }
+
+    const preview = URL.createObjectURL(file)
+    extraImageFiles.value.push({ file, preview })
+  }
+
+  target.value = ''
+}
 
 const fetchProductData = async () => {
   try {
@@ -312,7 +431,8 @@ const fetchProductData = async () => {
         shopeeUrl: data.shopeeUrl || '',
         tokopediaUrl: data.tokopediaUrl || '',
         isAvailable: data.isAvailable,
-        isFeatured: data.isFeatured
+        isFeatured: data.isFeatured,
+        extraImages: data.extraImages || []
       }
       if (data.originalPrice && data.originalPrice > data.price) {
         isPromo.value = true
@@ -335,28 +455,68 @@ const handleSlugInput = () => {
   isSlugEdited.value = true
 }
 
-const handleSubmit = async () => {
-  isSubmitting.value = true
-  const payload = { 
-    ...form.value,
-    highlights: form.value.highlights.split(',').map(s => s.trim()).filter(Boolean)
-  }
-  if (!isPromo.value) {
-    delete payload.originalPrice
-  } else if (!payload.originalPrice) {
-    delete payload.originalPrice
-  }
-  
-  if (!payload.slug) delete payload.slug
-  if (!payload.categoryId) delete payload.categoryId
-  if (!payload.shopeeUrl) delete payload.shopeeUrl
-  if (!payload.tokopediaUrl) delete payload.tokopediaUrl
+const uploadFile = async (file: File): Promise<string> => {
+  const formData = new FormData()
+  formData.append('image', file)
+  const { data } = await $fetch<{ success: boolean; data: { url: string } }>('/api/admin/upload', {
+    method: 'POST',
+    body: formData
+  })
+  return data.url
+}
 
-  const success = await updateProduct(productId, payload)
-  isSubmitting.value = false
+const handleSubmit = async () => {
+  if (!imageFile.value && !form.value.image) {
+    toast.add({ title: 'Peringatan', description: 'Gambar utama produk wajib diisi.', color: 'warning' })
+    return
+  }
+
+  isSubmitting.value = true
   
-  if (success) {
-    router.push('/admin/products')
+  try {
+    // 1. Proses Upload
+    if (imageFile.value) {
+      isUploading.value = true
+      form.value.image = await uploadFile(imageFile.value)
+      isUploading.value = false
+    }
+
+    if (extraImageFiles.value.length > 0) {
+      isUploadingExtra.value = true
+      for (const item of extraImageFiles.value) {
+        const url = await uploadFile(item.file)
+        form.value.extraImages.push(url)
+      }
+      isUploadingExtra.value = false
+    }
+
+    // 2. Siapkan Payload
+    const payload: Record<string, any> = { 
+      ...form.value,
+      highlights: form.value.highlights ? form.value.highlights.split(',').map(s => s.trim()).filter(Boolean) : []
+    }
+    if (!isPromo.value) {
+      delete payload.originalPrice
+    } else if (!payload.originalPrice) {
+      delete payload.originalPrice
+    }
+    
+    if (!payload.slug) delete payload.slug
+    if (!payload.categoryId) delete payload.categoryId
+    if (!payload.shopeeUrl) delete payload.shopeeUrl
+    if (!payload.tokopediaUrl) delete payload.tokopediaUrl
+
+    // 3. Simpan
+    const success = await updateProduct(productId, payload)
+    if (success) {
+      router.push('/admin/products')
+    }
+  } catch (err: any) {
+    toast.add({ title: 'Gagal', description: err.data?.statusMessage || err.message || 'Terjadi kesalahan', color: 'error' })
+  } finally {
+    isSubmitting.value = false
+    isUploading.value = false
+    isUploadingExtra.value = false
   }
 }
 </script>

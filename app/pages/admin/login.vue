@@ -9,7 +9,7 @@
         divide: 'divide-none',
         shadow: 'shadow-[0_4px_24px_rgba(36,50,74,0.04)]',
         rounded: 'rounded-[32px]',
-        body: { padding: 'px-8 py-12 sm:px-12 sm:py-14' }
+        body: 'px-8 py-12 sm:px-12 sm:py-14'
       }"
     >
       <!-- Header Area -->
