@@ -12,13 +12,12 @@
       direction="left" 
       :handle="false"
       :ui="{
-        overlay: 'bg-[#24324A]/40',
-        content: 'max-w-[256px] w-full p-0 bg-[#FBFAF8] border-r border-[#E7E1D8] shadow-sm ring-0',
+        overlay: 'bg-[#24324A]/40 backdrop-blur-xs',
+        content: 'max-w-[256px] w-full p-0 bg-[#FBFAF8] text-[#24324A] border-r border-[#E7E1D8] shadow-sm ring-0 dark:bg-[#FBFAF8] dark:text-[#24324A]',
         body: 'p-0 h-full'
       }"
     >
       <template #body>
-        <!-- Hapus border kanan saat di dalam drawer -->
         <AdminSidebar class="border-none w-full" @close="isDrawerOpen = false" />
       </template>
     </UDrawer>
@@ -28,7 +27,7 @@
       <AdminTopbar @open-drawer="isDrawerOpen = true" />
       
       <!-- Konten Utama (NuxtPage) -->
-      <main class="flex-1 p-6 lg:p-8 overflow-x-hidden min-w-0 w-full">
+      <main class="flex-1 p-4 sm:p-6 lg:p-8 overflow-x-hidden min-w-0 w-full">
         <slot />
       </main>
     </div>
@@ -38,7 +37,6 @@
 
 <script setup lang="ts">
 import { ref, watch } from 'vue'
-import { useRoute } from 'vue-router'
 
 const isDrawerOpen = ref(false)
 const route = useRoute()

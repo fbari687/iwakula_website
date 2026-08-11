@@ -21,8 +21,8 @@
       <!-- Harga & Tombol -->
       <div class="flex flex-col sm:flex-row sm:items-end justify-between gap-2">
         <div class="flex flex-col items-start">
-          <span class="text-[#58413C99] line-through text-[11px] sm:text-sm">Rp {{ price.toLocaleString("id-ID") }}</span>
-          <span v-if="originalPrice != null" class="text-base sm:text-2xl text-primary font-sans font-semibold">Rp {{ originalPrice.toLocaleString("id-ID") }}</span>
+          <span v-if="originalPrice && originalPrice > price" class="text-[#58413C99] line-through text-[11px] sm:text-sm">Rp {{ originalPrice.toLocaleString("id-ID") }}</span>
+          <span class="text-base sm:text-2xl text-primary font-sans font-semibold">Rp {{ price.toLocaleString("id-ID") }}</span>
         </div>
 
         <NuxtLink :to="`/products/${slug}`" class="w-full sm:w-fit py-1.5 px-3 sm:py-2 sm:px-4 bg-primary flex items-center justify-center rounded-[8px] transition-all duration-150 hover:bg-primary/90">

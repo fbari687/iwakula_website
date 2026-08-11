@@ -1,122 +1,128 @@
 <template>
-  <div class="min-h-screen flex items-center justify-center bg-[#F7F6F2] p-4 font-body">
+  <div v-if="!user" class="min-h-screen flex items-center justify-center bg-[#F7F6F2] p-4 sm:p-6 lg:p-8 font-sans selection:bg-[#C65A3A]/20 selection:text-[#C65A3A]">
     
-    <UCard 
-      class="w-full max-w-[460px] bg-[#F7F6F2]"
-      :ui="{ 
-        base: 'overflow-hidden border border-[#E7E1D8]',
-        ring: '',
-        divide: 'divide-none',
-        shadow: 'shadow-[0_4px_24px_rgba(36,50,74,0.04)]',
-        rounded: 'rounded-[32px]',
-        body: 'px-8 py-12 sm:px-12 sm:py-14'
-      }"
-    >
-      <!-- Header Area -->
-      <div class="flex flex-col items-center justify-center gap-5 mb-12">
-        <!-- Logo -->
-        <div class="flex items-center gap-3">
-          <div class="w-10 h-10 rounded-[14px] bg-[#C65A3A] flex items-center justify-center shadow-sm">
-            <UIcon name="i-heroicons-squares-2x2-solid" class="text-white text-xl" />
-          </div>
-          <span class="text-[28px] font-bold font-sans tracking-tight text-[#24324A]">iwakula.</span>
+    <!-- Outer Card Wrapper -->
+    <div class="w-full max-w-[450px] space-y-6">
+      
+      <!-- Logo Branding Header -->
+      <div class="flex flex-col items-center justify-center text-center space-y-3">
+        <div class="h-14 w-14 rounded-2xl bg-[#C65A3A] flex items-center justify-center shadow-md border border-[#b04f32] text-white transition-transform hover:scale-105 duration-300">
+          <UIcon name="i-heroicons-squares-2x2-solid" class="text-3xl" />
         </div>
-        
-        <div class="text-center mt-1">
-          <h1 class="text-[26px] font-bold font-sans text-[#24324A] leading-tight">Admin CMS</h1>
-          <p class="text-[15px] text-[#6B7280] font-body mt-2.5 font-medium tracking-wide">Masuk untuk mengelola konten Iwakula.</p>
+        <div>
+          <h1 class="text-2xl sm:text-3xl font-bold text-[#24324A] tracking-tight">Iwakula Admin</h1>
+          <p class="text-xs sm:text-sm text-[#6B7280] font-medium mt-1">Portal Manajemen Konten & Katalog UMKM</p>
         </div>
       </div>
 
-      <!-- Form Area -->
-      <form @submit.prevent="handleLogin" class="space-y-6">
-        <UFormField 
-          label="Alamat Email" 
-          name="email" 
-          :ui="{ label: 'font-semibold text-[13.5px] text-[#24324A] mb-2 tracking-wide uppercase' }"
-        >
-          <div class="relative">
-            <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
-              <UIcon name="i-heroicons-envelope" class="h-5 w-5 text-[#6B7280]" />
-            </div>
-            <input 
+      <!-- Main Login Card -->
+      <UCard 
+        class="bg-[#FBFAF8] border-[#E7E1D8] rounded-[24px] shadow-sm overflow-hidden"
+        :ui="{ body: 'p-6 sm:p-9 space-y-6', root: 'ring-1 ring-[#E7E1D8]' }"
+      >
+        <form @submit.prevent="handleLogin" class="space-y-6">
+          <!-- Alamat Email -->
+          <UFormField 
+            label="Alamat Email" 
+            name="email" 
+            required 
+            :ui="adminFormFieldUi"
+          >
+            <UInput 
               v-model="email" 
               type="email" 
               placeholder="admin@iwakula.com"
+              icon="i-heroicons-envelope"
+              autocomplete="email"
+              size="lg"
               :disabled="loading"
-              required
-              class="block w-full pl-11 pr-4 bg-[#FBFAF8] border border-[#D6CEC2] rounded-[14px] min-h-[48px] text-[#24324A] placeholder:text-[#6B7280] focus:outline-none focus:border-[#C65A3A] focus:ring-4 focus:ring-[#C65A3A]/20 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
+              class="w-full"
+              :ui="loginInputUi"
+              aria-label="Alamat Email"
             />
-          </div>
-        </UFormField>
+          </UFormField>
 
-        <UFormField 
-          label="Kata Sandi" 
-          name="password" 
-          :ui="{ label: 'font-semibold text-[13.5px] text-[#24324A] mb-2 tracking-wide uppercase' }"
-        >
-          <div class="relative">
-            <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
-              <UIcon name="i-heroicons-lock-closed" class="h-5 w-5 text-[#6B7280]" />
-            </div>
-            <input 
-              v-model="password" 
-              type="password" 
-              placeholder="••••••••"
-              :disabled="loading"
-              required
-              class="block w-full pl-11 pr-4 bg-[#FBFAF8] border border-[#D6CEC2] rounded-[14px] min-h-[48px] text-[#24324A] placeholder:text-[#6B7280] focus:outline-none focus:border-[#C65A3A] focus:ring-4 focus:ring-[#C65A3A]/20 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
-            />
-          </div>
-        </UFormField>
-
-        <div class="pt-6">
-          <UButton 
-            type="submit" 
-            class="w-full justify-center !text-white font-sans font-bold text-[16px] py-4 transition-all duration-300 rounded-[14px] tracking-wide shadow-sm" 
-            :class="['!bg-[#C65A3A] hover:!bg-[#B44E31]']"
-            :loading="loading"
-            size="xl"
+          <!-- Kata Sandi -->
+          <UFormField 
+            label="Kata Sandi" 
+            name="password" 
+            required 
+            :ui="adminFormFieldUi"
           >
-            Masuk ke Dasbor
-          </UButton>
-        </div>
-      </form>
+            <div class="relative">
+              <UInput 
+                v-model="password" 
+                :type="showPassword ? 'text' : 'password'" 
+                placeholder="••••••••"
+                icon="i-heroicons-lock-closed"
+                autocomplete="current-password"
+                size="lg"
+                :disabled="loading"
+                class="w-full pr-12"
+                :ui="loginInputUi"
+                aria-label="Kata Sandi"
+              />
+              <button 
+                type="button" 
+                class="absolute right-3 top-1/2 -translate-y-1/2 text-[#6B7280] hover:text-[#24324A] transition-colors p-1.5 rounded-lg focus:outline-none cursor-pointer"
+                :title="showPassword ? 'Sembunyikan kata sandi' : 'Tampilkan kata sandi'"
+                @click="showPassword = !showPassword"
+              >
+                <UIcon :name="showPassword ? 'i-heroicons-eye-slash' : 'i-heroicons-eye'" class="text-xl" />
+              </button>
+            </div>
+          </UFormField>
 
-      <!-- Footer Area -->
-      <div class="mt-14 text-center">
-        <p class="text-[13px] text-[#6B7280] font-body tracking-wider font-medium">
-          &copy; {{ new Date().getFullYear() }} Iwakula. All rights reserved.
+          <!-- Submit Button -->
+          <div class="pt-2">
+            <UButton 
+              type="submit" 
+              :loading="loading"
+              class="w-full justify-center text-white bg-[#C65A3A] hover:bg-[#b04f32] rounded-[14px] py-3.5 min-h-[50px] text-base font-semibold shadow-xs transition-colors border-0 disabled:opacity-50 cursor-pointer"
+            >
+              <template v-if="!loading">
+                <span>Masuk ke Dasbor</span>
+                <UIcon name="i-heroicons-arrow-right-on-rectangle" class="text-xl ml-2" />
+              </template>
+              <template v-else>
+                <span>Memverifikasi...</span>
+              </template>
+            </UButton>
+          </div>
+        </form>
+      </UCard>
+
+      <!-- Footer Info -->
+      <div class="text-center">
+        <p class="text-xs text-[#6B7280] font-medium tracking-wide">
+          &copy; {{ new Date().getFullYear() }} UMKM Iwakula. Seluruh Hak Cipta Dilindungi.
         </p>
       </div>
-    </UCard>
+
+    </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue'
-import { useRouter } from 'vue-router'
+import { ref, computed } from 'vue'
 
 definePageMeta({
-  layout: false, // Gunakan layout kosong atau custom (karena admin belum ada layout.vue)
-  middleware: [
-    async function (to, from) {
-      const { user, fetchUser } = useAuth()
-      if (!user.value) {
-        await fetchUser()
-      }
-      if (user.value) {
-        return navigateTo('/admin')
-      }
-    }
-  ]
+  layout: false
 })
 
 const email = ref('')
 const password = ref('')
+const showPassword = ref(false)
+
 const toast = useToast()
-const { login, loading } = useAuth()
+const { user, login, loading } = useAuth()
 const router = useRouter()
+
+// UI Khusus Halaman Login (Lebih Longgar & Tinggi)
+const loginInputUi = computed(() => ({
+  ...adminInputUi,
+  base: `${adminInputUi.base} py-3.5 text-base min-h-[50px]`
+}))
 
 const handleLogin = async () => {
   if (!email.value || !password.value) return
@@ -126,16 +132,14 @@ const handleLogin = async () => {
   if (res.success) {
     toast.add({
       title: 'Login Berhasil',
-      description: 'Selamat datang kembali.',
+      description: 'Selamat datang kembali di Admin Dashboard Iwakula.',
       color: 'success'
     })
-    
-    // Karena belum ada middleware, kita push ke /admin langsung
     router.push('/admin')
   } else {
     toast.add({
       title: 'Login Gagal',
-      description: res.message,
+      description: res.message || 'Alamat email atau kata sandi tidak valid.',
       color: 'error'
     })
   }

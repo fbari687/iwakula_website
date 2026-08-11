@@ -1,22 +1,24 @@
 <template>
-  <div class="space-y-6 lg:space-y-8 pb-12 max-w-3xl mx-auto">
+  <div class="space-y-6 sm:space-y-8 pb-12 max-w-3xl mx-auto">
     <!-- Header Halaman -->
     <div>
       <UButton 
         to="/admin/contacts" 
         icon="i-heroicons-arrow-left" 
-        class="mb-4 bg-transparent text-[#6B7280] hover:text-[#24324A] hover:bg-[#E7E1D8]/50 transition-colors"
+        color="neutral"
         variant="ghost"
+        class="mb-4 text-[#6B7280] hover:text-[#24324A] hover:bg-[#F3EEE8] -ml-2 rounded-[12px] font-medium transition-colors cursor-pointer"
       >
-        Kembali
+        Kembali ke Daftar
       </UButton>
       <h1 class="text-2xl lg:text-3xl font-semibold text-[#24324A]">Edit Kontak</h1>
       <p class="text-sm text-[#6B7280] mt-1">Ubah rincian informasi kontak atau saluran komunikasi.</p>
     </div>
 
-    <!-- Spinner Loading -->
-    <div v-if="isFetching" class="flex justify-center p-12">
-      <UIcon name="i-heroicons-arrow-path" class="animate-spin text-4xl text-[#C65A3A]" />
+    <!-- Spinner Loading Data Awal -->
+    <div v-if="isFetching" class="flex flex-col items-center justify-center p-16">
+      <UIcon name="i-heroicons-arrow-path" class="animate-spin text-4xl text-[#C65A3A] mb-3" />
+      <p class="text-sm font-medium text-[#6B7280]">Memuat data kontak...</p>
     </div>
 
     <!-- Card Form Utama -->
@@ -27,56 +29,56 @@
     >
       <form @submit.prevent="handleSubmit" class="flex flex-col">
         
-        <div class="p-6 sm:p-8 space-y-6">
+        <div class="p-5 sm:p-8 space-y-6">
           <div class="border-b border-[#E7E1D8] pb-4 mb-2">
-            <h2 class="text-lg font-semibold text-[#24324A]">Informasi Kontak</h2>
-            <p class="text-sm text-[#6B7280]">Konfigurasi kunci identifikasi dan nilai kontak.</p>
+            <h2 class="text-base sm:text-lg font-semibold text-[#24324A]">Informasi Saluran Kontak</h2>
+            <p class="text-xs sm:text-sm text-[#6B7280]">Konfigurasi kunci identifikasi platform dan nilai kontak.</p>
           </div>
 
-          <UFormField label="Kunci Kontak (Platform)" required :description="isPrimaryContact ? 'Kunci kontak utama (WhatsApp & Email) tidak dapat diubah.' : 'Setiap jenis media sosial hanya dapat didaftarkan satu kali.'" :ui="formFieldUi">
+          <UFormField label="Platform / Saluran Kontak" required :description="isPrimaryContact ? 'Kunci kontak utama (WhatsApp & Email) bersifat permanen dan tidak dapat diubah.' : 'Setiap jenis platform hanya dapat didaftarkan satu kali.'" :ui="adminFormFieldUi">
             <USelect 
               v-model="form.key" 
               :items="availableKeyOptions"
               :disabled="isPrimaryContact"
-              placeholder="Pilih Media Sosial / Kontak" 
+              placeholder="Pilih Media Sosial / Platform Kontak" 
               class="w-full"
-              :ui="selectUi"
+              :ui="adminSelectUi"
               @update:model-value="onKeyChange"
             />
           </UFormField>
 
-          <UFormField label="Nilai Kontak (Value)" required description="Nomor telepon (misal: 628119844941), alamat email, atau username/handle media sosial." :ui="formFieldUi">
+          <UFormField label="Nilai Kontak (Value)" required description="Nomor telepon (misal: 628119844941), alamat email, atau handle media sosial." :ui="adminFormFieldUi">
             <UInput 
               v-model="form.value" 
               placeholder="Misal: 628119844941 atau iwakulafood" 
               class="w-full"
-              :ui="inputUi"
+              :ui="adminInputUi"
             />
           </UFormField>
 
-          <UFormField label="Nama Ikon (Icon Name)" description="Class/Nama ikon Iconify (Opsional, Misal: i-ic-baseline-whatsapp, i-ic-baseline-email)." :ui="formFieldUi">
+          <UFormField label="Nama Ikon (Iconify Class)" description="Nama ikon Iconify (Opsional, Misal: i-ic-baseline-whatsapp, i-ic-baseline-email)." :ui="adminFormFieldUi">
             <UInput 
               v-model="form.icon" 
               placeholder="i-ic-baseline-whatsapp" 
               class="w-full"
-              :ui="inputUi"
+              :ui="adminInputUi"
             />
           </UFormField>
         </div>
 
-        <!-- FOOTER: Aksi -->
-        <div class="p-6 sm:p-8 border-t border-[#E7E1D8] bg-[#F7F6F2]/50 flex justify-end gap-3 rounded-b-[20px]">
+        <!-- FOOTER: Tombol Aksi -->
+        <div class="p-5 sm:p-8 border-t border-[#E7E1D8] bg-[#F7F6F2]/50 flex items-center justify-end gap-3 rounded-b-[20px]">
           <UButton 
             to="/admin/contacts" 
             variant="soft" 
-            :class="secondaryButtonClass"
+            :class="adminSecondaryBtnClass"
           >
             Batal
           </UButton>
           <UButton 
             type="submit" 
             :loading="isSubmitting" 
-            :class="primaryButtonClass"
+            :class="adminPrimaryBtnClass"
           >
             Simpan Perubahan
           </UButton>
@@ -111,37 +113,6 @@ const CONTACT_PLATFORMS = [
   { label: 'Website / Portofolio', value: 'website', icon: 'i-heroicons-globe-alt' },
   { label: 'Telepon / HP', value: 'phone', icon: 'i-heroicons-phone' }
 ]
-
-const formFieldUi = {
-  label: 'text-[#24324A] font-medium',
-  description: 'text-[#6B7280] text-sm mt-1'
-}
-
-const inputUi = { 
-  rounded: 'rounded-[14px]',
-  placeholder: 'placeholder:text-[#9CA3AF]',
-  base: 'bg-[#FBFAF8] text-[#24324A] transition-colors disabled:bg-[#F7F6F2] disabled:text-[#9CA3AF]',
-  color: { 
-    white: { 
-      outline: 'shadow-none ring-1 ring-inset ring-[#E7E1D8] hover:ring-[#D6CEC2] focus:ring-2 focus:ring-[#C65A3A]' 
-    } 
-  } 
-}
-
-const selectUi = { 
-  rounded: 'rounded-[14px]',
-  placeholder: 'placeholder:text-[#9CA3AF]',
-  base: 'bg-[#FBFAF8] text-[#24324A] transition-colors disabled:bg-[#F7F6F2] disabled:text-[#9CA3AF]',
-  color: { 
-    white: { 
-      outline: 'shadow-none ring-1 ring-inset ring-[#E7E1D8] hover:ring-[#D6CEC2] focus:ring-2 focus:ring-[#C65A3A]' 
-    } 
-  },
-  content: 'bg-[#FBFAF8] border border-[#E7E1D8] rounded-[14px] shadow-lg p-1.5 text-[#24324A] z-50',
-  item: 'text-[#24324A] hover:!bg-[#C65A3A] hover:!text-white data-[highlighted]:!bg-[#C65A3A] data-[highlighted]:!text-white data-[disabled]:!text-[#9CA3AF] data-[disabled]:!opacity-50 data-[disabled]:!bg-transparent cursor-pointer rounded-lg px-3 py-2 transition-colors font-medium'
-}
-const primaryButtonClass = 'bg-[#C65A3A] hover:bg-[#b04f32] text-white rounded-[14px] px-7 py-2.5 shadow-sm border-0 font-medium transition-colors disabled:opacity-50'
-const secondaryButtonClass = 'bg-[#F7F6F2] hover:bg-white text-[#24324A] ring-1 ring-inset ring-[#E7E1D8] rounded-[14px] px-7 py-2.5 transition-colors disabled:opacity-50'
 
 const form = ref({
   key: '',

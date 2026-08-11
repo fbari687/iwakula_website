@@ -1,4 +1,4 @@
-import { useState } from '#imports'
+import { useState, useRequestHeaders } from '#imports'
 
 export const useAuth = () => {
   const user = useState<any | null>('admin-user', () => null)
@@ -41,7 +41,10 @@ export const useAuth = () => {
   const fetchUser = async () => {
     loading.value = true
     try {
-      const response = await $fetch<any>('/api/admin/auth/me')
+      // Teruskan cookie browser saat permintaan dilakukan secara SSR di Server
+      const headers = useRequestHeaders(['cookie']) as Record<string, string>
+      const response = await $fetch<any>('/api/admin/auth/me', { headers })
+      
       if (response && response.success) {
         user.value = response.data
       } else {
