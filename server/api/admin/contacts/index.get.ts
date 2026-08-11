@@ -2,17 +2,16 @@ import { contactRepository } from '~~/server/repositories/contactRepository'
 
 export default defineEventHandler(async () => {
   try {
-    const contactsList = await contactRepository.getAll()
-
+    const data = await contactRepository.getAll()
     return {
       success: true,
-      message: 'Data kontak berhasil diambil',
-      data: contactsList
+      message: 'Berhasil mengambil daftar kontak',
+      data
     }
-  } catch (error) {
+  } catch (error: any) {
     throw createError({
       statusCode: 500,
-      statusMessage: 'Gagal mengambil data kontak dari server'
+      statusMessage: 'Internal Server Error: Gagal mengambil data kontak.'
     })
   }
 })

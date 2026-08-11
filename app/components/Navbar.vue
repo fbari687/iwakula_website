@@ -50,7 +50,7 @@
         <div class="h-px"></div>
       </div>
 
-      <NuxtLink to="https://wa.me/" target="_blank" class="text-white bg-primary py-2 px-4 rounded-lg font-semibold text-base flex flex-col items-center justify-center gap-1 transition duration-150 hover:bg-primary/90">
+      <NuxtLink :to="whatsappLink" target="_blank" class="text-white bg-primary py-2 px-4 rounded-lg font-semibold text-base flex flex-col items-center justify-center gap-1 transition duration-150 hover:bg-primary/90">
         <span>Pesan Sekarang</span>
         <div class="h-px"></div>
       </NuxtLink>
@@ -105,7 +105,7 @@
 
           <!-- Bottom Actions -->
           <div class="flex flex-col gap-4 pt-6 border-t border-gray-100">
-            <NuxtLink to="https://wa.me/" target="_blank" class="w-full text-center text-white bg-primary py-3 px-4 rounded-lg font-semibold text-base transition duration-150 hover:bg-primary/90" @click="isMobileMenuOpen = false">
+            <NuxtLink :to="whatsappLink" target="_blank" class="w-full text-center text-white bg-primary py-3 px-4 rounded-lg font-semibold text-base transition duration-150 hover:bg-primary/90" @click="isMobileMenuOpen = false">
               Pesan Sekarang
             </NuxtLink>
           </div>
@@ -117,8 +117,20 @@
 
 <script lang="ts" setup>
 import type { DropdownMenuItem } from "@nuxt/ui";
+import type { Contact } from "~~/server/database/schema";
 
 const route = useRoute();
+const { fetchContacts } = useContacts();
+const { data: contactsResponse } = await fetchContacts();
+
+const whatsappLink = computed(() => {
+  const contacts = contactsResponse.value?.data || [];
+  const wa = contacts.find((c) => c.key === "whatsapp");
+  if (!wa || !wa.value) return "https://wa.me/";
+  const cleanPhone = wa.value.replace(/\D/g, "");
+  return `https://wa.me/${cleanPhone}`;
+});
+
 const isProductDetail = computed(() => {
   return /^\/products\/.+/.test(route.path);
 });

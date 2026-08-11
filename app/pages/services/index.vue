@@ -247,9 +247,19 @@ const form = reactive({
   program: "agen",
 });
 
+const { fetchContacts } = useContacts();
+const { data: contactsResponse } = await fetchContacts();
+
+const whatsappNumber = computed(() => {
+  const contacts = contactsResponse.value?.data || [];
+  const wa = contacts.find((c) => c.key === "whatsapp");
+  if (!wa || !wa.value) return "628119844941";
+  return wa.value.replace(/\D/g, "");
+});
+
 function handleSubmit() {
   const message = `Halo Iwakula, saya berminat mendaftar Kemitraan.%0A%0A*Nama:* ${form.name}%0A*WhatsApp:* ${form.phone}%0A*Kota:* ${form.city}%0A*Pilihan Program:* ${form.program === "agen" ? "Program Agen & Reseller" : "Suplai Katering & B2B"}`;
 
-  window.open(`https://wa.me/628111234567?text=${message}`, "_blank");
+  window.open(`https://wa.me/${whatsappNumber.value}?text=${message}`, "_blank");
 }
 </script>

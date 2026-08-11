@@ -3,16 +3,15 @@ import { achievementRepository } from '~~/server/repositories/achievementReposit
 export default defineEventHandler(async () => {
   try {
     const data = await achievementRepository.getAll()
-
     return {
       success: true,
-      message: 'Berhasil mengambil data pencapaian',
+      message: 'Berhasil mengambil daftar pencapaian',
       data
     }
-  } catch (error) {
+  } catch (error: any) {
     throw createError({
       statusCode: 500,
-      statusMessage: 'Gagal mengambil data pencapaian dari server'
+      statusMessage: 'Internal Server Error: Gagal mengambil data pencapaian.'
     })
   }
 })
