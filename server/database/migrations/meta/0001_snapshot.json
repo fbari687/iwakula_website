@@ -1,7 +1,7 @@
 {
   "version": "5",
   "dialect": "mysql",
-  "id": "d9aa916d-dfa8-4d99-9bff-8ead5230e6e9",
+  "id": "b2c084c0-df52-4266-bd97-74233853aac6",
   "prevId": "b42fcc31-262f-4318-b21b-cd6297df87b6",
   "tables": {
     "achievements": {
@@ -223,7 +223,7 @@
         },
         "product_id": {
           "name": "product_id",
-          "type": "int",
+          "type": "bigint unsigned",
           "primaryKey": false,
           "notNull": true,
           "autoincrement": false
@@ -299,7 +299,7 @@
         },
         "category_id": {
           "name": "category_id",
-          "type": "int",
+          "type": "bigint unsigned",
           "primaryKey": false,
           "notNull": true,
           "autoincrement": false
@@ -409,7 +409,21 @@
         }
       },
       "indexes": {},
-      "foreignKeys": {},
+      "foreignKeys": {
+        "products_category_id_categories_id_fk": {
+          "name": "products_category_id_categories_id_fk",
+          "tableFrom": "products",
+          "tableTo": "categories",
+          "columnsFrom": [
+            "category_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "restrict",
+          "onUpdate": "no action"
+        }
+      },
       "compositePrimaryKeys": {
         "products_id": {
           "name": "products_id",

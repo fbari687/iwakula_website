@@ -1,5 +1,6 @@
 import { productRepository } from '~~/server/repositories/productRepository'
 import { productUpdateSchema } from '~~/server/validators/product'
+import { deletePublicFile } from '~~/server/utils/fileStorage'
 
 function generateSlug(text: string) {
   return text.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)+/g, '')
@@ -25,6 +26,21 @@ export default defineEventHandler(async (event) => {
         const existingSlug = await productRepository.getBySlug(finalSlug)
         if (existingSlug) {
           throw createError({ statusCode: 409, statusMessage: 'Conflict: Slug sudah digunakan oleh produk lain.' })
+        }
+      }
+    }
+
+    // Jika gambar utama diganti, hapus gambar utama lama dari /uploads
+    const oldMainImg = existingProduct.mainImage || existingProduct.image
+    if (data.image && data.image !== oldMainImg && oldMainImg) {
+      await deletePublicFile(oldMainImg)
+    }
+
+    // Jika galeri foto ekstra diubah, hapus foto yang tidak lagi dipakai di galeri baru
+    if (data.extraImages && Array.isArray(data.extraImages) && existingProduct.extraImages) {
+      for (const oldExtraUrl of existingProduct.extraImages) {
+        if (!data.extraImages.includes(oldExtraUrl) && oldExtraUrl !== data.image) {
+          await deletePublicFile(oldExtraUrl)
         }
       }
     }

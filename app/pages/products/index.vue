@@ -80,7 +80,7 @@ const categoriesWithProducts = computed(() => {
     categories.value
       .map((category) => {
         // Filter produk yang berelasi dengan kategori ini
-        const categoryProducts = allProducts.value.filter((product) => product.categoryId === category.id || product.category.id === category.id);
+        const categoryProducts = allProducts.value.filter((product) => product.categoryId === category.id || product.category?.id === category.id);
 
         return {
           category,

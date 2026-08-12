@@ -61,9 +61,10 @@
             </div>
           </div>
           <h2 class="font-sans font-bold text-nottooblack text-5xl">{{ product.name }}</h2>
-          <span class="font-body text-lg text-nottooblack"
-            ><NuxtLink :to="`/product?category=${product.category.slug}`">{{ product.category.name }}</NuxtLink> • {{ product.subTitle }}</span
-          >
+          <span class="font-body text-lg text-nottooblack">
+            <NuxtLink v-if="product.category?.slug" :to="`/products?category=${product.category.slug}`">{{ product.category?.name || 'Tanpa Kategori' }}</NuxtLink>
+            <span v-else>Tanpa Kategori</span> • {{ product.subTitle }}
+          </span>
           <div class="p-6 bg-[#F3F2FF] border border-[#E0BFB94D] rounded-md">
             <div class="flex flex-col gap-1">
               <div class="flex gap-4 items-end justify-start">

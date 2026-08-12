@@ -1,4 +1,4 @@
-import { mysqlTable, serial, varchar, int, boolean, text, timestamp, json, index } from "drizzle-orm/mysql-core";
+import { mysqlTable, serial, varchar, int, bigint, boolean, text, timestamp, json, index } from "drizzle-orm/mysql-core";
 import { relations } from "drizzle-orm";
 
 // Tabel Users
@@ -31,7 +31,9 @@ export interface ServingStep {
 // Tabel Products
 export const products = mysqlTable("products", {
   id: serial("id").primaryKey(),
-  categoryId: int("category_id").notNull(),
+  categoryId: bigint("category_id", { mode: "number", unsigned: true })
+    .notNull()
+    .references(() => categories.id, { onDelete: "restrict" }),
   name: varchar("name", { length: 150 }).notNull(),
   slug: varchar("slug", { length: 150 }).notNull().unique(),
   subTitle: varchar("sub_title", { length: 100 }).notNull(),
@@ -63,7 +65,7 @@ export const products = mysqlTable("products", {
 // Tabel product_images
 export const productImages = mysqlTable("product_images", {
   id: serial("id").primaryKey(),
-  productId: int("product_id")
+  productId: bigint("product_id", { mode: "number", unsigned: true })
     .notNull()
     .references(() => products.id, { onDelete: "cascade" }),
   imageUrl: varchar("image_url", { length: 255 }).notNull(),

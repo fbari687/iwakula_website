@@ -1,4 +1,5 @@
 import { achievementRepository } from '~~/server/repositories/achievementRepository'
+import { deletePublicFile } from '~~/server/utils/fileStorage'
 
 export default defineEventHandler(async (event) => {
   try {
@@ -14,9 +15,14 @@ export default defineEventHandler(async (event) => {
 
     await achievementRepository.delete(id)
 
+    // Hapus file gambar pencapaian dari sistem berkas /uploads jika ada
+    if (existing.image) {
+      await deletePublicFile(existing.image)
+    }
+
     return {
       success: true,
-      message: 'Pencapaian berhasil dihapus'
+      message: 'Pencapaian beserta gambarnya berhasil dihapus'
     }
   } catch (error: any) {
     if (error.statusCode) {

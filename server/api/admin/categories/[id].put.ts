@@ -1,5 +1,6 @@
 import { categoryRepository } from '~~/server/repositories/categoryRepository'
 import { categoryUpdateSchema } from '~~/server/validators/category'
+import { deletePublicFile } from '~~/server/utils/fileStorage'
 
 export default defineEventHandler(async (event) => {
   try {
@@ -19,10 +20,9 @@ export default defineEventHandler(async (event) => {
       throw createError({ statusCode: 404, statusMessage: 'Not Found: Kategori tidak ditemukan.' })
     }
 
-    // SEO-preservation slug policy: Slug lama dipertahankan melainkan ada input eksplisit slug baru
+    // SEO-preservation slug policy
     const finalSlug = data.slug || existingCategory.slug
 
-    // Jika slug berubah, pastikan slug baru tidak menimpa kategori lain (Conflict)
     if (finalSlug !== existingCategory.slug) {
       const slugConflict = await categoryRepository.getBySlug(finalSlug)
       if (slugConflict) {
@@ -30,7 +30,6 @@ export default defineEventHandler(async (event) => {
       }
     }
 
-    // Bangun payload, pastikan id dan timestamp tidak ikut termutasi salah
     const payloadToUpdate = {
       name: data.name,
       slug: finalSlug,
@@ -38,12 +37,16 @@ export default defineEventHandler(async (event) => {
       description: data.description
     }
 
-    // Buang properti undefined agar Drizzle tidak komplain
     Object.keys(payloadToUpdate).forEach(key => {
       if ((payloadToUpdate as any)[key] === undefined) {
         delete (payloadToUpdate as any)[key]
       }
     })
+
+    // Jika gambar diperbarui dengan file baru, hapus berkas gambar lama dari /uploads
+    if (data.image && data.image !== existingCategory.image && existingCategory.image) {
+      await deletePublicFile(existingCategory.image)
+    }
 
     await categoryRepository.update(id, payloadToUpdate)
 

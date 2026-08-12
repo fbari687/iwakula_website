@@ -1,6 +1,6 @@
-import { eq, desc } from 'drizzle-orm'
+import { eq, desc, count } from 'drizzle-orm'
 import { db } from '~~/server/utils/db'
-import { categories } from '~~/server/database/schema'
+import { categories, products } from '~~/server/database/schema'
 
 export const categoryRepository = {
   getAll: async () => {
@@ -34,7 +34,35 @@ export const categoryRepository = {
   },
 
   delete: async (id: number) => {
-    await db.delete(categories).where(eq(categories.id, id))
-    return id
+    return await db.transaction(async (tx) => {
+      const category = await tx.query.categories.findFirst({
+        where: eq(categories.id, id)
+      })
+
+      if (!category) {
+        throw createError({
+          statusCode: 404,
+          statusMessage: 'Not Found: Kategori tidak ditemukan.'
+        })
+      }
+
+      const countResult = await tx
+        .select({ count: count() })
+        .from(products)
+        .where(eq(products.categoryId, id))
+
+      const productCount = countResult[0]?.count ?? 0
+
+      if (productCount > 0) {
+        throw createError({
+          statusCode: 409,
+          statusMessage: 'Kategori masih digunakan oleh produk',
+          data: { productCount }
+        })
+      }
+
+      await tx.delete(categories).where(eq(categories.id, id))
+      return id
+    })
   }
 }

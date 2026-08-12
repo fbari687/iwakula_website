@@ -38,7 +38,7 @@ export const useAdminCategories = () => {
         body: payload
       })
       toast.add({ title: 'Berhasil', description: 'Kategori baru disimpan', color: 'success' })
-      await fetchCategories() // UI Sync Reflux
+      await fetchCategories()
       return true
     } catch (err: any) {
       toast.add({ title: 'Gagal', description: err.data?.statusMessage || err.message, color: 'error' })
@@ -53,7 +53,7 @@ export const useAdminCategories = () => {
         body: payload
       })
       toast.add({ title: 'Berhasil', description: 'Kategori diperbarui', color: 'success' })
-      await fetchCategories() // UI Sync Reflux
+      await fetchCategories()
       return true
     } catch (err: any) {
       toast.add({ title: 'Gagal', description: err.data?.statusMessage || err.message, color: 'error' })
@@ -67,10 +67,23 @@ export const useAdminCategories = () => {
         method: 'DELETE'
       })
       toast.add({ title: 'Berhasil', description: 'Kategori dihapus permanen', color: 'success' })
-      await fetchCategories() // UI Sync Reflux
+      categories.value = categories.value.filter(c => c.id !== id)
+      await fetchCategories()
       return true
     } catch (err: any) {
-      toast.add({ title: 'Gagal', description: err.data?.statusMessage || err.message, color: 'error' })
+      const statusCode = err.statusCode || err.data?.statusCode
+      const productCount = err.data?.data?.productCount
+      let message = err.data?.statusMessage || err.message || 'Gagal menghapus kategori'
+
+      if (statusCode === 409) {
+        if (productCount !== undefined) {
+          message = `Kategori tidak dapat dihapus karena masih digunakan oleh ${productCount} produk. Pindahkan atau hapus produk tersebut terlebih dahulu.`
+        } else {
+          message = 'Kategori tidak dapat dihapus karena masih digunakan oleh produk.'
+        }
+      }
+
+      toast.add({ title: 'Gagal Hapus', description: message, color: 'error' })
       return false
     }
   }

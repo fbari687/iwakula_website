@@ -60,6 +60,7 @@
     "bcrypt@6.0.0": true
   },
   "devDependencies": {
+    "@iconify/json": "^2.2.514",
     "@tailwindcss/typography": "^0.5.20",
     "@types/bcrypt": "^6.0.0",
     "@types/node": "^26.1.1",

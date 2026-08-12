@@ -1,5 +1,6 @@
 import { achievementRepository } from '~~/server/repositories/achievementRepository'
 import { achievementUpdateSchema } from '~~/server/validators/achievement'
+import { deletePublicFile } from '~~/server/utils/fileStorage'
 
 export default defineEventHandler(async (event) => {
   try {
@@ -10,10 +11,8 @@ export default defineEventHandler(async (event) => {
 
     const body = await readBody(event)
     
-    // Validasi Zod
     const data = achievementUpdateSchema.parse(body)
 
-    // Periksa eksistensi
     const existing = await achievementRepository.getById(id)
     if (!existing) {
       throw createError({ statusCode: 404, statusMessage: 'Not Found: Pencapaian tidak ditemukan.' })
@@ -26,12 +25,16 @@ export default defineEventHandler(async (event) => {
       image: data.image
     }
 
-    // Buang properti undefined agar Drizzle tidak mereset nilai terisi
     Object.keys(payloadToUpdate).forEach(key => {
       if ((payloadToUpdate as any)[key] === undefined) {
         delete (payloadToUpdate as any)[key]
       }
     })
+
+    // Jika gambar diperbarui dengan file baru, hapus berkas gambar lama dari /uploads
+    if (data.image && data.image !== existing.image && existing.image) {
+      await deletePublicFile(existing.image)
+    }
 
     await achievementRepository.update(id, payloadToUpdate)
 

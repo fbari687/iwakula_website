@@ -67,6 +67,7 @@ export const useAdminAchievements = () => {
         method: 'DELETE'
       })
       toast.add({ title: 'Berhasil', description: 'Pencapaian dihapus permanen', color: 'success' })
+      achievements.value = achievements.value.filter(a => a.id !== id)
       await fetchAchievements()
       return true
     } catch (err: any) {

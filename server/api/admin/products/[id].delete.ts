@@ -1,4 +1,5 @@
 import { productRepository } from '~~/server/repositories/productRepository'
+import { deletePublicFile } from '~~/server/utils/fileStorage'
 
 export default defineEventHandler(async (event) => {
   try {
@@ -12,9 +13,23 @@ export default defineEventHandler(async (event) => {
 
     await productRepository.delete(id)
 
+    // Hapus file gambar utama dan galeri tambahan dari sistem berkas /uploads
+    const mainImg = existingProduct.mainImage || existingProduct.image
+    if (mainImg) {
+      await deletePublicFile(mainImg)
+    }
+
+    if (existingProduct.extraImages && Array.isArray(existingProduct.extraImages)) {
+      for (const imgUrl of existingProduct.extraImages) {
+        if (imgUrl && imgUrl !== mainImg) {
+          await deletePublicFile(imgUrl)
+        }
+      }
+    }
+
     return {
       success: true,
-      message: 'Produk berhasil dihapus',
+      message: 'Produk beserta berkas gambarnya berhasil dihapus',
       data: { id }
     }
   } catch (error: any) {

@@ -67,6 +67,7 @@ export const useAdminContacts = () => {
         method: 'DELETE'
       })
       toast.add({ title: 'Berhasil', description: 'Kontak dihapus permanen', color: 'success' })
+      contacts.value = contacts.value.filter(c => c.id !== id)
       await fetchContacts()
       return true
     } catch (err: any) {

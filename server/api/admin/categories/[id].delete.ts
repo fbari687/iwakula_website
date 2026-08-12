@@ -1,4 +1,5 @@
 import { categoryRepository } from '~~/server/repositories/categoryRepository'
+import { deletePublicFile } from '~~/server/utils/fileStorage'
 
 export default defineEventHandler(async (event) => {
   try {
@@ -7,18 +8,19 @@ export default defineEventHandler(async (event) => {
       throw createError({ statusCode: 400, statusMessage: 'Bad Request: ID tidak valid.' })
     }
 
-    // Validasi keberadaan baris (jika sudah dihapus sebelumnya, beri 404)
     const existingCategory = await categoryRepository.getById(id)
-    if (!existingCategory) {
-      throw createError({ statusCode: 404, statusMessage: 'Not Found: Kategori tidak ditemukan.' })
-    }
-
-    // Eksekusi Hard Delete Policy (menghapus fisik memori selamanya dari MySQL)
+    
+    // Eksekusi penghapusan berbasis transaksi (akan memvalidasi 404 & 409 productCount)
     await categoryRepository.delete(id)
+
+    // Hapus file gambar dari /uploads hanya jika penghapusan di database berhasil
+    if (existingCategory && existingCategory.image) {
+      await deletePublicFile(existingCategory.image)
+    }
 
     return {
       success: true,
-      message: 'Kategori berhasil dihapus secara permanen'
+      message: 'Kategori berhasil dihapus'
     }
   } catch (error: any) {
     if (error.statusCode) {
@@ -26,7 +28,7 @@ export default defineEventHandler(async (event) => {
     }
     throw createError({
       statusCode: 500,
-      statusMessage: 'Internal Server Error: Gagal melenyapkan data kategori.'
+      statusMessage: 'Internal Server Error: Gagal menghapus data kategori.'
     })
   }
 })

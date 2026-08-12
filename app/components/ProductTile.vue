@@ -9,7 +9,7 @@
     <div class="w-3/5 sm:w-1/2 sm:flex-1 flex flex-col justify-between p-3 sm:p-6 gap-2 sm:gap-4">
       <div class="flex flex-col gap-1 sm:gap-2">
         <!-- Badge -->
-        <div class="bg-accent px-2 py-0.5 sm:px-3 sm:py-1 w-fit rounded-full text-[10px] sm:text-xs font-medium flex items-center justify-center text-darkprimary">{{ category.name }}</div>
+        <div class="bg-accent px-2 py-0.5 sm:px-3 sm:py-1 w-fit rounded-full text-[10px] sm:text-xs font-medium flex items-center justify-center text-darkprimary">{{ category?.name || 'Tanpa Kategori' }}</div>
 
         <!-- Judul Produk -->
         <NuxtLink :to="`/products/${slug}`" class="font-sans text-secondary font-semibold text-base sm:text-2xl transition-all duration-150 hover:text-secondary/80 line-clamp-1"> {{ name }} </NuxtLink>
@@ -41,12 +41,13 @@ interface Props {
   slug: string;
   subtitle: string;
   mainImage: string;
-  category: Category;
+  category?: Category | null;
   price: number;
   originalPrice?: number | null;
 }
 
 const props = withDefaults(defineProps<Props>(), {
+  category: null,
   originalPrice: null,
 });
 </script>

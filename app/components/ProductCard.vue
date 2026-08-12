@@ -7,7 +7,7 @@
     </NuxtLink>
     <div class="w-full grow p-6 flex flex-col justify-between gap-4">
       <div class="flex flex-col gap-2">
-        <NuxtLink :to="`/products?category=${category.slug}`" class="bg-accent px-3 py-1 w-fit rounded-full text-xs font-medium flex items-center justify-center text-darkprimary">{{ category.name }}</NuxtLink>
+        <NuxtLink :to="category?.slug ? `/products?category=${category.slug}` : '/products'" class="bg-accent px-3 py-1 w-fit rounded-full text-xs font-medium flex items-center justify-center text-darkprimary">{{ category?.name || 'Tanpa Kategori' }}</NuxtLink>
         <NuxtLink :to="`/products/${slug}`" class="font-sans text-secondary font-semibold text-2xl transition-all duration-150 hover:text-secondary/80">{{ name }}</NuxtLink>
         <span class="text-darkprimary font-body">{{ subtitle }}</span>
       </div>
@@ -32,12 +32,13 @@ interface Props {
   slug: string;
   subtitle: string;
   mainImage: string;
-  category: Category;
+  category?: Category | null;
   price: number;
   originalPrice?: number | null;
 }
 
 const props = withDefaults(defineProps<Props>(), {
+  category: null,
   originalPrice: null,
 });
 </script>

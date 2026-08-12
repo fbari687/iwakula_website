@@ -25,7 +25,7 @@ export const useAdminProducts = () => {
     }
   }
 
-  const fetchProducts = async (filters?: { categoryId?: number; search?: string }) => {
+  const fetchProducts = async (filters?: { categoryId?: number; search?: string; isAvailable?: boolean }) => {
     isLoading.value = true
     error.value = null
     try {
@@ -64,6 +64,7 @@ export const useAdminProducts = () => {
         body: payload
       })
       toast.add({ title: 'Berhasil', description: 'Produk baru disimpan', color: 'success' })
+      await fetchProducts()
       return true
     } catch (err: any) {
       toast.add({ title: 'Gagal', description: err.data?.statusMessage || err.message, color: 'error' })
@@ -78,6 +79,7 @@ export const useAdminProducts = () => {
         body: payload
       })
       toast.add({ title: 'Berhasil', description: 'Produk diperbarui', color: 'success' })
+      await fetchProducts()
       return true
     } catch (err: any) {
       toast.add({ title: 'Gagal', description: err.data?.statusMessage || err.message, color: 'error' })
@@ -91,6 +93,8 @@ export const useAdminProducts = () => {
         method: 'DELETE'
       })
       toast.add({ title: 'Berhasil', description: 'Produk dihapus permanen', color: 'success' })
+      // Pembaruan state lokal secara parsial & sinkronisasi ulang agar UI langsung terbarui tanpa refresh
+      products.value = products.value.filter(p => p.id !== id)
       return true
     } catch (err: any) {
       toast.add({ title: 'Gagal', description: err.data?.statusMessage || err.message, color: 'error' })
