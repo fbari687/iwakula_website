@@ -1,6 +1,6 @@
 <template>
   <footer class="w-full bg-secondary text-white">
-    <div class="w-full px-10 py-20 container mx-auto grid grid-cols-1 lg:grid-cols-4 gap-6 items-start justify-between">
+    <div class="w-full px-4 sm:px-6 md:px-10 py-12 md:py-20 container mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 md:gap-6 items-start justify-between">
       <!-- Logo and Description -->
       <div class="flex flex-col gap-4">
         <NuxtImg src="/images/logo.png" alt="Logo" class="h-17.5 w-fit" />
@@ -45,7 +45,7 @@
         <h3 class="font-body text-accent text-sm font-bold">Lokasi Kedai</h3>
         <iframe
           src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3965.17287237431!2d106.86735447573308!3d-6.371669462329494!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e69ed001adbe0e7%3A0xf792b8a62559e9d0!2sPempek%20Iwakula%20Tipar!5e0!3m2!1sid!2sid!4v1785651755190!5m2!1sid!2sid"
-          class="w-full aspect-square"
+          class="w-full aspect-square rounded-lg"
           style="border: 0"
           allowfullscreen="false"
           loading="lazy"
@@ -54,9 +54,9 @@
       </div>
       <!-- Location -->
     </div>
-    <div class="w-full border-t border-t-[rgba(255, 255, 255, 0.20)]">
-      <div class="w-full px-10 py-6 container mx-auto">
-        <p class="text-[#9CA3AF] text-center font-body">© 2026 Iwakula (CV Berkah Samudera Nusantara). All rights reserved.</p>
+    <div class="w-full border-t border-white/20">
+      <div class="w-full px-4 sm:px-6 md:px-10 py-6 container mx-auto">
+        <p class="text-[#9CA3AF] text-center font-body text-sm sm:text-base">© 2026 Iwakula (CV Berkah Samudera Nusantara). All rights reserved.</p>
       </div>
     </div>
   </footer>

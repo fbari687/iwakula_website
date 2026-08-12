@@ -1,5 +1,5 @@
 <template>
-  <div class="lg:h-75 rounded-[16px] bg-[#FFFFFF0D] p-8 border border-[#FFFFFF1A] flex flex-col justify-between items-center gap-6">
+  <div class="lg:min-h-75 h-full rounded-[16px] bg-[#FFFFFF0D] p-6 sm:p-8 border border-[#FFFFFF1A] flex flex-col justify-between items-center gap-6">
     <Icon :name="icon" size="48" class="text-accent" />
     <h2 class="font-bold font-sans text-2xl">{{ title }}</h2>
     <p class="font-body text-center text-base">{{ description }}</p>

@@ -60,9 +60,9 @@
               </span>
             </div>
           </div>
-          <h2 class="font-sans font-bold text-nottooblack text-5xl">{{ product.name }}</h2>
-          <span class="font-body text-lg text-nottooblack">
-            <NuxtLink v-if="product.category?.slug" :to="`/products?category=${product.category.slug}`">{{ product.category?.name || 'Tanpa Kategori' }}</NuxtLink>
+          <h2 class="font-sans font-bold text-nottooblack text-3xl sm:text-4xl lg:text-5xl leading-tight">{{ product.name }}</h2>
+          <span class="font-body text-base sm:text-lg text-nottooblack">
+            <NuxtLink v-if="product.category?.slug" :to="`/products?category=${product.category.slug}#${product.category.slug}`">{{ product.category?.name || 'Tanpa Kategori' }}</NuxtLink>
             <span v-else>Tanpa Kategori</span> • {{ product.subTitle }}
           </span>
           <div class="p-6 bg-[#F3F2FF] border border-[#E0BFB94D] rounded-md">
@@ -86,8 +86,8 @@
             <span>Pesan Sekarang via WhatsApp</span>
           </NuxtLink>
 
-          <!-- Grid Marketplace Dinamis (grid-cols-1 jika hanya salah satu, grid-cols-2 jika keduanya ada) -->
-          <div v-if="product.shopeeUrl || product.tokopediaUrl" class="grid gap-4" :class="[product.shopeeUrl && product.tokopediaUrl ? 'grid-cols-2' : 'grid-cols-1']">
+          <!-- Grid Marketplace Dinamis (grid-cols-1 jika hanya salah satu, grid-cols-1 sm:grid-cols-2 jikaeduanya ada) -->
+          <div v-if="product.shopeeUrl || product.tokopediaUrl" class="grid gap-4" :class="[product.shopeeUrl && product.tokopediaUrl ? 'grid-cols-1 sm:grid-cols-2' : 'grid-cols-1']">
             <NuxtLink
               v-if="product.shopeeUrl"
               :to="product.shopeeUrl"
@@ -254,7 +254,7 @@ const breadcrumbItems = computed<BreadcrumbItem[]>(() => [
   },
   {
     label: product.value?.category.name || "Kategori",
-    to: `/products?category=${product.value?.category.slug || ""}`,
+    to: `/products?category=${product.value?.category.slug || ""}#${product.value?.category.slug || ""}`,
     ui: { link: "text-darkprimary hover:text-primary/80 font-medium" },
   },
   {

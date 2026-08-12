@@ -15,6 +15,10 @@
   --color-graysubtitle: #d1d5db;
 }
 
+html {
+  scroll-behavior: smooth;
+}
+
 body {
   font-family: var(--font-body);
 }

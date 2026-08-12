@@ -6,7 +6,7 @@
 
       <div class="relative bg-black/60 min-h-80 md:min-h-100 h-full flex items-center">
         <div class="container w-full h-full mx-auto flex items-center justify-center">
-          <div class="py-16 md:py-32 px-4 sm:px-8 lg:px-0 max-w-160 text-white flex flex-col gap-4 md:gap-6">
+          <div class="py-16 md:py-32 px-4 sm:px-6 md:px-10 max-w-160 text-white flex flex-col gap-4 md:gap-6">
             <h1 class="font-bold text-3xl sm:text-4xl lg:text-5xl leading-tight lg:leading-14 font-heading text-center">Katalog Menu Olahan Ikan</h1>
             <p class="text-sm sm:text-base lg:text-lg font-body font-normal leading-relaxed text-graysubtitle text-center">Praktis, lezat, dan kaya gizi. Temukan pilihan hidangan olahan ikan terbaik untuk keluarga Anda.</p>
           </div>
@@ -26,7 +26,7 @@
         v-for="(catGroup, index) in categoriesWithProducts"
         :key="catGroup.category.id"
         :id="catGroup.category.slug"
-        class="w-full bg-bone px-4 sm:px-6 md:px-10 py-6 sm:py-8"
+        class="w-full bg-bone px-4 sm:px-6 md:px-10 py-6 sm:py-8 scroll-mt-24"
         :class="{ 'pb-12 sm:pb-16': index === categoriesWithProducts.length - 1 }"
       >
         <div class="w-full container mx-auto flex flex-col gap-4 sm:gap-6">
@@ -63,6 +63,7 @@
 </template>
 
 <script lang="ts" setup>
+const route = useRoute();
 const { fetchCategories } = useCategories();
 const { fetchProducts } = useProducts();
 
@@ -91,6 +92,42 @@ const categoriesWithProducts = computed(() => {
       .filter((group) => group.products.length > 0)
   );
 });
+
+// 3. Smooth scroll ke section kategori yang ditargetkan (via query atau hash URL)
+const scrollToCategory = () => {
+  const targetSlug = (route.query.category as string) || route.hash.replace("#", "");
+  if (!targetSlug) return;
+
+  nextTick(() => {
+    setTimeout(() => {
+      const targetElement = document.getElementById(targetSlug);
+      if (targetElement) {
+        targetElement.scrollIntoView({ behavior: "smooth" });
+      }
+    }, 150);
+  });
+};
+
+onMounted(() => {
+  if (!pending.value) {
+    scrollToCategory();
+  }
+});
+
+watch(pending, (isPending) => {
+  if (!isPending) {
+    scrollToCategory();
+  }
+});
+
+watch(
+  () => [route.query.category, route.hash],
+  () => {
+    if (!pending.value) {
+      scrollToCategory();
+    }
+  }
+);
 </script>
 
 <style></style>

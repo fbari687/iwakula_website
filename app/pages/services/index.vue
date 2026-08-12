@@ -12,15 +12,16 @@
               Buka peluang bisnis kuliner olahan ikan yang legal, sehat, dan menguntungkan di kota Anda. Kami menghadirkan standar kualitas premium untuk setiap mitra kami di seluruh Indonesia.
             </p>
             <div class="flex flex-col sm:flex-row gap-3 sm:gap-4 items-center w-full sm:w-auto mt-2">
-              <NuxtLink to="#form-kemitraan" class="text-white bg-primary py-3 px-6 rounded-lg font-semibold text-sm sm:text-base flex items-center justify-center gap-2 transition duration-150 hover:bg-primary/90 w-full sm:w-fit">
+              <a href="#form-kemitraan" @click.prevent="scrollToSection('form-kemitraan')" class="text-white bg-primary py-3 px-6 rounded-lg font-semibold text-sm sm:text-base flex items-center justify-center gap-2 transition duration-150 hover:bg-primary/90 w-full sm:w-fit cursor-pointer">
                 <span>Daftar Sekarang</span>
-              </NuxtLink>
-              <NuxtLink
-                to="#program-kemitraan"
-                class="text-white bg-transparent border border-white/30 py-3 px-6 rounded-lg font-semibold text-sm sm:text-base flex items-center justify-center gap-2 transition duration-150 hover:bg-black/20 w-full sm:w-fit"
+              </a>
+              <a
+                href="#program-kemitraan"
+                @click.prevent="scrollToSection('program-kemitraan')"
+                class="text-white bg-transparent border border-white/30 py-3 px-6 rounded-lg font-semibold text-sm sm:text-base flex items-center justify-center gap-2 transition duration-150 hover:bg-black/20 w-full sm:w-fit cursor-pointer"
               >
                 <span>Lihat Program</span>
-              </NuxtLink>
+              </a>
             </div>
           </div>
         </div>
@@ -29,7 +30,7 @@
     <!-- Hero Section -->
 
     <!-- Partnership Section -->
-    <section id="program-kemitraan" class="w-full bg-bone px-4 sm:px-6 md:px-10 text-nottooblack">
+    <section id="program-kemitraan" class="w-full bg-bone px-4 sm:px-6 md:px-10 text-nottooblack scroll-mt-24">
       <div class="w-full container mx-auto flex flex-col gap-8 md:gap-12">
         <div class="w-full grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-8 justify-between">
           <!-- Card Agen & Reseller -->
@@ -53,9 +54,9 @@
               </div>
             </div>
 
-            <NuxtLink to="#form-kemitraan" class="text-white bg-primary py-3.5 px-6 rounded-lg font-semibold text-sm sm:text-base flex items-center justify-center gap-2 transition duration-150 hover:bg-primary/90 w-full">
+            <a href="#form-kemitraan" @click.prevent="scrollToSection('form-kemitraan')" class="text-white bg-primary py-3.5 px-6 rounded-lg font-semibold text-sm sm:text-base flex items-center justify-center gap-2 transition duration-150 hover:bg-primary/90 w-full cursor-pointer">
               <span>Gabung Jadi Agen</span>
-            </NuxtLink>
+            </a>
           </div>
 
           <!-- Card B2B & Katering -->
@@ -79,12 +80,13 @@
               </div>
             </div>
 
-            <NuxtLink
-              to="#form-kemitraan"
-              class="text-secondary bg-white py-3.5 px-6 rounded-lg font-semibold border border-secondary text-sm sm:text-base flex items-center justify-center gap-2 transition duration-150 hover:bg-secondary/5 w-full"
+            <a
+              href="#form-kemitraan"
+              @click.prevent="scrollToSection('form-kemitraan')"
+              class="text-secondary bg-white py-3.5 px-6 rounded-lg font-semibold border border-secondary text-sm sm:text-base flex items-center justify-center gap-2 transition duration-150 hover:bg-secondary/5 w-full cursor-pointer"
             >
               <span>Hubungi Tim B2B</span>
-            </NuxtLink>
+            </a>
           </div>
         </div>
       </div>
@@ -135,7 +137,7 @@
     <!-- Flow Section -->
 
     <!-- Lead Form Section -->
-    <section id="form-kemitraan" class="w-full px-4 sm:px-6 md:px-10 py-8 md:py-16 bg-bone">
+    <section id="form-kemitraan" class="w-full px-4 sm:px-6 md:px-10 py-8 md:py-16 bg-bone scroll-mt-24">
       <div class="w-full container mx-auto">
         <div class="w-full bg-white grid grid-cols-1 lg:grid-cols-2 shadow-xl rounded-2xl overflow-hidden border border-gray-100">
           <!-- Banner Kiri -->
@@ -247,6 +249,13 @@ const form = reactive({
   program: "agen",
 });
 
+const scrollToSection = (id: string) => {
+  const el = document.getElementById(id);
+  if (el) {
+    el.scrollIntoView({ behavior: "smooth" });
+  }
+};
+
 const { fetchContacts } = useContacts();
 const { data: contactsResponse } = await fetchContacts();
 
@@ -254,12 +263,19 @@ const whatsappNumber = computed(() => {
   const contacts = contactsResponse.value?.data || [];
   const wa = contacts.find((c) => c.key === "whatsapp");
   if (!wa || !wa.value) return "628119844941";
-  return wa.value.replace(/\D/g, "");
+  
+  let clean = wa.value.replace(/\D/g, "");
+  if (clean.startsWith("0")) {
+    clean = "62" + clean.slice(1);
+  }
+  return clean;
 });
 
 function handleSubmit() {
-  const message = `Halo Iwakula, saya berminat mendaftar Kemitraan.%0A%0A*Nama:* ${form.name}%0A*WhatsApp:* ${form.phone}%0A*Kota:* ${form.city}%0A*Pilihan Program:* ${form.program === "agen" ? "Program Agen & Reseller" : "Suplai Katering & B2B"}`;
+  const programLabel = form.program === "agen" ? "Program Agen & Reseller" : "Suplai Katering & B2B";
+  const message = `Halo Iwakula, saya berminat mendaftar Kemitraan.\n\n*Nama:* ${form.name}\n*WhatsApp:* ${form.phone}\n*Kota:* ${form.city}\n*Pilihan Program:* ${programLabel}`;
 
-  window.open(`https://wa.me/${whatsappNumber.value}?text=${message}`, "_blank");
+  const encodedMessage = encodeURIComponent(message);
+  window.open(`https://wa.me/${whatsappNumber.value}?text=${encodedMessage}`, "_blank");
 }
 </script>
