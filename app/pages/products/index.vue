@@ -7,8 +7,8 @@
       <div class="relative bg-black/60 min-h-80 md:min-h-100 h-full flex items-center">
         <div class="container w-full h-full mx-auto flex items-center justify-center">
           <div class="py-16 md:py-32 px-4 sm:px-6 md:px-10 max-w-160 text-white flex flex-col gap-4 md:gap-6">
-            <h1 class="font-bold text-3xl sm:text-4xl lg:text-5xl leading-tight lg:leading-14 font-heading text-center">Katalog Menu Olahan Ikan</h1>
-            <p class="text-sm sm:text-base lg:text-lg font-body font-normal leading-relaxed text-graysubtitle text-center">Praktis, lezat, dan kaya gizi. Temukan pilihan hidangan olahan ikan terbaik untuk keluarga Anda.</p>
+            <h1 class="font-bold text-3xl sm:text-4xl lg:text-5xl leading-tight lg:leading-14 font-heading text-center">{{ $t("products.heroTitle") }}</h1>
+            <p class="text-sm sm:text-base lg:text-lg font-body font-normal leading-relaxed text-graysubtitle text-center">{{ $t("products.heroSubtitle") }}</p>
           </div>
         </div>
       </div>
@@ -58,12 +58,18 @@
     </template>
 
     <!-- Empty State -->
-    <div v-else class="text-center py-20 text-gray-500 font-body">Belum ada produk yang tersedia saat ini.</div>
+    <div v-else class="text-center py-20 text-gray-500 font-body">{{ $t("products.empty") }}</div>
   </div>
 </template>
 
 <script lang="ts" setup>
+const { t } = useI18n();
 const route = useRoute();
+
+usePageSeo({
+  title: t("products.seoTitle"),
+  description: t("products.seoDesc"),
+});
 const { fetchCategories } = useCategories();
 const { fetchProducts } = useProducts();
 

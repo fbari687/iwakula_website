@@ -4,7 +4,7 @@
     <!-- Kiri: Komposisi & Allergen Info -->
     <div class="bg-[#F6F5FF] rounded-xl p-6 border border-[#EBE8FF] flex flex-col justify-between gap-6">
       <div>
-        <h3 class="text-base font-semibold text-[#171B2B] mb-4">Komposisi</h3>
+        <h3 class="text-base font-semibold text-[#171B2B] mb-4">{{ $t("products.composition") }}</h3>
         <ul class="space-y-3 pl-1">
           <li class="flex items-center gap-2.5 text-sm font-medium">
             <span class="w-1.5 h-1.5 rounded-full bg-darkprimary"></span>
@@ -35,31 +35,31 @@
     <!-- Kanan: Panduan Penyimpanan -->
     <div class="bg-[#F6F5FF] rounded-xl p-6 border border-[#EBE8FF] flex flex-col justify-between gap-6">
       <div>
-        <h3 class="text-base font-semibold text-[#171B2B] mb-4">Panduan Penyimpanan</h3>
+        <h3 class="text-base font-semibold text-[#171B2B] mb-4">{{ $t("products.storageGuide") }}</h3>
 
         <div class="space-y-3">
           <!-- Item Freezer -->
           <div class="bg-white rounded-lg p-4 flex items-center justify-between border border-gray-100 shadow-2xs">
             <div class="flex items-center gap-3">
               <UIcon name="i-lucide-snowflake" class="w-5 h-5 text-[#3B6491] shrink-0" />
-              <span class="text-sm font-medium text-[#171B2B]">Freezer (-18°C)</span>
+              <span class="text-sm font-medium text-[#171B2B]">{{ $t("products.freezer") }}</span>
             </div>
-            <span class="text-sm font-bold text-primary">6 Bulan</span>
+            <span class="text-sm font-bold text-primary">6 {{ $t("products.months") }}</span>
           </div>
 
           <!-- Item Chiller -->
           <div class="bg-white rounded-lg p-4 flex items-center justify-between border border-gray-100 shadow-2xs">
             <div class="flex items-center gap-3">
               <UIcon name="i-lucide-calendar" class="w-5 h-5 text-[#3B6491] shrink-0" />
-              <span class="text-sm font-medium text-[#171B2B]">Chiller (4°C)</span>
+              <span class="text-sm font-medium text-[#171B2B]">{{ $t("products.chiller") }}</span>
             </div>
-            <span class="text-sm font-bold text-primary">3 Hari</span>
+            <span class="text-sm font-bold text-primary">3 {{ $t("products.days") }}</span>
           </div>
         </div>
       </div>
 
       <!-- Catatan Kaki / Note -->
-      <p class="text-xs italic text-darkprimary/80">*Jangan dibekukan kembali setelah dicairkan.</p>
+      <p class="text-xs italic text-darkprimary/80">{{ $t("products.freezeWarning") }}</p>
     </div>
   </div>
 </template>

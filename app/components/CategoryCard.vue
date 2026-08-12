@@ -1,5 +1,5 @@
 <template>
-  <NuxtLink :to="`/products?category=${slug}#${slug}`" class="group aspect-4/5 rounded-[12px] flex items-center justify-center overflow-hidden text-white relative">
+  <NuxtLink :to="localePath(`/products?category=${slug}#${slug}`)" class="group aspect-4/5 rounded-[12px] flex items-center justify-center overflow-hidden text-white relative">
     <!-- Elemen Gambar Latar Belakang Terpisah -->
     <NuxtImg :src="image" :alt="name" loading="lazy" format="webp" class="absolute inset-0 w-full h-full object-cover object-center transition-transform duration-500 group-hover:scale-105" />
 
@@ -8,7 +8,7 @@
       <h3 class="font-sans font-semibold text-2xl">{{ name }}</h3>
       <h5 class="text-bone font-body">{{ description }}</h5>
       <div class="flex gap-2 items-center justify-between text-accent text-base transition-all duration-150 group-hover:gap-2.5">
-        <span>Lihat Menu</span>
+        <span>{{ $t('home.viewAll') }}</span>
         <Icon name="i-lucide-move-right" size="18" />
       </div>
     </div>
@@ -16,6 +16,7 @@
 </template>
 
 <script lang="ts" setup>
+const localePath = useLocalePath();
 interface Props {
   name: string;
   description: string;

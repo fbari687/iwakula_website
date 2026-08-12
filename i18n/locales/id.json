@@ -1,0 +1,183 @@
+{
+  "nav": {
+    "home": "Beranda",
+    "products": "Katalog Produk",
+    "services": "Layanan & Kemitraan",
+    "about": "Tentang Kami",
+    "orderNow": "Pesan Sekarang"
+  },
+  "hero": {
+    "title": "Solusi Praktis & Lezat Makan Ikan Bergizi Setiap Hari",
+    "subtitle": "Menghadirkan aneka olahan ikan tenggiri segar dan camilan high-protein siap saji tanpa repot untuk keluarga tercinta.",
+    "viewCatalog": "Lihat Katalog Produk"
+  },
+  "home": {
+    "seoTitle": "Solusi Praktis & Lezat Makan Ikan Bergizi Setiap Hari",
+    "seoDesc": "Menghadirkan aneka olahan ikan tenggiri segar dan camilan high-protein siap saji tanpa repot untuk keluarga tercinta.",
+    "stats": {
+      "since": "Sejak Berdiri",
+      "variants": "Varian Olahan Ikan",
+      "halal": "Sertifikasi Halal",
+      "partners": "Mitra Reseller Aktif"
+    },
+    "menuTitle": "Pilihan Menu Olahan Ikan Favorit",
+    "reasonsTitle": "Mengapa Memilih Iwakula?",
+    "trustTitle": "Jaminan Mutu & Kualitas Terbina",
+    "recommendationsTitle": "Rekomendasi Iwakula",
+    "viewAll": "Lihat Semua",
+    "partnershipTitle": "Tumbuh Bersama Iwakula",
+    "partnershipSubtitle": "Kami membuka peluang kemitraan bagi Anda yang ingin menghadirkan produk olahan ikan berkualitas ke lebih banyak orang.",
+    "aboutTitle": "Dari Dapur Kami untuk Nutrisi Masyarakat",
+    "aboutText": "Iwakula adalah usaha kuliner yang didirikan pada tahun 2018 bergerak dibidang olahan makanan berbasis ikan dengan konsep praktis, sehat, dan lezat. Minimnya masyarakat dalam mengkonsumsi ikan serta kendala utama dalam mengolah ikan yang dianggap kurang praktis dan kurang bervariasi dalam menu sehari - hari, maka Iwakula hadir sebagai solusi untuk meningkatkan konsumsi ikan dengan menghadirkan produk olahan ikan yang bervariatif, lezat, praktis dan bergizi.",
+    "aboutReadMore": "Baca selengkapnya tentang perjalanan kami",
+    "legalities": {
+      "badampom": "Tersertifikasi BADAN POM",
+      "halal": "Tersertifikasi Halal Indonesia",
+      "kkp": "Tersertifikasi Kementerian Kelautan dan Perikanan",
+      "depok": "Binaan Pemkot Depok"
+    },
+    "partnershipsList": {
+      "resellerTitle": "Reseller & Agen",
+      "resellerDesc": "Dapatkan harga khusus dan dukungan promosi dengan bergabung menjadi mitra distribusi kami.",
+      "resellerBtn": "Daftar Reseller",
+      "cateringTitle": "Catering Services",
+      "cateringDesc": "Suplai produk olahan ikan premium untuk kebutuhan katering, restoran, dan acara Anda.",
+      "cateringBtn": "Hubungi Sales B2B"
+    },
+    "reasonsList": {
+      "practicalTitle": "Praktis Tanpa Ribet",
+      "practicalSub": "Cocok untuk keluarga sibuk yang ingin konsumsi ikan tanpa repot",
+      "freshFishTitle": "Ikan Segar Pilihan",
+      "freshFishSub": "Menggunakan daging ikan murni tenggiri dengan bumbu rempah spesial",
+      "hygienicTitle": "Higienis & Teruji",
+      "hygienicSub": "Diproses bersih dengan oven pengering dan memiliki sertifikasi resmi",
+      "glutenFreeTitle": "Gluten Free",
+      "glutenFreeSub": "Aman dan sehat dikonsumsi tanpa kandungan gandum"
+    }
+  },
+  "products": {
+    "seoTitle": "Katalog Menu Olahan Ikan",
+    "seoDesc": "Praktis, lezat, dan kaya gizi. Temukan pilihan hidangan olahan ikan terbaik untuk keluarga Anda.",
+    "heroTitle": "Katalog Menu Olahan Ikan",
+    "heroSubtitle": "Praktis, lezat, dan kaya gizi. Temukan pilihan hidangan olahan ikan terbaik untuk keluarga Anda.",
+    "empty": "Belum ada produk yang tersedia saat ini.",
+    "shippingNote": "*Harga belum termasuk ongkir",
+    "orderWa": "Pesan Sekarang via WhatsApp",
+    "shopee": "Shopee",
+    "tokopedia": "Tokopedia",
+    "recommendationsTitle": "Rekomendasi Menu Lainnya",
+    "recommendationsSubtitle": "Lengkapi hidangan Anda dengan produk unggulan kami",
+    "tabDescription": "DESKRIPSI & CARA PENYAJIAN",
+    "composition": "Komposisi",
+    "storageGuide": "Panduan Penyimpanan",
+    "freezer": "Freezer (-18°C)",
+    "chiller": "Chiller (4°C)",
+    "months": "Bulan",
+    "days": "Hari",
+    "freezeWarning": "*Jangan dibekukan kembali setelah dicairkan.",
+    "certifications": "Sertifikasi & Legalitas Mutu",
+    "viewCert": "[Lihat Sertifikat]",
+    "downloadCert": "Unduh Sertifikat",
+    "validUntil": "Berlaku hingga"
+  },
+  "services": {
+    "seoTitle": "Layanan & Kemitraan Business to Business",
+    "seoDesc": "Buka peluang bisnis kuliner olahan ikan yang legal, sehat, dan menguntungkan di kota Anda.",
+    "heroTitle": "Tumbuh Bersama Iwakula",
+    "heroSubtitle": "Buka peluang bisnis kuliner olahan ikan yang legal, sehat, dan menguntungkan di kota Anda. Kami menghadirkan standar kualitas premium untuk setiap mitra kami di seluruh Indonesia.",
+    "registerNow": "Daftar Sekarang",
+    "viewProgram": "Lihat Program",
+    "resellerTitle": "Program Agen & Reseller",
+    "resellerDesc": "Ideal untuk perorangan atau UMKM yang ingin memulai bisnis kuliner dengan modal terjangkau dan dukungan penuh.",
+    "joinAgent": "Gabung Jadi Agen",
+    "b2bTitle": "Suplai Katering & Bisnis B2B",
+    "b2bDesc": "Solusi rantai pasok profesional untuk hotel, katering, restoran, dan toko retail modern skala besar.",
+    "contactB2b": "Hubungi Tim B2B",
+    "flowTitle": "Alur Kerja Sama",
+    "formTitle": "Mulai Langkah Anda",
+    "formSubtitle": "Isi formulir di samping dan tim kami akan segera menghubungi Anda untuk mendiskusikan peluang kerja sama terbaik.",
+    "freeConsult": "Konsultasi gratis tanpa biaya pendaftaran",
+    "fastResponse": "Respon cepat dari tim sales resmi Iwakula",
+    "fullName": "Nama Lengkap",
+    "namePlaceholder": "Masukkan nama sesuai KTP",
+    "waNumber": "Nomor WhatsApp",
+    "waPlaceholder": "08xx-xxxx-xxxx",
+    "city": "Kota Lokasi",
+    "cityPlaceholder": "Sebutkan kota domisili/usaha",
+    "serviceChoice": "Pilihan Layanan",
+    "optAgent": "Program Agen & Reseller",
+    "optB2b": "Suplai Katering & Bisnis B2B",
+    "submitForm": "Kirim Permohonan",
+    "waMessage": "Halo Tim Iwakula, saya ingin mengajukan permohonan kemitraan:",
+    "resellerBenefits": {
+      "item1": "Margin keuntungan hingga 20-30%",
+      "item2": "Bebas biaya lisensi & tanpa royalty fee",
+      "item3": "Dukungan materi promosi & foto produk HD",
+      "item4": "Minimal order terjangkau untuk pemula"
+    },
+    "b2bBenefits": {
+      "item1": "Spesifikasi produk & gramasi dapat disesuaikan",
+      "item2": "Kapasitas produksi hingga ribuan porsi per hari",
+      "item3": "Sertifikasi halal, BPOM, & sanitasi lengkap",
+      "item4": "Kontrak suplai berkala dengan harga khusus"
+    },
+    "workSteps": {
+      "step1Title": "Pengisian Formulir",
+      "step1Desc": "Lengkapi data diri dan kota domisili usaha Anda pada formulir di halaman ini.",
+      "step2Title": "Konsultasi Kemitraan",
+      "step2Desc": "Tim sales resmi Iwakula akan menghubungi Anda untuk diskusi detail program.",
+      "step3Title": "Kesepakatan & Sample",
+      "step3Desc": "Penentuan kuota order, pengiriman sampel produk, dan penandatanganan kerja sama.",
+      "step4Title": "Pengiriman Produk",
+      "step4Desc": "Produk dikirim langsung ke lokasi Anda dan siap untuk dipasarkan."
+    }
+  },
+  "about": {
+    "seoTitle": "Kisah Di Balik Iwakula & Profil Perusahaan",
+    "seoDesc": "Menghadirkan kebaikan laut Nusantara dalam sajian modern yang higienis, praktis, dan sehat untuk keluarga Anda.",
+    "heroTitle": "Kisah Di Balik Iwakula",
+    "heroSubtitle": "Menghadirkan kebaikan laut Nusantara dalam sajian modern yang higienis, praktis, dan sehat untuk keluarga Anda.",
+    "badge": "TENTANG KAMI",
+    "heading": "Dari Dapur Kami untuk Nutrisi Masyarakat",
+    "narrative": "Iwakula adalah usaha kuliner yang didirikan pada tahun 2018 bergerak dibidang olahan makanan berbasis ikan dengan konsep praktis, sehat, dan lezat. Minimnya masyarakat dalam mengkonsumsi ikan serta kendala utama dalam mengolah ikan yang dianggap kurang praktis dan kurang bervariasi dalam menu sehari - hari, maka Iwakula hadir sebagai solusi untuk meningkatkan konsumsi ikan dengan menghadirkan produk olahan ikan yang bervariatif, lezat, praktis dan bergizi.",
+    "visionTitle": "Visi Kami",
+    "visionText": "Menjadi perusahaan dibidang perikanan yang unggul dalam kualitas dan dipercaya oleh konsumen",
+    "missionTitle": "Misi Kami",
+    "missionItem1": "Melaksanakan proses produksi dengan menerapkan keamanan pangan dan higienis untuk menghasilkan produk olahan ikan yang aman dikonsumsi",
+    "missionItem2": "Selalu siap dalam menciptakan inovasi pengembangan produk olahan ikan",
+    "missionItem3": "Memberikan layanan terbaik bagi kemajuan industri perikanan",
+    "achievementsTitle": "Pencapaian & Kemitraan Strategis",
+    "companyName": "CV Berkah Samudera Nusantara",
+    "companySub": "Badan Hukum Resmi Pengelola Brand Iwakula",
+    "nib": "Nomor Induk Berusaha",
+    "standardization": "Standarisasi",
+    "zoningTitle": "Hygienic Kitchen Zoning",
+    "facilitiesTitle": "Fasilitas Produksi",
+    "kitchenZoning": {
+      "zone1": "Area Penerimaan & Sortir Bahan Baku",
+      "zone2": "Area Penimbangan & Formulasi",
+      "zone3": "Laboratorium Pengolahan Higienis",
+      "zone4": "Sterilisasi Pengemasan & Kontrol Kualitas"
+    },
+    "facilities": {
+      "img1": "Penyimpanan Bahan Baku",
+      "img2": "Area Pencucian dan Pengepakan",
+      "img3": "Area Pengolahan dan Adonan",
+      "img4": "Sertifikasi dan Dokumen Mutu"
+    }
+  },
+  "footer": {
+    "desc": "Solusi Enak Makan Ikan. Menyajikan olahan ikan tenggiri premium yang praktis, sehat, dan lezat.",
+    "address": "Wisma Harapan 2 Blok H2 No. 14, RT. 03 RW. 20, Kel. Mekarsari, Kec Cimanggis, Kota Depok, Jawa Barat.",
+    "navTitle": "Navigasi",
+    "contactTitle": "Hubungi Kami",
+    "locationTitle": "Lokasi Kedai",
+    "copyright": "© 2026 Iwakula (CV Berkah Samudera Nusantara). All rights reserved."
+  },
+  "common": {
+    "viewDetail": "Lihat Detail",
+    "uncategorized": "Tanpa Kategori",
+    "notFound": "Produk Tidak Ditemukan",
+    "backToCatalog": "Kembali ke Katalog"
+  }
+}

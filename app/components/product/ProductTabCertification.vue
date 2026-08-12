@@ -19,8 +19,7 @@
         </div>
       </div>
 
-      <!-- Right Side: Action Button -->
-      <button type="button" class="text-xs sm:text-sm font-bold text-primary hover:text-primary/80 transition-colors cursor-pointer shrink-0" @click="openModal(cert)">[Lihat Sertifikat]</button>
+      <button type="button" class="text-xs sm:text-sm font-bold text-primary hover:text-primary/80 transition-colors cursor-pointer shrink-0" @click="openModal(cert)">{{ $t("products.viewCert") }}</button>
     </div>
 
     <!-- MODAL PREVIEW SERTIFIKAT (Nuxt UI v4) -->
@@ -48,7 +47,7 @@
 
           <!-- Certificate Meta Info -->
           <div class="text-center flex flex-col gap-1">
-            <p class="text-sm font-bold text-[#171B2B]">Berlaku hingga: {{ selectedCert.validUntil }}</p>
+            <p class="text-sm font-bold text-[#171B2B]">{{ $t("products.validUntil") }}: {{ selectedCert.validUntil }}</p>
             <span class="text-xs text-darkprimary/70">
               {{ selectedCert.code }}
             </span>
@@ -57,7 +56,7 @@
           <!-- Action Button: Download -->
           <a :href="selectedCert.pdfUrl || '#'" target="_blank" download class="w-full py-3 px-4 bg-primary text-white font-bold text-sm rounded-xl flex items-center justify-center gap-2 hover:bg-primary/90 transition-colors">
             <UIcon name="i-lucide-download" class="w-4 h-4 shrink-0" />
-            <span>Unduh Sertifikat</span>
+            <span>{{ $t("products.downloadCert") }}</span>
           </a>
         </div>
       </template>

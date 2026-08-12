@@ -1,0 +1,183 @@
+{
+  "nav": {
+    "home": "Home",
+    "products": "Product Catalog",
+    "services": "Services & Partnership",
+    "about": "About Us",
+    "orderNow": "Order Now"
+  },
+  "hero": {
+    "title": "Delicious & Convenient Nutritious Fish Dishes Every Day",
+    "subtitle": "Delivering premium fresh Spanish mackerel dishes and ready-to-eat high-protein snacks effortlessly for your loved ones.",
+    "viewCatalog": "View Product Catalog"
+  },
+  "home": {
+    "seoTitle": "Delicious & Convenient Nutritious Fish Dishes Every Day",
+    "seoDesc": "Delivering premium fresh Spanish mackerel dishes and ready-to-eat high-protein snacks effortlessly for your loved ones.",
+    "stats": {
+      "since": "Established Since",
+      "variants": "Fish Product Variants",
+      "halal": "Halal Certified",
+      "partners": "Active Reseller Partners"
+    },
+    "menuTitle": "Favorite Processed Fish Products",
+    "reasonsTitle": "Why Choose Iwakula?",
+    "trustTitle": "Quality Assurance & Certified Excellence",
+    "recommendationsTitle": "Iwakula Recommendations",
+    "viewAll": "View All",
+    "partnershipTitle": "Grow Together with Iwakula",
+    "partnershipSubtitle": "We open partnership opportunities for those who want to bring quality processed fish products to more people.",
+    "aboutTitle": "From Our Kitchen for Public Nutrition",
+    "aboutText": "Iwakula is a culinary business established in 2018 engaged in processed fish-based foods with a practical, healthy, and delicious concept. Given the low public consumption of fish and the main obstacles in preparing fish considered impractical and monotonous, Iwakula comes as a solution to increase fish consumption by providing varied, delicious, practical, and nutritious fish products.",
+    "aboutReadMore": "Read more about our journey",
+    "legalities": {
+      "badampom": "Certified by BADAN POM",
+      "halal": "Indonesian Halal Certified",
+      "kkp": "Certified by Ministry of Maritime Affairs & Fisheries",
+      "depok": "Fostered by Depok City Government"
+    },
+    "partnershipsList": {
+      "resellerTitle": "Reseller & Agent",
+      "resellerDesc": "Get special prices and promotional support by joining as our distribution partner.",
+      "resellerBtn": "Register Reseller",
+      "cateringTitle": "Catering Services",
+      "cateringDesc": "Supply of premium processed fish products for your catering, restaurant, and event needs.",
+      "cateringBtn": "Contact B2B Sales"
+    },
+    "reasonsList": {
+      "practicalTitle": "Practical & Hassle-Free",
+      "practicalSub": "Perfect for busy families who want to consume fish without hassle",
+      "freshFishTitle": "Selected Fresh Fish",
+      "freshFishSub": "Using pure mackerel fish meat with special blend of spices",
+      "hygienicTitle": "Hygienic & Tested",
+      "hygienicSub": "Cleanly processed with drying oven and holds official certifications",
+      "glutenFreeTitle": "Gluten Free",
+      "glutenFreeSub": "Safe and healthy to consume without wheat content"
+    }
+  },
+  "products": {
+    "seoTitle": "Processed Fish Product Catalog",
+    "seoDesc": "Practical, delicious, and rich in nutrition. Find the best processed fish dishes for your family.",
+    "heroTitle": "Processed Fish Product Catalog",
+    "heroSubtitle": "Practical, delicious, and rich in nutrition. Find the best processed fish dishes for your family.",
+    "empty": "No products available at the moment.",
+    "shippingNote": "*Price excludes shipping cost",
+    "orderWa": "Order Now via WhatsApp",
+    "shopee": "Shopee",
+    "tokopedia": "Tokopedia",
+    "recommendationsTitle": "Other Menu Recommendations",
+    "recommendationsSubtitle": "Complete your meal with our featured products",
+    "tabDescription": "DESCRIPTION & SERVING SUGGESTIONS",
+    "composition": "Ingredients",
+    "storageGuide": "Storage Guide",
+    "freezer": "Freezer (-18°C)",
+    "chiller": "Chiller (4°C)",
+    "months": "Months",
+    "days": "Days",
+    "freezeWarning": "*Do not refreeze after thawing.",
+    "certifications": "Quality Certifications & Compliance",
+    "viewCert": "[View Certificate]",
+    "downloadCert": "Download Certificate",
+    "validUntil": "Valid until"
+  },
+  "services": {
+    "seoTitle": "Services & Business to Business Partnership",
+    "seoDesc": "Unlock legal, healthy, and profitable processed fish business opportunities in your city.",
+    "heroTitle": "Grow Together with Iwakula",
+    "heroSubtitle": "Unlock legal, healthy, and profitable processed fish business opportunities in your city. We bring premium quality standards for all our partners across Indonesia.",
+    "registerNow": "Register Now",
+    "viewProgram": "View Program",
+    "resellerTitle": "Agent & Reseller Program",
+    "resellerDesc": "Ideal for individuals or SMEs who want to start a culinary business with affordable capital and full support.",
+    "joinAgent": "Join as an Agent",
+    "b2bTitle": "Catering Supply & B2B Business",
+    "b2bDesc": "Professional supply chain solution for hotels, caterers, restaurants, and large-scale modern retail stores.",
+    "contactB2b": "Contact B2B Team",
+    "flowTitle": "Partnership Workflow",
+    "formTitle": "Start Your Journey",
+    "formSubtitle": "Fill out the form and our team will contact you shortly to discuss the best collaboration opportunities.",
+    "freeConsult": "Free consultation with zero registration fees",
+    "fastResponse": "Fast response from official Iwakula sales team",
+    "fullName": "Full Name",
+    "namePlaceholder": "Enter name as stated on ID",
+    "waNumber": "WhatsApp Number",
+    "waPlaceholder": "08xx-xxxx-xxxx",
+    "city": "City Location",
+    "cityPlaceholder": "State your city of residence/business",
+    "serviceChoice": "Service Option",
+    "optAgent": "Agent & Reseller Program",
+    "optB2b": "Catering Supply & B2B Business",
+    "submitForm": "Submit Application",
+    "waMessage": "Hello Iwakula Team, I would like to apply for a partnership:",
+    "resellerBenefits": {
+      "item1": "Profit margin up to 20-30%",
+      "item2": "No license fee & zero royalty fee",
+      "item3": "Support with promotional materials & HD product photos",
+      "item4": "Affordable minimum order for beginners"
+    },
+    "b2bBenefits": {
+      "item1": "Customizable product specifications & weight",
+      "item2": "Production capacity up to thousands of servings per day",
+      "item3": "Complete Halal, BPOM, & sanitation certifications",
+      "item4": "Periodic supply contract with special pricing"
+    },
+    "workSteps": {
+      "step1Title": "Form Filling",
+      "step1Desc": "Fill out your personal details and business city in the form on this page.",
+      "step2Title": "Partnership Consultation",
+      "step2Desc": "Official Iwakula sales team will contact you to discuss program details.",
+      "step3Title": "Agreement & Sample",
+      "step3Desc": "Determination of order quota, product sample shipment, and signing of partnership.",
+      "step4Title": "Product Delivery",
+      "step4Desc": "Products delivered directly to your location and ready to market."
+    }
+  },
+  "about": {
+    "seoTitle": "The Story Behind Iwakula & Corporate Profile",
+    "seoDesc": "Bringing the goodness of Indonesian seas in modern, hygienic, practical, and healthy servings for your family.",
+    "heroTitle": "The Story Behind Iwakula",
+    "heroSubtitle": "Bringing the goodness of Indonesian seas in modern, hygienic, practical, and healthy servings for your family.",
+    "badge": "ABOUT US",
+    "heading": "From Our Kitchen for Public Nutrition",
+    "narrative": "Iwakula is a culinary business established in 2018 engaged in processed fish-based foods with a practical, healthy, and delicious concept. Given the low public consumption of fish and the main obstacles in preparing fish considered impractical and monotonous, Iwakula comes as a solution to increase fish consumption by providing varied, delicious, practical, and nutritious fish products.",
+    "visionTitle": "Our Vision",
+    "visionText": "To become a leading fishery business recognized for superior quality and trusted by consumers.",
+    "missionTitle": "Our Mission",
+    "missionItem1": "Carry out production processes by applying food safety and hygiene standards to produce processed fish products that are safe for consumption.",
+    "missionItem2": "Always ready to create continuous innovation in processed fish product development.",
+    "missionItem3": "Provide the best service for the advancement of the fishery industry.",
+    "achievementsTitle": "Achievements & Strategic Partnerships",
+    "companyName": "CV Berkah Samudera Nusantara",
+    "companySub": "Official Legal Entity Managing Iwakula Brand",
+    "nib": "Business Identification Number (NIB)",
+    "standardization": "Standardization",
+    "zoningTitle": "Hygienic Kitchen Zoning",
+    "facilitiesTitle": "Production Facilities",
+    "kitchenZoning": {
+      "zone1": "Raw Material Receiving & Sorting Area",
+      "zone2": "Weighing & Formulation Area",
+      "zone3": "Hygienic Processing Laboratory",
+      "zone4": "Packaging Sterilization & Quality Control"
+    },
+    "facilities": {
+      "img1": "Raw Material Storage",
+      "img2": "Washing and Packaging Area",
+      "img3": "Processing and Dough Area",
+      "img4": "Certifications and Quality Documents"
+    }
+  },
+  "footer": {
+    "desc": "Convenient & Delicious Fish Meal Solution. Serving practical, healthy, and premium Spanish mackerel fish products.",
+    "address": "Wisma Harapan 2 Block H2 No. 14, RT. 03 RW. 20, Kel. Mekarsari, Kec Cimanggis, Depok City, West Java, Indonesia.",
+    "navTitle": "Navigation",
+    "contactTitle": "Contact Us",
+    "locationTitle": "Store Location",
+    "copyright": "© 2026 Iwakula (CV Berkah Samudera Nusantara). All rights reserved."
+  },
+  "common": {
+    "viewDetail": "View Detail",
+    "uncategorized": "Uncategorized",
+    "notFound": "Product Not Found",
+    "backToCatalog": "Back to Catalog"
+  }
+}

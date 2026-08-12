@@ -6,8 +6,8 @@
 
   <!-- Error / Not Found State -->
   <div v-else-if="error || !product" class="text-center py-40 bg-bone min-h-screen flex flex-col gap-4 items-center justify-center">
-    <h1 class="text-2xl font-bold text-nottooblack">Produk Tidak Ditemukan</h1>
-    <UButton to="/products" color="primary">Kembali ke Katalog</UButton>
+    <h1 class="text-2xl font-bold text-nottooblack">{{ $t("common.notFound") }}</h1>
+    <UButton :to="localePath('/products')" color="primary">{{ $t("common.backToCatalog") }}</UButton>
   </div>
 
   <!-- Main Content Detail Produk -->
@@ -73,7 +73,7 @@
                   Rp {{ product.originalPrice.toLocaleString("id-ID") }}
                 </span>
               </div>
-              <span class="italic font-body text-xs text-darkprimary font-medium">*Harga belum termasuk ongkir</span>
+              <span class="italic font-body text-xs text-darkprimary font-medium">{{ $t("products.shippingNote") }}</span>
             </div>
           </div>
 
@@ -83,7 +83,7 @@
             target="_blank"
             class="bg-primary py-4 w-full flex items-center justify-center text-white rounded-md font-bold font-sans text-lg cursor-pointer transition-colors duration-150 hover:bg-primary/90"
           >
-            <span>Pesan Sekarang via WhatsApp</span>
+            <span>{{ $t("products.orderWa") }}</span>
           </NuxtLink>
 
           <!-- Grid Marketplace Dinamis (grid-cols-1 jika hanya salah satu, grid-cols-1 sm:grid-cols-2 jikaeduanya ada) -->
@@ -95,7 +95,7 @@
               class="bg-white py-3 w-full flex items-center justify-center text-secondary border border-secondary rounded-md font-medium tracking-[0.7px] gap-2 font-body text-base cursor-pointer transition-colors duration-150 hover:bg-gray-100"
             >
               <NuxtImg src="/images/shopee-icon.svg" class="h-6" />
-              <span>Shopee</span>
+              <span>{{ $t("products.shopee") }}</span>
             </NuxtLink>
             <NuxtLink
               v-if="product.tokopediaUrl"
@@ -104,7 +104,7 @@
               class="bg-white py-3 w-full flex items-center justify-center text-secondary border border-secondary rounded-md font-medium tracking-[0.7px] gap-2 font-body text-base cursor-pointer transition-colors duration-150 hover:bg-gray-100"
             >
               <NuxtImg src="/images/Tokopedia_Mascot.png" class="h-8" />
-              <span>Tokopedia</span>
+              <span>{{ $t("products.tokopedia") }}</span>
             </NuxtLink>
           </div>
         </div>
@@ -138,11 +138,11 @@
       <div class="w-full container mx-auto flex flex-col gap-8">
         <div class="w-full flex items-end justify-between">
           <div class="flex flex-col">
-            <h2 class="text-[2rem] font-semibold font-sans text-nottooblack">Rekomendasi Menu Lainnya</h2>
-            <p class="hidden text-nottooblack md:block">Lengkapi hidangan Anda dengan produk unggulan kami</p>
+            <h2 class="text-[2rem] font-semibold font-sans text-nottooblack">{{ $t("products.recommendationsTitle") }}</h2>
+            <p class="hidden text-nottooblack md:block">{{ $t("products.recommendationsSubtitle") }}</p>
           </div>
-          <NuxtLink to="/products" class="flex items-center justify-end gap-2 text-primary text-base transition-all duration-150 hover:gap-2.5">
-            <span>Lihat Semua</span>
+          <NuxtLink :to="localePath('/products')" class="flex items-center justify-end gap-2 text-primary text-base transition-all duration-150 hover:gap-2.5">
+            <span>{{ $t("home.viewAll") }}</span>
             <UIcon name="i-lucide-arrow-right" class="w-4 h-4" />
           </NuxtLink>
         </div>
@@ -173,6 +173,8 @@
 <script lang="ts" setup>
 import type { BreadcrumbItem, TabsItem } from "@nuxt/ui";
 
+const { t } = useI18n();
+const localePath = useLocalePath();
 const route = useRoute();
 const slug = route.params.slug as string;
 
@@ -182,6 +184,17 @@ const { fetchContacts } = useContacts();
 // 1. Fetch Detail Produk Berdasarkan Slug
 const { data: productResponse, pending, error } = await fetchProductBySlug(slug);
 const product = computed(() => productResponse.value?.data);
+
+watchEffect(() => {
+  if (product.value) {
+    usePageSeo({
+      title: product.value.name,
+      description: `${product.value.name} - ${product.value.subTitle}`,
+      image: product.value.mainImage,
+      type: "product",
+    });
+  }
+});
 
 // 2. Fetch Nomor WhatsApp Dinamis dari Contacts API
 const { data: contactResponse } = await fetchContacts();
@@ -233,9 +246,9 @@ const onHide = () => {
   visibleRef.value = false;
 };
 
-const tabsItems = ref<TabsItem[]>([
+const tabsItems = computed<TabsItem[]>(() => [
   {
-    label: "DESKRIPSI & CARA PENYAJIAN",
+    label: t("products.tabDescription"),
     slot: "description",
   },
 ]);
@@ -243,22 +256,22 @@ const tabsItems = ref<TabsItem[]>([
 // Dynamic Breadcrumb
 const breadcrumbItems = computed<BreadcrumbItem[]>(() => [
   {
-    label: "Home",
-    to: "/",
+    label: t("nav.home"),
+    to: localePath("/"),
     ui: { link: "text-darkprimary hover:text-primary/80 font-medium" },
   },
   {
-    label: "Produk",
-    to: "/products",
+    label: t("nav.products"),
+    to: localePath("/products"),
     ui: { link: "text-darkprimary hover:text-primary/80 font-medium" },
   },
   {
-    label: product.value?.category.name || "Kategori",
-    to: `/products?category=${product.value?.category.slug || ""}#${product.value?.category.slug || ""}`,
+    label: product.value?.category.name || t("common.uncategorized"),
+    to: localePath(`/products?category=${product.value?.category.slug || ""}#${product.value?.category.slug || ""}`),
     ui: { link: "text-darkprimary hover:text-primary/80 font-medium" },
   },
   {
-    label: product.value?.name || "Detail",
+    label: product.value?.name || "",
     to: route.path,
     ui: { link: "text-[#171B2B] font-bold" },
   },

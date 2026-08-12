@@ -7,20 +7,20 @@
       <div class="relative bg-black/65 min-h-105 sm:min-h-150 h-full flex items-center">
         <div class="container w-full mx-auto px-4 sm:px-6 md:px-10 flex items-center justify-start py-12 sm:py-20">
           <div class="max-w-3xl text-white flex flex-col items-center sm:items-start text-center sm:text-left gap-4 sm:gap-6">
-            <h1 class="font-bold text-3xl sm:text-4xl lg:text-5xl leading-tight lg:leading-14 font-heading">Tumbuh Bersama Iwakula</h1>
+            <h1 class="font-bold text-3xl sm:text-4xl lg:text-5xl leading-tight lg:leading-14 font-heading">{{ $t("services.heroTitle") }}</h1>
             <p class="text-sm sm:text-base lg:text-lg font-body font-normal leading-relaxed text-graysubtitle">
-              Buka peluang bisnis kuliner olahan ikan yang legal, sehat, dan menguntungkan di kota Anda. Kami menghadirkan standar kualitas premium untuk setiap mitra kami di seluruh Indonesia.
+              {{ $t("services.heroSubtitle") }}
             </p>
             <div class="flex flex-col sm:flex-row gap-3 sm:gap-4 items-center w-full sm:w-auto mt-2">
               <a href="#form-kemitraan" @click.prevent="scrollToSection('form-kemitraan')" class="text-white bg-primary py-3 px-6 rounded-lg font-semibold text-sm sm:text-base flex items-center justify-center gap-2 transition duration-150 hover:bg-primary/90 w-full sm:w-fit cursor-pointer">
-                <span>Daftar Sekarang</span>
+                <span>{{ $t("services.registerNow") }}</span>
               </a>
               <a
                 href="#program-kemitraan"
                 @click.prevent="scrollToSection('program-kemitraan')"
                 class="text-white bg-transparent border border-white/30 py-3 px-6 rounded-lg font-semibold text-sm sm:text-base flex items-center justify-center gap-2 transition duration-150 hover:bg-black/20 w-full sm:w-fit cursor-pointer"
               >
-                <span>Lihat Program</span>
+                <span>{{ $t("services.viewProgram") }}</span>
               </a>
             </div>
           </div>
@@ -40,9 +40,9 @@
                 <Icon name="i-lucide-store" class="w-6 h-6 sm:w-8 sm:h-8" />
               </div>
 
-              <h2 class="font-sans font-semibold text-2xl sm:text-[2rem] text-secondary">Program Agen & Reseller</h2>
+              <h2 class="font-sans font-semibold text-2xl sm:text-[2rem] text-secondary">{{ $t("services.resellerTitle") }}</h2>
 
-              <p class="text-sm sm:text-base font-normal text-darkprimary">Ideal untuk perorangan atau UMKM yang ingin memulai bisnis kuliner dengan modal terjangkau dan dukungan penuh.</p>
+              <p class="text-sm sm:text-base font-normal text-darkprimary">{{ $t("services.resellerDesc") }}</p>
 
               <div class="flex flex-col items-start gap-3 sm:gap-4 mt-2">
                 <div v-for="(item, idx) in resellerBenefits" :key="idx" class="flex gap-3 items-start sm:items-center">
@@ -55,7 +55,7 @@
             </div>
 
             <a href="#form-kemitraan" @click.prevent="scrollToSection('form-kemitraan')" class="text-white bg-primary py-3.5 px-6 rounded-lg font-semibold text-sm sm:text-base flex items-center justify-center gap-2 transition duration-150 hover:bg-primary/90 w-full cursor-pointer">
-              <span>Gabung Jadi Agen</span>
+              <span>{{ $t("services.joinAgent") }}</span>
             </a>
           </div>
 
@@ -66,9 +66,9 @@
                 <Icon name="i-lucide-factory" class="w-6 h-6 sm:w-8 sm:h-8" />
               </div>
 
-              <h2 class="font-sans font-semibold text-2xl sm:text-[2rem] text-secondary">Suplai Katering & Bisnis B2B</h2>
+              <h2 class="font-sans font-semibold text-2xl sm:text-[2rem] text-secondary">{{ $t("services.b2bTitle") }}</h2>
 
-              <p class="text-sm sm:text-base font-normal text-darkprimary">Solusi rantai pasok profesional untuk hotel, katering, restoran, dan toko retail modern skala besar.</p>
+              <p class="text-sm sm:text-base font-normal text-darkprimary">{{ $t("services.b2bDesc") }}</p>
 
               <div class="flex flex-col items-start gap-3 sm:gap-4 mt-2">
                 <div v-for="(item, idx) in b2bBenefits" :key="idx" class="flex gap-3 items-start sm:items-center">
@@ -85,7 +85,7 @@
               @click.prevent="scrollToSection('form-kemitraan')"
               class="text-secondary bg-white py-3.5 px-6 rounded-lg font-semibold border border-secondary text-sm sm:text-base flex items-center justify-center gap-2 transition duration-150 hover:bg-secondary/5 w-full cursor-pointer"
             >
-              <span>Hubungi Tim B2B</span>
+              <span>{{ $t("services.contactB2b") }}</span>
             </a>
           </div>
         </div>
@@ -97,7 +97,7 @@
     <section class="w-full px-4 sm:px-6 md:px-10 py-8 md:py-12 bg-white">
       <div class="w-full container mx-auto flex flex-col gap-6 md:gap-8">
         <div class="flex flex-col gap-2 items-center justify-center">
-          <h2 class="text-xl sm:text-2xl font-sans font-semibold text-center text-nottooblack">Jaminan Mutu & Kualitas Terbina</h2>
+          <h2 class="text-xl sm:text-2xl font-sans font-semibold text-center text-nottooblack">{{ $t("home.trustTitle") }}</h2>
         </div>
 
         <div class="w-full grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
@@ -111,7 +111,7 @@
     <section class="w-full px-4 sm:px-6 md:px-10 py-8 md:py-12 bg-bone">
       <div class="w-full container mx-auto flex flex-col gap-6 md:gap-12">
         <div class="flex flex-col gap-2 items-center justify-center">
-          <h2 class="text-2xl sm:text-[2rem] font-sans font-semibold text-center text-nottooblack">Alur Kerja Sama</h2>
+          <h2 class="text-2xl sm:text-[2rem] font-sans font-semibold text-center text-nottooblack">{{ $t("services.flowTitle") }}</h2>
         </div>
 
         <div class="w-full grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
@@ -138,116 +138,81 @@
 
     <!-- Lead Form Section -->
     <section id="form-kemitraan" class="w-full px-4 sm:px-6 md:px-10 py-8 md:py-16 bg-bone scroll-mt-24">
-      <div class="w-full container mx-auto">
-        <div class="w-full bg-white grid grid-cols-1 lg:grid-cols-2 shadow-xl rounded-2xl overflow-hidden border border-gray-100">
-          <!-- Banner Kiri -->
-          <div class="w-full p-6 sm:p-10 lg:p-12 bg-secondary text-white flex flex-col justify-center gap-4 sm:gap-6">
-            <h2 class="font-sans text-2xl sm:text-3xl lg:text-4xl font-semibold leading-tight">Mulai Langkah Anda</h2>
-            <p class="text-white/80 text-sm sm:text-base leading-relaxed">Isi formulir di samping dan tim kami akan segera menghubungi Anda untuk mendiskusikan peluang kerja sama terbaik.</p>
-            <div class="flex flex-col gap-3 mt-2 sm:mt-4">
-              <div class="flex items-center gap-3 text-sm text-white/90">
-                <Icon name="i-lucide-check-circle-2" class="text-accent w-5 h-5 shrink-0" />
-                <span>Konsultasi gratis tanpa biaya pendaftaran</span>
+      <div class="w-full container mx-auto bg-white rounded-2xl shadow-md p-6 sm:p-10 md:p-14 border border-gray-100">
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 md:gap-12 items-center">
+          <!-- Text Info Left -->
+          <div class="lg:col-span-5 flex flex-col gap-4 sm:gap-6">
+            <div class="flex flex-col gap-2">
+              <h2 class="font-sans font-bold text-2xl sm:text-3xl lg:text-4xl text-secondary leading-tight">{{ $t("services.formTitle") }}</h2>
+              <p class="font-body text-sm sm:text-base text-darkprimary leading-relaxed">
+                {{ $t("services.formSubtitle") }}
+              </p>
+            </div>
+
+            <div class="flex flex-col gap-3 pt-2">
+              <div class="flex items-center gap-3">
+                <Icon name="i-lucide-check-circle-2" class="text-primary w-5 h-5 shrink-0" />
+                <span class="text-sm text-gray-700 font-medium">{{ $t("services.freeConsult") }}</span>
               </div>
-              <div class="flex items-center gap-3 text-sm text-white/90">
-                <Icon name="i-lucide-check-circle-2" class="text-accent w-5 h-5 shrink-0" />
-                <span>Respon cepat dari tim sales resmi Iwakula</span>
+              <div class="flex items-center gap-3">
+                <Icon name="i-lucide-check-circle-2" class="text-primary w-5 h-5 shrink-0" />
+                <span class="text-sm text-gray-700 font-medium">{{ $t("services.fastResponse") }}</span>
               </div>
             </div>
           </div>
 
-          <!-- Form Kanan -->
-          <form @submit.prevent="handleSubmit" class="w-full p-6 sm:p-8 lg:p-10 flex flex-col gap-4">
-            <div class="w-full flex flex-col gap-1.5">
-              <label class="text-xs sm:text-sm text-secondary font-semibold tracking-wider uppercase">Nama Lengkap</label>
-              <div class="w-full px-4 py-3 border border-gray-300 rounded-lg focus-within:border-primary transition-colors">
-                <input v-model="form.name" type="text" required class="w-full outline-none text-sm font-body text-nottooblack" placeholder="Masukkan nama sesuai KTP" />
+          <!-- Form Right -->
+          <div class="lg:col-span-7 bg-[#F9F9FF] p-6 sm:p-8 rounded-xl border border-gray-200/60">
+            <form @submit.prevent="handleSubmit" class="flex flex-col gap-5">
+              <div class="flex flex-col gap-1.5">
+                <label class="text-sm font-semibold text-gray-800">{{ $t("services.fullName") }} <span class="text-primary">*</span></label>
+                <input v-model="form.name" type="text" required :placeholder="$t('services.namePlaceholder')" class="w-full px-4 py-3 bg-white border border-gray-300 rounded-lg text-sm focus:outline-none focus:border-primary transition-colors" />
               </div>
-            </div>
 
-            <div class="w-full flex flex-col gap-1.5">
-              <label class="text-xs sm:text-sm text-secondary font-semibold tracking-wider uppercase">Nomor WhatsApp</label>
-              <div class="w-full px-4 py-3 border border-gray-300 rounded-lg focus-within:border-primary transition-colors">
-                <input v-model="form.phone" type="tel" required class="w-full outline-none text-sm font-body text-nottooblack" placeholder="08xx-xxxx-xxxx" />
+              <div class="flex flex-col gap-1.5">
+                <label class="text-sm font-semibold text-gray-800">{{ $t("services.waNumber") }} <span class="text-primary">*</span></label>
+                <input v-model="form.phone" type="tel" required :placeholder="$t('services.waPlaceholder')" class="w-full px-4 py-3 bg-white border border-gray-300 rounded-lg text-sm focus:outline-none focus:border-primary transition-colors" />
               </div>
-            </div>
 
-            <div class="w-full flex flex-col gap-1.5">
-              <label class="text-xs sm:text-sm text-secondary font-semibold tracking-wider uppercase">Kota Lokasi</label>
-              <div class="w-full px-4 py-3 border border-gray-300 rounded-lg focus-within:border-primary transition-colors">
-                <input v-model="form.city" type="text" required class="w-full outline-none text-sm font-body text-nottooblack" placeholder="Sebutkan kota domisili/usaha" />
+              <div class="flex flex-col gap-1.5">
+                <label class="text-sm font-semibold text-gray-800">{{ $t("services.city") }} <span class="text-primary">*</span></label>
+                <input v-model="form.city" type="text" required :placeholder="$t('services.cityPlaceholder')" class="w-full px-4 py-3 bg-white border border-gray-300 rounded-lg text-sm focus:outline-none focus:border-primary transition-colors" />
               </div>
-            </div>
 
-            <div class="w-full flex flex-col gap-1.5">
-              <label class="text-xs sm:text-sm text-secondary font-semibold tracking-wider uppercase">Pilihan Layanan</label>
-              <select v-model="form.program" name="layanan" class="w-full px-4 py-3 border border-gray-300 rounded-lg outline-none bg-white text-sm font-body text-nottooblack focus:border-primary transition-colors">
-                <option value="agen">Program Agen & Reseller</option>
-                <option value="b2b">Suplai Katering & Bisnis B2B</option>
-              </select>
-            </div>
+              <div class="flex flex-col gap-1.5">
+                <label class="text-sm font-semibold text-gray-800">{{ $t("services.serviceChoice") }} <span class="text-primary">*</span></label>
+                <select v-model="form.service" class="w-full px-4 py-3 bg-white border border-gray-300 rounded-lg text-sm focus:outline-none focus:border-primary transition-colors cursor-pointer">
+                  <option value="Program Agen & Reseller">{{ $t("services.optAgent") }}</option>
+                  <option value="Suplai Katering & Bisnis B2B">{{ $t("services.optB2b") }}</option>
+                </select>
+              </div>
 
-            <button type="submit" class="text-white bg-primary py-3.5 px-6 rounded-lg font-semibold text-sm sm:text-base flex items-center justify-center gap-2 transition duration-150 hover:bg-primary/90 w-full mt-2 cursor-pointer">
-              <span>Kirim Permohonan</span>
-            </button>
-          </form>
+              <button type="submit" class="mt-2 w-full py-4 bg-primary text-white font-sans font-bold text-base rounded-lg transition duration-150 hover:bg-primary/90 shadow-sm cursor-pointer">
+                {{ $t("services.submitForm") }}
+              </button>
+            </form>
+          </div>
         </div>
       </div>
     </section>
+    <!-- Lead Form Section -->
   </div>
 </template>
 
-<script setup lang="ts">
-const formatter = new Intl.NumberFormat("en-US", { minimumIntegerDigits: 2 });
+<script lang="ts" setup>
+const { t } = useI18n();
 
-const resellerBenefits = ["Margin keuntungan tinggi & harga khusus grosir", "Gratis Marketing Kit (Flyer, Foto Produk HD, Konten Sosmed)", "Pendampingan edukasi produk dan strategi penjualan", "Proteksi area eksklusif bagi Agen Kota"];
-
-const b2bBenefits = ["Produksi kapasitas besar (mencapai ribuan porsi per hari)", "Kualitas dan standardisasi rasa yang konsisten", "Layanan pengiriman terjadwal armada Frozen", "Dukungan dokumen legalitas lengkap (BPOM/Halal)"];
-
-const legalities = [
-  {
-    title: "Tersertifikasi BADAN POM",
-    image: "/images/BADAN_POM.png",
-  },
-  {
-    title: "Tersertifikasi Halal Indonesia",
-    image: "/images/Halal_Indonesia.webp",
-  },
-  {
-    title: "Tersertifikasi Kementerian Kelautan dan Perikanan",
-    image: "images/Logo_Kementerian_Kelautan_dan_Perikanan.png",
-  },
-  {
-    title: "Binaan Pemkot Depok",
-    image: "/images/Lambang_Kota_Depok.png",
-  },
-];
-
-const workSteps = [
-  {
-    title: "Hubungi Kontak",
-    desc: "Konsultasi awal melalui tim marketing WhatsApp kami.",
-  },
-  {
-    title: "Verifikasi Kota",
-    desc: "Pengecekan ketersediaan wilayah atau kapasitas produksi.",
-  },
-  {
-    title: "Pembayaran Grosir",
-    desc: "Transaksi aman melalui rekening resmi perusahaan.",
-  },
-  {
-    title: "Pengiriman Frozen",
-    desc: "Pengiriman terjadwal menggunakan kargo berpendingin.",
-  },
-];
-
-const form = reactive({
-  name: "",
-  phone: "",
-  city: "",
-  program: "agen",
+usePageSeo({
+  title: t("services.seoTitle"),
+  description: t("services.seoDesc"),
 });
+
+const formatter = new Intl.NumberFormat("id-ID", {
+  minimumIntegerDigits: 2,
+});
+
+const { fetchContacts } = useContacts();
+const { data: contactsResponse } = await fetchContacts();
 
 const scrollToSection = (id: string) => {
   const el = document.getElementById(id);
@@ -256,26 +221,86 @@ const scrollToSection = (id: string) => {
   }
 };
 
-const { fetchContacts } = useContacts();
-const { data: contactsResponse } = await fetchContacts();
-
-const whatsappNumber = computed(() => {
-  const contacts = contactsResponse.value?.data || [];
-  const wa = contacts.find((c) => c.key === "whatsapp");
-  if (!wa || !wa.value) return "628119844941";
-  
-  let clean = wa.value.replace(/\D/g, "");
-  if (clean.startsWith("0")) {
-    clean = "62" + clean.slice(1);
-  }
-  return clean;
+const form = ref({
+  name: "",
+  phone: "",
+  city: "",
+  service: "Program Agen & Reseller",
 });
 
-function handleSubmit() {
-  const programLabel = form.program === "agen" ? "Program Agen & Reseller" : "Suplai Katering & B2B";
-  const message = `Halo Iwakula, saya berminat mendaftar Kemitraan.\n\n*Nama:* ${form.name}\n*WhatsApp:* ${form.phone}\n*Kota:* ${form.city}\n*Pilihan Program:* ${programLabel}`;
+const handleSubmit = () => {
+  const contacts = contactsResponse.value?.data || [];
+  const waContact = contacts.find((c) => c.key === "whatsapp");
+  let phone = waContact?.value ? waContact.value.replace(/\D/g, "") : "";
 
-  const encodedMessage = encodeURIComponent(message);
-  window.open(`https://wa.me/${whatsappNumber.value}?text=${encodedMessage}`, "_blank");
-}
+  if (phone.startsWith("0")) {
+    phone = "62" + phone.slice(1);
+  }
+
+  if (!phone) {
+    phone = "628123456789";
+  }
+
+  const message =
+    `${t("services.waMessage")}\n\n` +
+    `- ${t("services.fullName")}: ${form.value.name}\n` +
+    `- ${t("services.waNumber")}: ${form.value.phone}\n` +
+    `- ${t("services.city")}: ${form.value.city}\n` +
+    `- ${t("services.serviceChoice")}: ${form.value.service}`;
+
+  const targetUrl = `https://wa.me/${phone}?text=${encodeURIComponent(message)}`;
+  window.open(targetUrl, "_blank");
+};
+
+const resellerBenefits = computed(() => [
+  t("services.resellerBenefits.item1"),
+  t("services.resellerBenefits.item2"),
+  t("services.resellerBenefits.item3"),
+  t("services.resellerBenefits.item4"),
+]);
+
+const b2bBenefits = computed(() => [
+  t("services.b2bBenefits.item1"),
+  t("services.b2bBenefits.item2"),
+  t("services.b2bBenefits.item3"),
+  t("services.b2bBenefits.item4"),
+]);
+
+const workSteps = computed(() => [
+  {
+    title: t("services.workSteps.step1Title"),
+    desc: t("services.workSteps.step1Desc"),
+  },
+  {
+    title: t("services.workSteps.step2Title"),
+    desc: t("services.workSteps.step2Desc"),
+  },
+  {
+    title: t("services.workSteps.step3Title"),
+    desc: t("services.workSteps.step3Desc"),
+  },
+  {
+    title: t("services.workSteps.step4Title"),
+    desc: t("services.workSteps.step4Desc"),
+  },
+]);
+
+const legalities = computed(() => [
+  {
+    title: t("home.legalities.badampom"),
+    image: "/images/BADAN_POM.png",
+  },
+  {
+    title: t("home.legalities.halal"),
+    image: "/images/Halal_Indonesia.webp",
+  },
+  {
+    title: t("home.legalities.kkp"),
+    image: "images/Logo_Kementerian_Kelautan_dan_Perikanan.png",
+  },
+  {
+    title: t("home.legalities.depok"),
+    image: "/images/Lambang_Kota_Depok.png",
+  },
+]);
 </script>

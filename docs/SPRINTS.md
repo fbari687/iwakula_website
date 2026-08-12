@@ -179,3 +179,112 @@ Dokumen ini memecah implementasi keseluruhan *Blueprint CMS* menjadi beberapa ta
   - Nomor kontak atau tautan media sosial dapat diubah via CMS dan langsung terganti di *footer/navbar* publik.
 - **Risiko:** 
   - Tingkat risiko rendah, kebanyakan hanya tugas repetitif.
+
+---
+
+## Sprint 7: Internationalization (i18n) & SEO Foundation
+
+### Tujuan
+
+Menjadikan website Iwakula siap untuk pasar internasional dengan mendukung **Bahasa Indonesia dan Bahasa Inggris**, sekaligus membangun fondasi SEO yang benar untuk website bilingual.
+
+### Ruang Lingkup
+
+#### Internationalization (i18n)
+
+* Integrasi `@nuxtjs/i18n`
+* Locale `id` dan `en`
+* Routing bilingual (`/id/...` dan `/en/...`)
+* Language switcher
+* Translasi seluruh teks statis (Navbar, Footer, CTA, tombol, label, placeholder, dll)
+* Lazy-loaded locale files
+* Default locale Indonesia
+
+#### SEO Foundation
+
+* Dynamic page title
+* Dynamic meta description
+* Open Graph tags
+* Twitter Card tags
+* Canonical URL
+* `hreflang` (`id` & `en`)
+* HTML `lang` attribute
+* Sitemap generation
+* Robots.txt
+* Reusable SEO composable (`useSeoMeta` / helper)
+
+### Tidak Termasuk
+
+* Database bilingual
+* CMS bilingual
+* Translasi produk dari database
+* AI translation workflow
+* Locale-specific slug management
+
+---
+
+## Sprint 8: CMS Multilingual Content
+
+### Tujuan
+
+Menjadikan seluruh konten yang berasal dari database mendukung dua bahasa secara penuh.
+
+### Ruang Lingkup
+
+* Categories bilingual
+* Products bilingual
+* Achievements bilingual
+* Contacts bilingual (jika diperlukan)
+* Repository update
+* Validator update
+* API update
+* Admin form bilingual
+* Frontend locale-aware data rendering
+
+### Tidak Termasuk
+
+* AI translation
+* Workflow approval translation
+* Locale-specific media management
+
+---
+
+## Sprint 9: Performance & Advanced SEO
+
+### Tujuan
+
+Mengoptimalkan performa website publik dan meningkatkan kualitas SEO agar siap untuk deployment produksi.
+
+### Ruang Lingkup
+
+#### Performance
+
+* Image optimization
+* Responsive image strategy
+* Lazy loading refinement
+* Font optimization
+* Route payload optimization
+* Code splitting review
+* Bundle size review
+* Nuxt performance optimization
+
+#### Advanced SEO
+
+* JSON-LD structured data
+* Organization schema
+* Product schema
+* Breadcrumb schema
+* Achievement / Article schema (jika relevan)
+* Core Web Vitals optimization
+* Lighthouse optimization
+* Metadata consistency audit
+* Sitemap enhancement
+* SEO monitoring preparation
+
+### Target
+
+* Lighthouse Performance tinggi
+* Lighthouse SEO tinggi
+* CLS minimal
+* LCP optimal
+* Website siap deployment produksi dan indexing Google.
