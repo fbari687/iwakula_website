@@ -10,8 +10,11 @@ export default defineEventHandler(async (event) => {
 
     const newId = await achievementRepository.create({
       badge: data.badge,
+      badgeEn: data.badgeEn || null,
       title: data.title,
+      titleEn: data.titleEn || null,
       description: data.description,
+      descriptionEn: data.descriptionEn || null,
       image: data.image
     })
 

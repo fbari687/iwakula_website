@@ -15,9 +15,11 @@ export const users = mysqlTable("users", {
 export const categories = mysqlTable("categories", {
   id: serial("id").primaryKey(),
   name: varchar("name", { length: 100 }).notNull(),
+  nameEn: varchar("name_en", { length: 100 }),
   slug: varchar("slug", { length: 100 }).notNull().unique(),
   image: varchar("image", { length: 255 }).notNull(),
   description: text("description").notNull(),
+  descriptionEn: text("description_en"),
   createdAt: timestamp("created_at").defaultNow().notNull(),
   updatedAt: timestamp("updated_at").defaultNow().onUpdateNow().notNull(),
 });
@@ -35,8 +37,10 @@ export const products = mysqlTable("products", {
     .notNull()
     .references(() => categories.id, { onDelete: "restrict" }),
   name: varchar("name", { length: 150 }).notNull(),
+  nameEn: varchar("name_en", { length: 150 }),
   slug: varchar("slug", { length: 150 }).notNull().unique(),
   subTitle: varchar("sub_title", { length: 100 }).notNull(),
+  subTitleEn: varchar("sub_title_en", { length: 100 }),
   price: int("price").notNull(),
   originalPrice: int("original_price").notNull(),
   mainImage: varchar("main_image", { length: 255 }).notNull(),
@@ -46,7 +50,9 @@ export const products = mysqlTable("products", {
 
   // Deskripsi & Cara Penyajian
   description: text("description").notNull(),
+  descriptionEn: text("description_en"),
   highlights: json("highlights").$type<string[]>().notNull(),
+  highlightsEn: json("highlights_en").$type<string[]>(),
   // servingSteps: json("serving_steps").$type<ServingStep[]>().notNull(),
   // servingTip: varchar("serving_tip", { length: 255 }),
 
@@ -79,8 +85,11 @@ export const productImages = mysqlTable("product_images", {
 export const achievements = mysqlTable("achievements", {
   id: serial("id").primaryKey(),
   badge: varchar("badge", { length: 100 }).notNull(), // Contoh: "Penghargaan 2024"
+  badgeEn: varchar("badge_en", { length: 100 }),
   title: varchar("title", { length: 200 }).notNull(), // Contoh: "Top 350 UMKM PFpreneur"
+  titleEn: varchar("title_en", { length: 200 }),
   description: text("description").notNull(),
+  descriptionEn: text("description_en"),
   image: varchar("image", { length: 255 }).notNull(), // Path gambar sertifikat/foto
   createdAt: timestamp("created_at").defaultNow().notNull(),
   updatedAt: timestamp("updated_at").defaultNow().onUpdateNow().notNull(),

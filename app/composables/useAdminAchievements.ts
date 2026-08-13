@@ -11,7 +11,7 @@ export const useAdminAchievements = () => {
     isLoading.value = true
     error.value = null
     try {
-      const { data } = await $fetch<{ success: boolean; data: Achievement[] }>('/api/achievements')
+      const { data } = await $fetch<{ success: boolean; data: Achievement[] }>('/api/admin/achievements')
       achievements.value = data
     } catch (err: any) {
       error.value = err

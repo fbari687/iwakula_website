@@ -2,10 +2,6 @@ import { productRepository } from '~~/server/repositories/productRepository'
 import { productUpdateSchema } from '~~/server/validators/product'
 import { deletePublicFile } from '~~/server/utils/fileStorage'
 
-function generateSlug(text: string) {
-  return text.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)+/g, '')
-}
-
 export default defineEventHandler(async (event) => {
   try {
     const id = parseInt(event.context.params?.id || '0')
@@ -20,14 +16,8 @@ export default defineEventHandler(async (event) => {
     }
 
     let finalSlug = existingProduct.slug
-    if (data.slug || data.name) {
-      finalSlug = data.slug || generateSlug(data.name || existingProduct.name)
-      if (finalSlug !== existingProduct.slug) {
-        const existingSlug = await productRepository.getBySlug(finalSlug)
-        if (existingSlug) {
-          throw createError({ statusCode: 409, statusMessage: 'Conflict: Slug sudah digunakan oleh produk lain.' })
-        }
-      }
+    if (data.name && data.name !== existingProduct.name) {
+      finalSlug = await generateUniqueSlug('products', data.name, id)
     }
 
     // Jika gambar utama diganti, hapus gambar utama lama dari /uploads

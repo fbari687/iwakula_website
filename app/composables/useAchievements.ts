@@ -7,9 +7,14 @@ interface ApiResponse<T> {
 }
 
 export const useAchievements = () => {
+  const { locale } = useI18n();
+
   const fetchAchievements = () => {
     return useFetch<ApiResponse<Achievement[]>>("/api/achievements", {
-      key: "achievements-list",
+      key: `achievements-list-${locale.value}`,
+      query: {
+        locale,
+      },
     });
   };
 

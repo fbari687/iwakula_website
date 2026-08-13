@@ -22,23 +22,14 @@
     >
       <form @submit.prevent="handleSubmit" class="flex flex-col">
         
-        <!-- SECTION 1: Informasi Dasar -->
+        <!-- SECTION 1: Informasi Konten Multibahasa & Kategori -->
         <div class="p-5 sm:p-8 space-y-6">
           <div class="border-b border-[#E7E1D8] pb-4 mb-2">
-            <h2 class="text-base sm:text-lg font-semibold text-[#24324A]">Informasi Dasar</h2>
-            <p class="text-xs sm:text-sm text-[#6B7280]">Identitas utama produk yang ditampilkan di katalog publik.</p>
+            <h2 class="text-base sm:text-lg font-semibold text-[#24324A]">Informasi & Konten Multibahasa</h2>
+            <p class="text-xs sm:text-sm text-[#6B7280]">Isi nama, varian, keunggulan, dan deskripsi produk dalam Bahasa Indonesia dan Bahasa Inggris (opsional).</p>
           </div>
 
-          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <UFormField label="Nama Produk" required :ui="adminFormFieldUi">
-              <UInput 
-                v-model="form.name" 
-                placeholder="Misal: Ikan Asap Cakalang" 
-                class="w-full"
-                :ui="adminInputUi"
-              />
-            </UFormField>
-
+          <div>
             <UFormField label="Kategori Produk" required :ui="adminFormFieldUi">
               <USelect 
                 v-model="form.categoryId" 
@@ -50,26 +41,92 @@
             </UFormField>
           </div>
 
-          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <UFormField label="Slug URL" description="Dihasilkan otomatis dari nama produk, atau edit manual." :ui="adminFormFieldUi">
-              <UInput 
-                v-model="form.slug" 
-                placeholder="ikan-asap-cakalang" 
-                class="w-full"
-                :ui="adminInputUi"
-                @input="handleSlugInput"
-              />
-            </UFormField>
+          <UTabs
+            color="primary"
+            variant="pill"
+            :items="[
+              { label: '🇮🇩 Bahasa Indonesia (Utama)', slot: 'id' },
+              { label: '🇬🇧 English (Opsional)', slot: 'en' }
+            ]"
+            :ui="{
+              list: 'bg-[#F3EEE8] p-1 rounded-xl w-full sm:w-fit',
+              trigger: 'data-[state=active]:bg-[#C65A3A] data-[state=active]:text-white font-medium text-xs sm:text-sm rounded-lg px-4 py-2 cursor-pointer transition-all'
+            }"
+          >
+            <template #id>
+              <div class="space-y-6 pt-4">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  <UFormField label="Nama Produk (ID)" required :ui="adminFormFieldUi">
+                    <UInput 
+                      v-model="form.name" 
+                      placeholder="Misal: Ikan Asap Cakalang" 
+                      class="w-full"
+                      :ui="adminInputUi"
+                    />
+                  </UFormField>
 
-            <UFormField label="Subjudul / Varian" required description="Keterangan singkat / berat bersih produk." :ui="adminFormFieldUi">
-              <UInput 
-                v-model="form.subTitle" 
-                placeholder="Misal: 500gr / Pedas Manis" 
-                class="w-full"
-                :ui="adminInputUi"
-              />
-            </UFormField>
-          </div>
+                  <UFormField label="Subjudul / Varian (ID)" required description="Keterangan singkat / berat bersih produk." :ui="adminFormFieldUi">
+                    <UInput 
+                      v-model="form.subTitle" 
+                      placeholder="Misal: 500gr / Pedas Manis" 
+                      class="w-full"
+                      :ui="adminInputUi"
+                    />
+                  </UFormField>
+                </div>
+
+                <UFormField label="Keunggulan Produk (ID)" description="Pisahkan dengan tanda koma (,)" :ui="adminFormFieldUi">
+                  <UInput 
+                    v-model="form.highlights" 
+                    placeholder="Misal: Tanpa Pengawet, Tinggi Protein" 
+                    class="w-full"
+                    :ui="adminInputUi"
+                  />
+                </UFormField>
+
+                <UFormField label="Deskripsi Produk (ID)" required :ui="adminFormFieldUi">
+                  <TiptapEditor v-model="form.description" />
+                </UFormField>
+              </div>
+            </template>
+
+            <template #en>
+              <div class="space-y-6 pt-4">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  <UFormField label="Product Name (EN)" description="Opsional: Nama produk dalam Bahasa Inggris." :ui="adminFormFieldUi">
+                    <UInput 
+                      v-model="form.nameEn" 
+                      placeholder="e.g. Smoked Skipjack Tuna" 
+                      class="w-full"
+                      :ui="adminInputUi"
+                    />
+                  </UFormField>
+
+                  <UFormField label="Subtitle / Variant (EN)" description="Opsional: Keterangan / berat dalam Bahasa Inggris." :ui="adminFormFieldUi">
+                    <UInput 
+                      v-model="form.subTitleEn" 
+                      placeholder="e.g. 500g / Spicy Sweet" 
+                      class="w-full"
+                      :ui="adminInputUi"
+                    />
+                  </UFormField>
+                </div>
+
+                <UFormField label="Product Highlights (EN)" description="Opsional: Pisahkan dengan tanda koma (,)" :ui="adminFormFieldUi">
+                  <UInput 
+                    v-model="form.highlightsEn" 
+                    placeholder="e.g. No Preservatives, High Protein" 
+                    class="w-full"
+                    :ui="adminInputUi"
+                  />
+                </UFormField>
+
+                <UFormField label="Product Description (EN)" description="Opsional: Deskripsi lengkap dalam Bahasa Inggris." :ui="adminFormFieldUi">
+                  <TiptapEditor v-model="form.descriptionEn" />
+                </UFormField>
+              </div>
+            </template>
+          </UTabs>
 
           <div class="grid grid-cols-1 md:grid-cols-2 gap-6 items-start">
             <div class="space-y-4">
@@ -97,20 +154,9 @@
             </UFormField>
           </div>
 
-          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <UFormField label="Keunggulan Produk" description="Pisahkan dengan tanda koma (,)" :ui="adminFormFieldUi">
-              <UInput 
-                v-model="form.highlights" 
-                placeholder="Misal: Tanpa Pengawet, Tinggi Protein" 
-                class="w-full"
-                :ui="adminInputUi"
-              />
-            </UFormField>
-
-            <div class="flex flex-col gap-4 mt-2 md:mt-7">
-              <UCheckbox v-model="form.isAvailable" label="Tersedia (Ready Stock)" :ui="adminCheckboxUi" />
-              <UCheckbox v-model="form.isFeatured" label="Jadikan Produk Unggulan (Featured)" :ui="adminCheckboxUi" />
-            </div>
+          <div class="flex flex-col sm:flex-row gap-6">
+            <UCheckbox v-model="form.isAvailable" label="Tersedia (Ready Stock)" :ui="adminCheckboxUi" />
+            <UCheckbox v-model="form.isFeatured" label="Jadikan Produk Unggulan (Featured)" :ui="adminCheckboxUi" />
           </div>
         </div>
 
@@ -217,18 +263,6 @@
           </div>
         </div>
 
-        <!-- SECTION 4: Deskripsi Lengkap -->
-        <div class="p-5 sm:p-8 border-t border-[#E7E1D8] space-y-6">
-          <div class="border-b border-[#E7E1D8] pb-4 mb-2">
-            <h2 class="text-base sm:text-lg font-semibold text-[#24324A]">Deskripsi Naratif</h2>
-            <p class="text-xs sm:text-sm text-[#6B7280]">Penjelasan mendalam mengenai bahan baku, rasa, dan keunikan produk.</p>
-          </div>
-
-          <UFormField label="Deskripsi Produk (WYSIWYG)" required :ui="adminFormFieldUi">
-            <TiptapEditor v-model="form.description" />
-          </UFormField>
-        </div>
-
         <!-- FOOTER: Tombol Aksi -->
         <div class="p-5 sm:p-8 border-t border-[#E7E1D8] bg-[#F7F6F2]/50 flex items-center justify-end gap-3 rounded-b-[20px]">
           <UButton 
@@ -253,7 +287,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, watch, onMounted, computed } from 'vue'
+import { ref, onMounted, computed } from 'vue'
 
 definePageMeta({ layout: 'admin' })
 
@@ -276,13 +310,16 @@ const categoryOptions = computed(() => {
 const form = ref({
   categoryId: undefined as number | undefined,
   name: '',
-  slug: '',
+  nameEn: '',
   subTitle: '',
+  subTitleEn: '',
   price: undefined as number | undefined,
   originalPrice: undefined as number | undefined,
   image: '',
   description: '',
+  descriptionEn: '',
   highlights: '',
+  highlightsEn: '',
   shopeeUrl: '',
   tokopediaUrl: '',
   isAvailable: true,
@@ -291,7 +328,6 @@ const form = ref({
 })
 
 const isSubmitting = ref(false)
-const isSlugEdited = ref(false)
 const isPromo = ref(false)
 const isUploading = ref(false)
 const isUploadingExtra = ref(false)
@@ -356,16 +392,6 @@ const handleExtraFileUpload = (event: Event) => {
   target.value = ''
 }
 
-watch(() => form.value.name, (newName) => {
-  if (!isSlugEdited.value) {
-    form.value.slug = newName.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)+/g, '')
-  }
-})
-
-const handleSlugInput = () => {
-  isSlugEdited.value = true
-}
-
 const uploadFile = async (file: File): Promise<string> => {
   const formData = new FormData()
   formData.append('image', file)
@@ -402,7 +428,8 @@ const handleSubmit = async () => {
 
     const payload: Record<string, any> = { 
       ...form.value,
-      highlights: form.value.highlights ? form.value.highlights.split(',').map(s => s.trim()).filter(Boolean) : []
+      highlights: form.value.highlights ? form.value.highlights.split(',').map(s => s.trim()).filter(Boolean) : [],
+      highlightsEn: form.value.highlightsEn ? form.value.highlightsEn.split(',').map(s => s.trim()).filter(Boolean) : []
     }
     if (!isPromo.value) {
       delete payload.originalPrice
@@ -410,7 +437,6 @@ const handleSubmit = async () => {
       delete payload.originalPrice
     }
     
-    if (!payload.slug) delete payload.slug
     if (!payload.categoryId) delete payload.categoryId
     if (!payload.shopeeUrl) delete payload.shopeeUrl
     if (!payload.tokopediaUrl) delete payload.tokopediaUrl
@@ -428,3 +454,5 @@ const handleSubmit = async () => {
   }
 }
 </script>
+
+<style></style>

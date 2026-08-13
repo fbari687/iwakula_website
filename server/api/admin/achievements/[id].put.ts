@@ -20,8 +20,11 @@ export default defineEventHandler(async (event) => {
 
     const payloadToUpdate = {
       badge: data.badge,
+      badgeEn: data.badgeEn,
       title: data.title,
+      titleEn: data.titleEn,
       description: data.description,
+      descriptionEn: data.descriptionEn,
       image: data.image
     }
 

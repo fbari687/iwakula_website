@@ -22,31 +22,71 @@
     >
       <form @submit.prevent="handleSubmit" class="flex flex-col">
         
-        <!-- SECTION 1: Informasi Kategori -->
+        <!-- SECTION 1: Teks Bilingual (Nama & Deskripsi) -->
         <div class="p-5 sm:p-8 space-y-6">
           <div class="border-b border-[#E7E1D8] pb-4 mb-2">
-            <h2 class="text-base sm:text-lg font-semibold text-[#24324A]">Informasi Kategori</h2>
-            <p class="text-xs sm:text-sm text-[#6B7280]">Identitas utama kategori yang ditampilkan di katalog publik.</p>
+            <h2 class="text-base sm:text-lg font-semibold text-[#24324A]">Informasi & Konten Multibahasa</h2>
+            <p class="text-xs sm:text-sm text-[#6B7280]">Isi nama dan deskripsi kategori dalam Bahasa Indonesia dan Bahasa Inggris (opsional).</p>
           </div>
 
-          <UFormField label="Nama Kategori" required :ui="adminFormFieldUi">
-            <UInput 
-              v-model="form.name" 
-              placeholder="Misal: Ikan Asap" 
-              class="w-full"
-              :ui="adminInputUi"
-            />
-          </UFormField>
+          <UTabs
+            color="primary"
+            variant="pill"
+            :items="[
+              { label: '🇮🇩 Bahasa Indonesia (Utama)', slot: 'id' },
+              { label: '🇬🇧 English (Opsional)', slot: 'en' }
+            ]"
+            :ui="{
+              list: 'bg-[#F3EEE8] p-1 rounded-xl w-full sm:w-fit',
+              trigger: 'data-[state=active]:bg-[#C65A3A] data-[state=active]:text-white font-medium text-xs sm:text-sm rounded-lg px-4 py-2 cursor-pointer transition-all'
+            }"
+          >
+            <template #id>
+              <div class="space-y-6 pt-4">
+                <UFormField label="Nama Kategori (ID)" required :ui="adminFormFieldUi">
+                  <UInput 
+                    v-model="form.name" 
+                    placeholder="Misal: Ikan Asap" 
+                    class="w-full"
+                    :ui="adminInputUi"
+                  />
+                </UFormField>
 
-          <UFormField label="Slug URL" description="Dihasilkan otomatis dari nama kategori, atau sesuaikan secara manual." :ui="adminFormFieldUi">
-            <UInput 
-              v-model="form.slug" 
-              placeholder="ikan-asap" 
-              class="w-full"
-              :ui="adminInputUi"
-              @input="handleSlugInput"
-            />
-          </UFormField>
+                <UFormField label="Deskripsi Kategori (ID)" required :ui="adminFormFieldUi">
+                  <UTextarea 
+                    v-model="form.description" 
+                    placeholder="Jelaskan karakteristik atau rasa olahan pada kategori ini dalam Bahasa Indonesia..." 
+                    :rows="4" 
+                    class="w-full"
+                    :ui="adminInputUi"
+                  />
+                </UFormField>
+              </div>
+            </template>
+
+            <template #en>
+              <div class="space-y-6 pt-4">
+                <UFormField label="Category Name (EN)" description="Opsional: Terjemahan bahasa Inggris untuk pengunjung internasional." :ui="adminFormFieldUi">
+                  <UInput 
+                    v-model="form.nameEn" 
+                    placeholder="e.g. Smoked Fish" 
+                    class="w-full"
+                    :ui="adminInputUi"
+                  />
+                </UFormField>
+
+                <UFormField label="Category Description (EN)" description="Opsional: Deskripsi kategori dalam Bahasa Inggris." :ui="adminFormFieldUi">
+                  <UTextarea 
+                    v-model="form.descriptionEn" 
+                    placeholder="Explain category characteristics in English..." 
+                    :rows="4" 
+                    class="w-full"
+                    :ui="adminInputUi"
+                  />
+                </UFormField>
+              </div>
+            </template>
+          </UTabs>
         </div>
 
         <!-- SECTION 2: Media -->
@@ -94,24 +134,6 @@
           </UFormField>
         </div>
 
-        <!-- SECTION 3: Deskripsi -->
-        <div class="p-5 sm:p-8 border-t border-[#E7E1D8] space-y-6">
-          <div class="border-b border-[#E7E1D8] pb-4 mb-2">
-            <h2 class="text-base sm:text-lg font-semibold text-[#24324A]">Deskripsi Naratif</h2>
-            <p class="text-xs sm:text-sm text-[#6B7280]">Penjelasan lengkap mengenai jenis produk yang ada di dalam kategori ini.</p>
-          </div>
-
-          <UFormField label="Deskripsi Kategori" required :ui="adminFormFieldUi">
-            <UTextarea 
-              v-model="form.description" 
-              placeholder="Jelaskan karakteristik atau rasa olahan pada kategori ini..." 
-              :rows="4" 
-              class="w-full"
-              :ui="adminInputUi"
-            />
-          </UFormField>
-        </div>
-
         <!-- FOOTER: Tombol Aksi -->
         <div class="p-5 sm:p-8 border-t border-[#E7E1D8] bg-[#F7F6F2]/50 flex items-center justify-end gap-3 rounded-b-[20px]">
           <UButton 
@@ -136,7 +158,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, watch } from 'vue'
+import { ref } from 'vue'
 
 definePageMeta({ layout: 'admin' })
 
@@ -146,13 +168,13 @@ const toast = useToast()
 
 const form = ref({
   name: '',
-  slug: '',
+  nameEn: '',
   image: '',
-  description: ''
+  description: '',
+  descriptionEn: ''
 })
 
 const isSubmitting = ref(false)
-const isSlugEdited = ref(false)
 const isUploading = ref(false)
 const imageFile = ref<File | null>(null)
 const imagePreview = ref<string>('')
@@ -187,16 +209,6 @@ const removeMainImage = () => {
   form.value.image = ''
 }
 
-watch(() => form.value.name, (newName) => {
-  if (!isSlugEdited.value) {
-    form.value.slug = newName.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)+/g, '')
-  }
-})
-
-const handleSlugInput = () => {
-  isSlugEdited.value = true
-}
-
 const handleSubmit = async () => {
   if (!form.value.image && !imageFile.value) {
     toast.add({ title: 'Gagal', description: 'Gambar kategori wajib diisi', color: 'error' })
@@ -205,8 +217,7 @@ const handleSubmit = async () => {
 
   isSubmitting.value = true
   
-  const { slug, ...rest } = form.value
-  const payload = slug ? { ...form.value } : rest
+  const payload = { ...form.value }
 
   try {
     if (imageFile.value) {
@@ -238,3 +249,5 @@ const handleSubmit = async () => {
   }
 }
 </script>
+
+<style></style>

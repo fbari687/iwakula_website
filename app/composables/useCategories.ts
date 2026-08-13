@@ -7,9 +7,14 @@ interface ApiResponse<T> {
 }
 
 export const useCategories = () => {
+  const { locale } = useI18n();
+
   const fetchCategories = (options = {}) => {
     return useFetch<ApiResponse<Category[]>>("/api/categories", {
-      key: "categories-list",
+      key: `categories-list-${locale.value}`,
+      query: {
+        locale,
+      },
       ...options,
     });
   };

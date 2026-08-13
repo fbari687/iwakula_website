@@ -1,8 +1,9 @@
 import { achievementRepository } from '~~/server/repositories/achievementRepository'
 
-export default defineEventHandler(async () => {
+export default defineEventHandler(async (event) => {
   try {
-    const data = await achievementRepository.getAll()
+    const locale = getHeaderOrQueryLocale(event)
+    const data = await achievementRepository.getAll({ locale })
 
     return {
       success: true,

@@ -223,7 +223,7 @@ Menjadikan website Iwakula siap untuk pasar internasional dengan mendukung **Bah
 
 ---
 
-## Sprint 8: CMS Multilingual Content
+## Sprint 8: CMS Multilingual Content (Selesai)
 
 ### Tujuan
 

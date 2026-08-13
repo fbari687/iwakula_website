@@ -20,21 +20,19 @@ export default defineEventHandler(async (event) => {
       throw createError({ statusCode: 404, statusMessage: 'Not Found: Kategori tidak ditemukan.' })
     }
 
-    // SEO-preservation slug policy
-    const finalSlug = data.slug || existingCategory.slug
-
-    if (finalSlug !== existingCategory.slug) {
-      const slugConflict = await categoryRepository.getBySlug(finalSlug)
-      if (slugConflict) {
-        throw createError({ statusCode: 409, statusMessage: 'Conflict: Slug sudah digunakan oleh kategori lain.' })
-      }
+    // Jika nama diperbarui, secara otomatis perbarui slug secara unik
+    let finalSlug = existingCategory.slug
+    if (data.name && data.name !== existingCategory.name) {
+      finalSlug = await generateUniqueSlug('categories', data.name, id)
     }
 
     const payloadToUpdate = {
       name: data.name,
+      nameEn: data.nameEn,
       slug: finalSlug,
       image: data.image,
-      description: data.description
+      description: data.description,
+      descriptionEn: data.descriptionEn
     }
 
     Object.keys(payloadToUpdate).forEach(key => {

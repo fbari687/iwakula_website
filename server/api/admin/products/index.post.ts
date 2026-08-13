@@ -1,20 +1,13 @@
 import { productRepository } from '~~/server/repositories/productRepository'
 import { productCreateSchema } from '~~/server/validators/product'
 
-function generateSlug(text: string) {
-  return text.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)+/g, '')
-}
-
 export default defineEventHandler(async (event) => {
   try {
     const body = await readBody(event)
     const data = productCreateSchema.parse(body)
     
-    const finalSlug = data.slug || generateSlug(data.name)
-    const existing = await productRepository.getBySlug(finalSlug)
-    if (existing) {
-      throw createError({ statusCode: 409, statusMessage: 'Conflict: Slug sudah digunakan oleh produk lain.' })
-    }
+    // Auto-generate unique slug
+    const finalSlug = await generateUniqueSlug('products', data.name)
 
     const newId = await productRepository.create({
       ...data,

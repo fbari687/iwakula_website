@@ -2,10 +2,11 @@ import { productRepository } from '~~/server/repositories/productRepository'
 
 export default defineEventHandler(async (event) => {
   try {
+    const locale = getHeaderOrQueryLocale(event)
     const slug = event.context.params?.slug
     if (!slug) throw createError({ statusCode: 400, statusMessage: 'Slug tidak valid' })
 
-    const product = await productRepository.getBySlug(slug)
+    const product = await productRepository.getBySlug(slug, { locale })
     if (!product) throw createError({ statusCode: 404, statusMessage: 'Produk tidak ditemukan' })
 
     return {

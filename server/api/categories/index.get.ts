@@ -2,7 +2,8 @@ import { categoryRepository } from '~~/server/repositories/categoryRepository'
 
 export default defineEventHandler(async (event) => {
   try {
-    const categoriesList = await categoryRepository.getAll();
+    const locale = getHeaderOrQueryLocale(event);
+    const categoriesList = await categoryRepository.getAll({ locale });
 
     return {
       success: true,

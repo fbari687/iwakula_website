@@ -18,7 +18,7 @@ export const useAdminProducts = () => {
 
   const fetchCategories = async () => {
     try {
-      const { data } = await $fetch<{ success: boolean; data: Category[] }>('/api/categories')
+      const { data } = await $fetch<{ success: boolean; data: Category[] }>('/api/admin/categories')
       categories.value = data
     } catch (err: any) {
       console.error('Failed to fetch categories:', err)

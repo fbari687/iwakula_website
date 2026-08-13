@@ -29,30 +29,89 @@
     >
       <form @submit.prevent="handleSubmit" class="flex flex-col">
         
-        <!-- SECTION 1: Informasi Utama -->
+        <!-- SECTION 1: Informasi & Konten Multibahasa -->
         <div class="p-5 sm:p-8 space-y-6">
           <div class="border-b border-[#E7E1D8] pb-4 mb-2">
-            <h2 class="text-base sm:text-lg font-semibold text-[#24324A]">Informasi Pencapaian</h2>
-            <p class="text-xs sm:text-sm text-[#6B7280]">Identitas utama penghargaan atau pencapaian yang diraih.</p>
+            <h2 class="text-base sm:text-lg font-semibold text-[#24324A]">Informasi & Konten Multibahasa</h2>
+            <p class="text-xs sm:text-sm text-[#6B7280]">Identitas utama penghargaan atau pencapaian dalam Bahasa Indonesia dan Bahasa Inggris (opsional).</p>
           </div>
 
-          <UFormField label="Badge / Label" required description="Kategori atau tahun pencapaian (Misal: Penghargaan 2024, Sertifikasi, UMKM Hero)." :ui="adminFormFieldUi">
-            <UInput 
-              v-model="form.badge" 
-              placeholder="Misal: Penghargaan 2024" 
-              class="w-full"
-              :ui="adminInputUi"
-            />
-          </UFormField>
+          <UTabs
+            color="primary"
+            variant="pill"
+            :items="[
+              { label: '🇮🇩 Bahasa Indonesia (Utama)', slot: 'id' },
+              { label: '🇬🇧 English (Opsional)', slot: 'en' }
+            ]"
+            :ui="{
+              list: 'bg-[#F3EEE8] p-1 rounded-xl w-full sm:w-fit',
+              trigger: 'data-[state=active]:bg-[#C65A3A] data-[state=active]:text-white font-medium text-xs sm:text-sm rounded-lg px-4 py-2 cursor-pointer transition-all'
+            }"
+          >
+            <template #id>
+              <div class="space-y-6 pt-4">
+                <UFormField label="Badge / Label (ID)" required description="Kategori atau tahun pencapaian (Misal: Penghargaan 2024, Sertifikasi, UMKM Hero)." :ui="adminFormFieldUi">
+                  <UInput 
+                    v-model="form.badge" 
+                    placeholder="Misal: Penghargaan 2024" 
+                    class="w-full"
+                    :ui="adminInputUi"
+                  />
+                </UFormField>
 
-          <UFormField label="Judul Pencapaian" required description="Nama lengkap gelar atau penghargaan yang diterima." :ui="adminFormFieldUi">
-            <UInput 
-              v-model="form.title" 
-              placeholder="Misal: Top 350 UMKM PFpreneur 2024" 
-              class="w-full"
-              :ui="adminInputUi"
-            />
-          </UFormField>
+                <UFormField label="Judul Pencapaian (ID)" required description="Nama lengkap gelar atau penghargaan yang diterima." :ui="adminFormFieldUi">
+                  <UInput 
+                    v-model="form.title" 
+                    placeholder="Misal: Top 350 UMKM PFpreneur 2024" 
+                    class="w-full"
+                    :ui="adminInputUi"
+                  />
+                </UFormField>
+
+                <UFormField label="Deskripsi Lengkap (ID)" required :ui="adminFormFieldUi">
+                  <UTextarea 
+                    v-model="form.description" 
+                    placeholder="Jelaskan secara singkat latar belakang dan makna pencapaian ini..." 
+                    :rows="4" 
+                    class="w-full"
+                    :ui="adminInputUi"
+                  />
+                </UFormField>
+              </div>
+            </template>
+
+            <template #en>
+              <div class="space-y-6 pt-4">
+                <UFormField label="Badge / Label (EN)" description="Opsional: Label pencapaian Bahasa Inggris." :ui="adminFormFieldUi">
+                  <UInput 
+                    v-model="form.badgeEn" 
+                    placeholder="e.g. Award 2024" 
+                    class="w-full"
+                    :ui="adminInputUi"
+                  />
+                </UFormField>
+
+                <UFormField label="Achievement Title (EN)" description="Opsional: Judul pencapaian Bahasa Inggris." :ui="adminFormFieldUi">
+                  <UInput 
+                    v-model="form.titleEn" 
+                    placeholder="e.g. Top 350 MSME PFpreneur 2024" 
+                    class="w-full"
+                    :ui="adminInputUi"
+                  />
+                </UFormField>
+
+                <UFormField label="Full Description (EN)" description="Opsional: Deskripsi pencapaian Bahasa Inggris." :ui="adminFormFieldUi">
+                  <UTextarea 
+                    v-model="form.descriptionEn" 
+                    placeholder="Explain the achievement background in English..." 
+                    :rows="4" 
+                    class="w-full"
+                    :ui="adminInputUi"
+                  />
+                </UFormField>
+              </div>
+            </template>
+          </UTabs>
         </div>
 
         <!-- SECTION 2: Media -->
@@ -100,24 +159,6 @@
           </UFormField>
         </div>
 
-        <!-- SECTION 3: Deskripsi -->
-        <div class="p-5 sm:p-8 border-t border-[#E7E1D8] space-y-6">
-          <div class="border-b border-[#E7E1D8] pb-4 mb-2">
-            <h2 class="text-base sm:text-lg font-semibold text-[#24324A]">Deskripsi Naratif</h2>
-            <p class="text-xs sm:text-sm text-[#6B7280]">Penjelasan lengkap mengenai konteks dan pentingnya pencapaian ini.</p>
-          </div>
-
-          <UFormField label="Deskripsi Lengkap" required :ui="adminFormFieldUi">
-            <UTextarea 
-              v-model="form.description" 
-              placeholder="Jelaskan secara singkat latar belakang dan makna pencapaian ini..." 
-              :rows="4" 
-              class="w-full"
-              :ui="adminInputUi"
-            />
-          </UFormField>
-        </div>
-
         <!-- FOOTER: Tombol Aksi -->
         <div class="p-5 sm:p-8 border-t border-[#E7E1D8] bg-[#F7F6F2]/50 flex items-center justify-end gap-3 rounded-b-[20px]">
           <UButton 
@@ -155,9 +196,12 @@ const achievementId = parseInt(route.params.id as string)
 
 const form = ref({
   badge: '',
+  badgeEn: '',
   title: '',
+  titleEn: '',
   image: '',
-  description: ''
+  description: '',
+  descriptionEn: ''
 })
 
 const isFetching = ref(true)
@@ -180,9 +224,12 @@ onMounted(async () => {
 
   form.value = {
     badge: data.badge,
+    badgeEn: data.badgeEn || '',
     title: data.title,
+    titleEn: data.titleEn || '',
     image: data.image,
-    description: data.description
+    description: data.description,
+    descriptionEn: data.descriptionEn || ''
   }
 
   isFetching.value = false
@@ -262,3 +309,5 @@ const handleSubmit = async () => {
   }
 }
 </script>
+
+<style></style>

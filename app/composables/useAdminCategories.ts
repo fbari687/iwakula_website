@@ -7,12 +7,12 @@ export const useAdminCategories = () => {
   
   const toast = useToast()
 
-  // Ambil daftar kategori dari endpoint publik (Single Source of Truth)
+  // Ambil daftar kategori dari endpoint admin (Raw Admin Data)
   const fetchCategories = async () => {
     isLoading.value = true
     error.value = null
     try {
-      const { data } = await $fetch<{ success: boolean; data: Category[] }>('/api/categories')
+      const { data } = await $fetch<{ success: boolean; data: Category[] }>('/api/admin/categories')
       categories.value = data
     } catch (err: any) {
       error.value = err
@@ -24,10 +24,12 @@ export const useAdminCategories = () => {
 
   // Mengambil kategori tunggal
   const fetchCategory = async (id: number) => {
-    if (!categories.value.length) {
-      await fetchCategories()
+    try {
+      const { data } = await $fetch<{ success: boolean; data: Category }>(`/api/admin/categories/${id}`)
+      return data
+    } catch (err) {
+      return categories.value.find(c => c.id === id) || null
     }
-    return categories.value.find(c => c.id === id) || null
   }
 
   // Operasi CUD (Create, Update, Delete)
