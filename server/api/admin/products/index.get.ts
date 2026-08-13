@@ -13,10 +13,16 @@ export default defineEventHandler(async (event) => {
       message: 'Berhasil mengambil daftar produk',
       data: products
     }
-  } catch (error) {
+  } catch (error: any) {
     throw createError({
       statusCode: 500,
-      statusMessage: 'Gagal mengambil data produk dari server'
+      statusMessage: 'Gagal mengambil data produk dari server',
+      data: {
+        message: error?.message,
+        code: error?.code,
+        errno: error?.errno,
+        sqlState: error?.sqlState,
+      }
     })
   }
 })
