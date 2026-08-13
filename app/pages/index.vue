@@ -2,7 +2,7 @@
   <div class="flex flex-col bg-bone overflow-x-hidden">
     <!-- Hero Section -->
     <main class="relative min-h-[85vh] md:min-h-screen w-full flex items-center justify-center">
-      <NuxtImg src="/images/bg.jpg" alt="Background" preload fetchpriority="high" loading="eager" class="absolute inset-0 h-full w-full object-cover object-center" />
+      <NuxtImg src="/images/bg.jpg" alt="IWAKULA Hero Background" preload fetchpriority="high" loading="eager" sizes="xs:100vw sm:100vw lg:1920px" class="absolute inset-0 h-full w-full object-cover object-center" />
 
       <div class="bg-black/60 w-full h-full absolute inset-0 flex items-center justify-center">
         <div class="container w-full mx-auto px-4 sm:px-6 md:px-10 flex items-center justify-center py-20">
@@ -136,13 +136,13 @@
     <!-- About Section -->
     <section class="w-full bg-[#F3F2FF] px-4 sm:px-6 md:px-10 py-12 md:py-20 text-white">
       <div class="w-full container mx-auto grid grid-cols-1 lg:grid-cols-2 items-center justify-between gap-8 lg:gap-20">
-        <NuxtImg src="/images/owner.webp" alt="owner" loading="lazy" format="webp" class="aspect-square w-full max-w-md mx-auto lg:max-w-none rounded-2xl object-cover object-center" />
+        <NuxtImg src="/images/owner.webp" alt="Foto Pendiri Iwakula" loading="lazy" format="webp" class="aspect-square w-full max-w-md mx-auto lg:max-w-none rounded-2xl object-cover object-center" />
         <div class="flex flex-col gap-4 sm:gap-6">
           <h2 class="font-sans text-2xl sm:text-4xl lg:text-5xl font-bold leading-tight lg:leading-14 text-nottooblack">{{ $t("home.aboutTitle") }}</h2>
           <p class="text-[#374151] text-base sm:text-lg text-left sm:text-justify leading-relaxed">
             {{ $t("home.aboutText") }}
           </p>
-          <NuxtLink :to="localePath('/about')" class="flex items-center justify-start gap-2 text-primary text-sm sm:text-base font-semibold transition-all duration-150 hover:gap-3 mt-2">
+          <NuxtLink :to="localePath('/about')" aria-label="Baca selengkapnya tentang perjalanan Iwakula" class="flex items-center justify-start gap-2 text-primary text-sm sm:text-base font-semibold transition-all duration-150 hover:gap-3 mt-2">
             <span>{{ $t("home.aboutReadMore") }}</span>
             <Icon name="i-lucide-arrow-right" class="w-4 h-4 sm:w-5 sm:h-5" />
           </NuxtLink>
@@ -165,10 +165,11 @@ usePageSeo({
 const { fetchCategories } = useCategories();
 const { fetchProducts } = useProducts();
 
-const { data: categoryResponse } = await fetchCategories();
+const [{ data: categoryResponse }, { data: productResponse, pending: productsPending }] = await Promise.all([
+  fetchCategories(),
+  fetchProducts({ limit: 4 }),
+]);
 const categories = computed(() => categoryResponse.value?.data || []);
-
-const { data: productResponse, pending: productsPending } = await fetchProducts({ limit: 4 });
 const products = computed(() => productResponse.value?.data || []);
 
 const legalities = computed(() => [

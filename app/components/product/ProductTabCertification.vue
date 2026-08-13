@@ -19,7 +19,7 @@
         </div>
       </div>
 
-      <button type="button" class="text-xs sm:text-sm font-bold text-primary hover:text-primary/80 transition-colors cursor-pointer shrink-0" @click="openModal(cert)">{{ $t("products.viewCert") }}</button>
+      <button type="button" class="text-xs sm:text-sm font-bold text-primary hover:text-primary/80 transition-colors cursor-pointer shrink-0" :aria-label="'Lihat sertifikat ' + cert.title" @click="openModal(cert)">{{ $t("products.viewCert") }}</button>
     </div>
 
     <!-- MODAL PREVIEW SERTIFIKAT (Nuxt UI v4) -->
@@ -36,12 +36,12 @@
             <h3 class="text-xs sm:text-sm font-semibold text-[#171B2B]">
               {{ selectedCert.title }}
             </h3>
-            <UButton icon="i-lucide-x" color="neutral" variant="ghost" size="xs" class="text-gray-500 hover:text-gray-700 cursor-pointer p-1" @click="isOpen = false" />
+            <UButton icon="i-lucide-x" color="neutral" variant="ghost" size="xs" aria-label="Tutup modal sertifikat" class="text-gray-500 hover:text-gray-700 cursor-pointer p-1" @click="isOpen = false" />
           </div>
 
           <!-- Preview Container (Image / Placeholder) -->
           <div class="w-full aspect-3/4 bg-[#F0EFFC] rounded-xl border border-dashed border-[#C5C0F5] flex flex-col items-center justify-center overflow-hidden">
-            <img v-if="selectedCert.imageUrl" :src="selectedCert.imageUrl" :alt="selectedCert.title" class="w-full h-full object-contain" />
+            <img v-if="selectedCert.imageUrl" :src="selectedCert.imageUrl" :alt="'Preview ' + selectedCert.title" class="w-full h-full object-contain" />
             <UIcon v-else name="i-lucide-file-text" class="w-12 h-12 text-[#9A93DB]" />
           </div>
 
@@ -54,7 +54,7 @@
           </div>
 
           <!-- Action Button: Download -->
-          <a :href="selectedCert.pdfUrl || '#'" target="_blank" download class="w-full py-3 px-4 bg-primary text-white font-bold text-sm rounded-xl flex items-center justify-center gap-2 hover:bg-primary/90 transition-colors">
+          <a :href="selectedCert.pdfUrl || '#'" target="_blank" rel="noopener noreferrer" download :aria-label="'Unduh sertifikat ' + selectedCert.title" class="w-full py-3 px-4 bg-primary text-white font-bold text-sm rounded-xl flex items-center justify-center gap-2 hover:bg-primary/90 transition-colors">
             <UIcon name="i-lucide-download" class="w-4 h-4 shrink-0" />
             <span>{{ $t("products.downloadCert") }}</span>
           </a>

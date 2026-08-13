@@ -6,8 +6,8 @@
     ]"
   >
     <!-- Brand Logo -->
-    <NuxtLink :to="localePath('/')" class="shrink-0">
-      <NuxtImg src="/images/logo.png" class="h-10 lg:h-14 xl:h-17.5 transition-all duration-300" />
+    <NuxtLink :to="localePath('/')" class="shrink-0" aria-label="IWAKULA Homepage">
+      <NuxtImg src="/images/logo.png" alt="Logo IWAKULA" class="h-10 lg:h-14 xl:h-17.5 transition-all duration-300" />
     </NuxtLink>
 
     <!-- DESKTOP MENU (1024px+) -->
@@ -44,12 +44,12 @@
             item: 'bg-white hover:bg-black/80 cursor-pointer text-black hover:text-black',
           }"
         >
-          <UButton :label="locale.toUpperCase()" trailing-icon="i-lucide-chevron-down" :icon="locale === 'en' ? 'flag:us-4x3' : 'flag:id-4x3'" color="neutral" variant="ghost" class="hover:bg-white/10 text-sm xl:text-base font-bold text-white cursor-pointer" />
+          <UButton :label="locale.toUpperCase()" trailing-icon="i-lucide-chevron-down" :icon="locale === 'en' ? 'flag:us-4x3' : 'flag:id-4x3'" color="neutral" variant="ghost" aria-label="Pilih Bahasa / Select Language" class="hover:bg-white/10 text-sm xl:text-base font-bold text-white cursor-pointer" />
         </UDropdownMenu>
         <div class="h-px"></div>
       </div>
 
-      <NuxtLink :to="whatsappLink" target="_blank" class="text-white bg-primary py-2 px-3 xl:px-4 rounded-lg font-semibold text-sm xl:text-base whitespace-nowrap flex flex-col items-center justify-center gap-1 transition duration-150 hover:bg-primary/90 shrink-0">
+      <NuxtLink :to="whatsappLink" target="_blank" rel="noopener noreferrer" aria-label="Pesan Sekarang via WhatsApp" class="text-white bg-primary py-2 px-3 xl:px-4 rounded-lg font-semibold text-sm xl:text-base whitespace-nowrap flex flex-col items-center justify-center gap-1 transition duration-150 hover:bg-primary/90 shrink-0">
         <span>{{ $t("nav.orderNow") }}</span>
         <div class="h-px"></div>
       </NuxtLink>
@@ -70,13 +70,14 @@
           item: 'bg-white hover:bg-black/80 cursor-pointer text-black hover:text-black',
         }"
       >
-        <UButton :label="locale.toUpperCase()" trailing-icon="i-lucide-chevron-down" :icon="locale === 'en' ? 'flag:us-4x3' : 'flag:id-4x3'" color="neutral" variant="ghost" class="hover:bg-white/10 text-base font-bold text-white cursor-pointer" />
+        <UButton :label="locale.toUpperCase()" trailing-icon="i-lucide-chevron-down" :icon="locale === 'en' ? 'flag:us-4x3' : 'flag:id-4x3'" color="neutral" variant="ghost" aria-label="Pilih Bahasa / Select Language" class="hover:bg-white/10 text-base font-bold text-white cursor-pointer" />
       </UDropdownMenu>
-      <UButton icon="i-lucide-menu" color="neutral" variant="ghost" class="text-white text-2xl p-2 cursor-pointer" @click="isMobileMenuOpen = true" />
+      <UButton icon="i-lucide-menu" color="neutral" variant="ghost" aria-label="Buka Menu Navigasi" :aria-expanded="isMobileMenuOpen" aria-controls="mobile-nav-drawer" class="text-white text-2xl p-2 cursor-pointer" @click="isMobileMenuOpen = true" />
     </div>
 
     <!-- MOBILE SIDEBAR / DRAWER (Nuxt UI v4) -->
     <UDrawer
+      id="mobile-nav-drawer"
       v-model:open="isMobileMenuOpen"
       direction="right"
       :handle="false"
@@ -89,12 +90,12 @@
           <div>
             <!-- Header Drawer Mobile (Logo + Close Button) -->
             <div class="flex items-center justify-between pb-6 border-b border-gray-100 mb-6">
-              <NuxtImg src="/images/logo.png" class="h-10" />
-              <UButton icon="i-lucide-x" color="neutral" variant="ghost" class="text-gray-700 text-xl cursor-pointer" @click="isMobileMenuOpen = false" />
+              <NuxtImg src="/images/logo.png" alt="Logo IWAKULA" class="h-10" />
+              <UButton icon="i-lucide-x" color="neutral" variant="ghost" aria-label="Tutup Menu Navigasi" class="text-gray-700 text-xl cursor-pointer" @click="isMobileMenuOpen = false" />
             </div>
 
             <!-- Links Navigasi Mobile -->
-            <nav class="flex flex-col gap-2 font-semibold text-lg text-gray-800">
+            <nav class="flex flex-col gap-2 font-semibold text-lg text-gray-800" aria-label="Mobile Menu">
               <NuxtLink :to="localePath('/')" class="hover:text-primary transition-colors py-3 px-1" @click="isMobileMenuOpen = false"> {{ $t("nav.home") }} </NuxtLink>
               <NuxtLink :to="localePath('/products')" class="hover:text-primary transition-colors py-3 px-1" @click="isMobileMenuOpen = false"> {{ $t("nav.products") }} </NuxtLink>
               <NuxtLink :to="localePath('/services')" class="hover:text-primary transition-colors py-3 px-1" @click="isMobileMenuOpen = false"> {{ $t("nav.services") }} </NuxtLink>
@@ -104,7 +105,7 @@
 
           <!-- Bottom Actions -->
           <div class="flex flex-col gap-4 pt-6 border-t border-gray-100">
-            <NuxtLink :to="whatsappLink" target="_blank" class="w-full text-center text-white bg-primary py-3 px-4 rounded-lg font-semibold text-base transition duration-150 hover:bg-primary/90" @click="isMobileMenuOpen = false">
+            <NuxtLink :to="whatsappLink" target="_blank" rel="noopener noreferrer" aria-label="Pesan Sekarang via WhatsApp" class="w-full text-center text-white bg-primary py-3 px-4 rounded-lg font-semibold text-base transition duration-150 hover:bg-primary/90" @click="isMobileMenuOpen = false">
               {{ $t("nav.orderNow") }}
             </NuxtLink>
           </div>

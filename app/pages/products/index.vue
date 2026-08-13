@@ -2,7 +2,7 @@
   <div class="flex flex-col gap-4 sm:gap-8 bg-bone overflow-x-hidden">
     <!-- Hero Section -->
     <main class="relative min-h-80 md:min-h-100 h-full w-full overflow-hidden">
-      <NuxtImg src="/images/bg.jpg" alt="Background" preload fetchpriority="high" loading="eager" class="absolute inset-0 h-full w-full object-cover object-center" />
+      <NuxtImg src="/images/bg.jpg" alt="Katalog Menu Olahan Ikan Iwakula Background" preload fetchpriority="high" loading="eager" class="absolute inset-0 h-full w-full object-cover object-center" />
 
       <div class="relative bg-black/60 min-h-80 md:min-h-100 h-full flex items-center">
         <div class="container w-full h-full mx-auto flex items-center justify-center">
@@ -64,11 +64,16 @@
 
 <script lang="ts" setup>
 const { t } = useI18n();
+const localePath = useLocalePath();
 const route = useRoute();
 
 usePageSeo({
   title: t("products.seoTitle"),
   description: t("products.seoDesc"),
+  breadcrumbs: [
+    { name: t("nav.home"), url: localePath("/") },
+    { name: t("nav.products"), url: localePath("/products") },
+  ],
 });
 const { fetchCategories } = useCategories();
 const { fetchProducts } = useProducts();

@@ -2,7 +2,7 @@
   <div class="flex flex-col gap-4 sm:gap-10 bg-bone overflow-x-hidden">
     <!-- Hero Section -->
     <main class="relative min-h-105 sm:min-h-150 h-full w-full overflow-hidden">
-      <NuxtImg src="/images/layanan.jpg" alt="Background" preload fetchpriority="high" loading="eager" class="absolute inset-0 h-full w-full object-cover object-center" />
+      <NuxtImg src="/images/layanan.jpg" alt="Layanan dan Kemitraan Iwakula Background" preload fetchpriority="high" loading="eager" class="absolute inset-0 h-full w-full object-cover object-center" />
 
       <div class="relative bg-black/65 min-h-105 sm:min-h-150 h-full flex items-center">
         <div class="container w-full mx-auto px-4 sm:px-6 md:px-10 flex items-center justify-start py-12 sm:py-20">
@@ -165,23 +165,23 @@
           <div class="lg:col-span-7 bg-[#F9F9FF] p-6 sm:p-8 rounded-xl border border-gray-200/60">
             <form @submit.prevent="handleSubmit" class="flex flex-col gap-5">
               <div class="flex flex-col gap-1.5">
-                <label class="text-sm font-semibold text-gray-800">{{ $t("services.fullName") }} <span class="text-primary">*</span></label>
-                <input v-model="form.name" type="text" required :placeholder="$t('services.namePlaceholder')" class="w-full px-4 py-3 bg-white border border-gray-300 rounded-lg text-sm focus:outline-none focus:border-primary transition-colors" />
+                <label for="service-full-name" class="text-sm font-semibold text-gray-800">{{ $t("services.fullName") }} <span class="text-primary">*</span></label>
+                <input id="service-full-name" v-model="form.name" type="text" required autocomplete="name" aria-required="true" :placeholder="$t('services.namePlaceholder')" class="w-full px-4 py-3 bg-white border border-gray-300 rounded-lg text-sm focus:outline-none focus:border-primary transition-colors" />
               </div>
 
               <div class="flex flex-col gap-1.5">
-                <label class="text-sm font-semibold text-gray-800">{{ $t("services.waNumber") }} <span class="text-primary">*</span></label>
-                <input v-model="form.phone" type="tel" required :placeholder="$t('services.waPlaceholder')" class="w-full px-4 py-3 bg-white border border-gray-300 rounded-lg text-sm focus:outline-none focus:border-primary transition-colors" />
+                <label for="service-phone" class="text-sm font-semibold text-gray-800">{{ $t("services.waNumber") }} <span class="text-primary">*</span></label>
+                <input id="service-phone" v-model="form.phone" type="tel" required autocomplete="tel" aria-required="true" :placeholder="$t('services.waPlaceholder')" class="w-full px-4 py-3 bg-white border border-gray-300 rounded-lg text-sm focus:outline-none focus:border-primary transition-colors" />
               </div>
 
               <div class="flex flex-col gap-1.5">
-                <label class="text-sm font-semibold text-gray-800">{{ $t("services.city") }} <span class="text-primary">*</span></label>
-                <input v-model="form.city" type="text" required :placeholder="$t('services.cityPlaceholder')" class="w-full px-4 py-3 bg-white border border-gray-300 rounded-lg text-sm focus:outline-none focus:border-primary transition-colors" />
+                <label for="service-city" class="text-sm font-semibold text-gray-800">{{ $t("services.city") }} <span class="text-primary">*</span></label>
+                <input id="service-city" v-model="form.city" type="text" required autocomplete="address-level2" aria-required="true" :placeholder="$t('services.cityPlaceholder')" class="w-full px-4 py-3 bg-white border border-gray-300 rounded-lg text-sm focus:outline-none focus:border-primary transition-colors" />
               </div>
 
               <div class="flex flex-col gap-1.5">
-                <label class="text-sm font-semibold text-gray-800">{{ $t("services.serviceChoice") }} <span class="text-primary">*</span></label>
-                <select v-model="form.service" class="w-full px-4 py-3 bg-white border border-gray-300 rounded-lg text-sm focus:outline-none focus:border-primary transition-colors cursor-pointer">
+                <label for="service-choice" class="text-sm font-semibold text-gray-800">{{ $t("services.serviceChoice") }} <span class="text-primary">*</span></label>
+                <select id="service-choice" v-model="form.service" aria-required="true" class="w-full px-4 py-3 bg-white border border-gray-300 rounded-lg text-sm focus:outline-none focus:border-primary transition-colors cursor-pointer">
                   <option value="Program Agen & Reseller">{{ $t("services.optAgent") }}</option>
                   <option value="Suplai Katering & Bisnis B2B">{{ $t("services.optB2b") }}</option>
                 </select>
@@ -201,10 +201,15 @@
 
 <script lang="ts" setup>
 const { t } = useI18n();
+const localePath = useLocalePath();
 
 usePageSeo({
   title: t("services.seoTitle"),
   description: t("services.seoDesc"),
+  breadcrumbs: [
+    { name: t("nav.home"), url: localePath("/") },
+    { name: t("nav.services"), url: localePath("/services") },
+  ],
 });
 
 const formatter = new Intl.NumberFormat("id-ID", {

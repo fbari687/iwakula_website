@@ -1,16 +1,21 @@
+import { useJsonLd, type BreadcrumbItemInput, type ProductSchemaInput } from "./useJsonLd";
+
 interface PageSeoOptions {
   title?: string;
   description?: string;
   image?: string;
   type?: "website" | "article" | "product";
   noindex?: boolean;
+  breadcrumbs?: BreadcrumbItemInput[];
+  productSchema?: ProductSchemaInput;
 }
 
 export const usePageSeo = (options: PageSeoOptions = {}) => {
   const { locale } = useI18n();
   const requestUrl = useRequestURL();
+  const { getOrganizationSchema, getWebSiteSchema, getBreadcrumbSchema, getProductSchema } = useJsonLd();
 
-  const siteUrl = requestUrl.origin || "https://iwakula.com";
+  const siteUrl = "https://iwakula.com";
   const currentPath = requestUrl.pathname;
 
   const defaultTitle =
@@ -26,12 +31,28 @@ export const usePageSeo = (options: PageSeoOptions = {}) => {
   const pageTitle = options.title ? `${options.title} | IWAKULA` : defaultTitle;
   const pageDescription = options.description || defaultDescription;
   const pageImage = options.image ? (options.image.startsWith("http") ? options.image : `${siteUrl}${options.image}`) : `${siteUrl}/images/logo.png`;
-  const canonicalUrl = `${siteUrl}${currentPath}`;
-
-  // Alternate URLs for hreflang
+  // Alternate URLs for hreflang & canonical
   const cleanPathNoLocale = currentPath.replace(/^\/en(\/|$)/, "/");
   const idUrl = `${siteUrl}${cleanPathNoLocale}`;
   const enUrl = `${siteUrl}${cleanPathNoLocale === "/" ? "/en" : "/en" + cleanPathNoLocale}`;
+  const canonicalUrl = locale.value === "en" ? enUrl : idUrl;
+
+  const currentLocale = locale.value === "en" ? "en_US" : "id_ID";
+  const alternateLocale = locale.value === "en" ? "id_ID" : "en_US";
+
+  // Build JSON-LD Schemas
+  const schemas: any[] = [
+    getOrganizationSchema(),
+    getWebSiteSchema(),
+  ];
+
+  if (options.breadcrumbs && options.breadcrumbs.length > 0) {
+    schemas.push(getBreadcrumbSchema(options.breadcrumbs));
+  }
+
+  if (options.productSchema) {
+    schemas.push(getProductSchema(options.productSchema));
+  }
 
   useSeoMeta({
     title: pageTitle,
@@ -41,7 +62,9 @@ export const usePageSeo = (options: PageSeoOptions = {}) => {
     ogImage: pageImage,
     ogUrl: canonicalUrl,
     ogType: (options.type || "website") as any,
-    ogLocale: locale.value === "en" ? "en_US" : "id_ID",
+    ogLocale: currentLocale,
+    ogLocaleAlternate: [alternateLocale],
+    ogSiteName: "IWAKULA",
     twitterCard: "summary_large_image",
     twitterTitle: pageTitle,
     twitterDescription: pageDescription,
@@ -51,13 +74,17 @@ export const usePageSeo = (options: PageSeoOptions = {}) => {
 
   useHead({
     htmlAttrs: {
-      lang: locale.value || "id",
+      lang: locale.value === "en" ? "en-US" : "id-ID",
     },
     link: [
       { rel: "canonical", href: canonicalUrl },
-      { rel: "alternate", hreflang: "id", href: idUrl },
-      { rel: "alternate", hreflang: "en", href: enUrl },
+      { rel: "alternate", hreflang: "id-ID", href: idUrl },
+      { rel: "alternate", hreflang: "en-US", href: enUrl },
       { rel: "alternate", hreflang: "x-default", href: idUrl },
     ],
+    script: schemas.map((schema) => ({
+      type: "application/ld+json",
+      innerHTML: JSON.stringify(schema),
+    })),
   });
 };

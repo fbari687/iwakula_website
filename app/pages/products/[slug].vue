@@ -60,7 +60,7 @@
               </span>
             </div>
           </div>
-          <h2 class="font-sans font-bold text-nottooblack text-3xl sm:text-4xl lg:text-5xl leading-tight">{{ product.name }}</h2>
+          <h1 class="font-sans font-bold text-nottooblack text-3xl sm:text-4xl lg:text-5xl leading-tight">{{ product.name }}</h1>
           <span class="font-body text-base sm:text-lg text-nottooblack">
             <NuxtLink v-if="product.category?.slug" :to="`/products?category=${product.category.slug}#${product.category.slug}`">{{ product.category?.name || 'Tanpa Kategori' }}</NuxtLink>
             <span v-else>Tanpa Kategori</span> • {{ product.subTitle }}
@@ -81,6 +81,8 @@
           <NuxtLink
             :to="`https://wa.me/${whatsappNumber}?text=Halo%20Iwakula,%20saya%20ingin%20memesan%20${encodeURIComponent(product.name)}`"
             target="_blank"
+            rel="noopener noreferrer"
+            :aria-label="'Pesan ' + product.name + ' via WhatsApp'"
             class="bg-primary py-4 w-full flex items-center justify-center text-white rounded-md font-bold font-sans text-lg cursor-pointer transition-colors duration-150 hover:bg-primary/90"
           >
             <span>{{ $t("products.orderWa") }}</span>
@@ -92,18 +94,22 @@
               v-if="product.shopeeUrl"
               :to="product.shopeeUrl"
               target="_blank"
+              rel="noopener noreferrer"
+              :aria-label="'Beli ' + product.name + ' di Shopee'"
               class="bg-white py-3 w-full flex items-center justify-center text-secondary border border-secondary rounded-md font-medium tracking-[0.7px] gap-2 font-body text-base cursor-pointer transition-colors duration-150 hover:bg-gray-100"
             >
-              <NuxtImg src="/images/shopee-icon.svg" class="h-6" />
+              <NuxtImg src="/images/shopee-icon.svg" alt="Shopee Logo" class="h-6" />
               <span>{{ $t("products.shopee") }}</span>
             </NuxtLink>
             <NuxtLink
               v-if="product.tokopediaUrl"
               :to="product.tokopediaUrl"
               target="_blank"
+              rel="noopener noreferrer"
+              :aria-label="'Beli ' + product.name + ' di Tokopedia'"
               class="bg-white py-3 w-full flex items-center justify-center text-secondary border border-secondary rounded-md font-medium tracking-[0.7px] gap-2 font-body text-base cursor-pointer transition-colors duration-150 hover:bg-gray-100"
             >
-              <NuxtImg src="/images/Tokopedia_Mascot.png" class="h-8" />
+              <NuxtImg src="/images/Tokopedia_Mascot.png" alt="Tokopedia Logo" class="h-8" />
               <span>{{ $t("products.tokopedia") }}</span>
             </NuxtLink>
           </div>
@@ -181,23 +187,43 @@ const slug = route.params.slug as string;
 const { fetchProductBySlug, fetchProducts } = useProducts();
 const { fetchContacts } = useContacts();
 
-// 1. Fetch Detail Produk Berdasarkan Slug
-const { data: productResponse, pending, error } = await fetchProductBySlug(slug);
+// Fetch Detail Produk, Contacts WA, dan Rekomendasi secara bersamaan (Parallel Fetching)
+const [
+  { data: productResponse, pending, error },
+  { data: contactResponse },
+  { data: recResponse }
+] = await Promise.all([
+  fetchProductBySlug(slug),
+  fetchContacts(),
+  fetchProducts({ limit: 4 })
+]);
+
 const product = computed(() => productResponse.value?.data);
 
-watchEffect(() => {
-  if (product.value) {
-    usePageSeo({
-      title: product.value.name,
-      description: `${product.value.name} - ${product.value.subTitle}`,
+if (product.value) {
+  usePageSeo({
+    title: product.value.name,
+    description: `${product.value.name} - ${product.value.subTitle}`,
+    image: product.value.mainImage,
+    type: "product",
+    breadcrumbs: [
+      { name: t("nav.home"), url: localePath("/") },
+      { name: t("nav.products"), url: localePath("/products") },
+      { name: product.value.category?.name || "Katalog", url: localePath(`/products?category=${product.value.category?.slug || ""}`) },
+      { name: product.value.name, url: localePath(`/products/${product.value.slug}`) },
+    ],
+    productSchema: {
+      name: product.value.name,
+      description: product.value.description ? product.value.description.replace(/<[^>]*>?/gm, "") : product.value.subTitle,
       image: product.value.mainImage,
-      type: "product",
-    });
-  }
-});
+      slug: product.value.slug,
+      price: product.value.price,
+      originalPrice: product.value.originalPrice,
+      categoryName: product.value.category?.name,
+    },
+  });
+}
 
-// 2. Fetch Nomor WhatsApp Dinamis dari Contacts API
-const { data: contactResponse } = await fetchContacts();
 const whatsappNumber = computed(() => {
   const contacts = contactResponse.value?.data || [];
   const waContact = contacts.find((item) => item.key === "whatsapp");
@@ -205,8 +231,6 @@ const whatsappNumber = computed(() => {
   return waContact.value.replace(/\D/g, ""); // Bersihkan dari karakter non-angka
 });
 
-// 3. Fetch Rekomendasi 4 Produk
-const { data: recResponse } = await fetchProducts({ limit: 4 });
 const recommendationProducts = computed(() => {
   const allProducts = recResponse.value?.data || [];
   // Filter agar produk yang sedang dilihat tidak muncul di rekomendasi

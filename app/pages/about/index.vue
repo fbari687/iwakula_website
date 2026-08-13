@@ -2,7 +2,7 @@
   <div class="flex flex-col bg-bone overflow-x-hidden">
     <!-- Hero Section -->
     <main class="relative min-h-90 md:min-h-100 h-full w-full overflow-hidden">
-      <NuxtImg src="/images/laut.jpg" alt="Background" preload fetchpriority="high" loading="eager" format="webp" class="absolute inset-0 h-full w-full object-cover object-center" />
+      <NuxtImg src="/images/laut.jpg" alt="Pemandangan Laut Nusantara Iwakula" preload fetchpriority="high" loading="eager" format="webp" class="absolute inset-0 h-full w-full object-cover object-center" />
 
       <div class="relative bg-black/40 min-h-90 md:min-h-100 h-full flex items-center">
         <div class="container w-full h-full mx-auto flex items-center justify-center">
@@ -18,9 +18,9 @@
     <!-- About Section -->
     <section class="w-full px-4 sm:px-6 md:px-10 py-12 md:py-20 text-white">
       <div class="w-full container mx-auto grid grid-cols-1 lg:grid-cols-2 items-center justify-between gap-8 lg:gap-20">
-        <NuxtImg src="/images/owner.webp" alt="owner" loading="lazy" format="webp" class="aspect-square w-full max-w-md mx-auto lg:max-w-none rounded-2xl object-cover object-center" />
+        <NuxtImg src="/images/owner.webp" alt="Foto Pendiri Iwakula" loading="lazy" format="webp" class="aspect-square w-full max-w-md mx-auto lg:max-w-none rounded-2xl object-cover object-center" />
         <div class="flex flex-col gap-4 md:gap-6">
-          <h2 class="font-body text-sm md:text-base font-bold text-primary tracking-wider">{{ $t("about.badge") }}</h2>
+          <p class="font-body text-sm md:text-base font-bold text-primary tracking-wider">{{ $t("about.badge") }}</p>
           <h2 class="font-sans text-3xl sm:text-4xl lg:text-5xl font-bold leading-tight lg:leading-14 text-nottooblack">{{ $t("about.heading") }}</h2>
           <p class="text-[#374151] text-base md:text-lg text-left sm:text-justify leading-relaxed">
             {{ $t("about.narrative") }}
@@ -152,10 +152,15 @@
 
 <script lang="ts" setup>
 const { t } = useI18n();
+const localePath = useLocalePath();
 
 usePageSeo({
   title: t("about.seoTitle"),
   description: t("about.seoDesc"),
+  breadcrumbs: [
+    { name: t("nav.home"), url: localePath("/") },
+    { name: t("nav.about"), url: localePath("/about") },
+  ],
 });
 
 const { fetchAchievements } = useAchievements();
