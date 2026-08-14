@@ -26,7 +26,7 @@
           <span class="text-xs sm:text-sm text-center">{{ $t("home.stats.since") }}</span>
         </div>
         <div class="flex flex-col gap-1 sm:gap-2 items-center">
-          <span class="text-accent font-bold text-2xl sm:text-3xl lg:text-4xl">7</span>
+          <span class="text-accent font-bold text-2xl sm:text-3xl lg:text-4xl">{{ totalVariantsCount }}</span>
           <span class="text-xs sm:text-sm text-center">{{ $t("home.stats.variants") }}</span>
         </div>
         <div class="flex flex-col gap-1 sm:gap-2 items-center">
@@ -34,8 +34,8 @@
           <span class="text-xs sm:text-sm text-center">{{ $t("home.stats.halal") }}</span>
         </div>
         <div class="flex flex-col gap-1 sm:gap-2 items-center">
-          <span class="text-accent font-bold text-2xl sm:text-3xl lg:text-4xl">50+</span>
-          <span class="text-xs sm:text-sm text-center">{{ $t("home.stats.partners") }}</span>
+          <span class="text-accent font-bold text-2xl sm:text-3xl lg:text-4xl">100%</span>
+          <span class="text-xs sm:text-sm text-center">{{ $t("home.stats.quality") }}</span>
         </div>
       </div>
     </section>
@@ -167,10 +167,12 @@ const { fetchProducts } = useProducts();
 
 const [{ data: categoryResponse }, { data: productResponse, pending: productsPending }] = await Promise.all([
   fetchCategories(),
-  fetchProducts({ limit: 4 }),
+  fetchProducts(),
 ]);
 const categories = computed(() => categoryResponse.value?.data || []);
-const products = computed(() => productResponse.value?.data || []);
+const allProducts = computed(() => productResponse.value?.data || []);
+const totalVariantsCount = computed(() => allProducts.value.length);
+const products = computed(() => allProducts.value.slice(0, 4));
 
 const legalities = computed(() => [
   {
