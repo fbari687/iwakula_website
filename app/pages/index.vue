@@ -172,7 +172,10 @@ const [{ data: categoryResponse }, { data: productResponse, pending: productsPen
 const categories = computed(() => categoryResponse.value?.data || []);
 const allProducts = computed(() => productResponse.value?.data || []);
 const totalVariantsCount = computed(() => allProducts.value.length);
-const products = computed(() => allProducts.value.slice(0, 4));
+const products = computed(() => {
+  const featured = allProducts.value.filter((p) => Boolean(p.isFeatured));
+  return featured.length > 0 ? featured.slice(0, 4) : allProducts.value.slice(0, 4);
+});
 
 onMounted(() => {
   refreshProducts();
