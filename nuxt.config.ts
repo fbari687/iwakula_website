@@ -30,6 +30,10 @@ export default defineNuxtConfig({
     sitemap: "https://iwakula.com/sitemap.xml",
   },
 
+  sitemap: {
+    sources: ["/api/__sitemap__/urls"],
+  },
+
   nitro: {
     compressPublicAssets: true,
   },
