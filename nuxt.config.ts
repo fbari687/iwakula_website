@@ -25,6 +25,11 @@ export default defineNuxtConfig({
     name: "IWAKULA",
   },
 
+  robots: {
+    disallow: ["/admin", "/api/admin"],
+    sitemap: "https://iwakula.com/sitemap.xml",
+  },
+
   nitro: {
     compressPublicAssets: true,
   },
