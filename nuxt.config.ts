@@ -21,7 +21,7 @@ export default defineNuxtConfig({
   },
 
   site: {
-    url: "https://www.iwakula.com",
+    url: "https://iwakula.com",
     name: "IWAKULA",
   },
 
