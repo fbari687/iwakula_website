@@ -54,17 +54,17 @@ export default defineNuxtConfig({
     "/en/about": { swr: 3600 },
     "/services": { swr: 3600 },
     "/en/services": { swr: 3600 },
-    "/products": { swr: 1800 },
-    "/en/products": { swr: 1800 },
-    "/products/**": { swr: 1800 },
-    "/en/products/**": { swr: 1800 },
+    "/products": { swr: 300 },
+    "/en/products": { swr: 300 },
+    "/products/**": { swr: 300 },
+    "/en/products/**": { swr: 300 },
 
     // Public API SWR Caching
     "/api/categories": { swr: 3600 },
     "/api/achievements": { swr: 3600 },
     "/api/contacts": { swr: 3600 },
-    "/api/products": { swr: 1800 },
-    "/api/products/**": { swr: 1800 },
+    "/api/products": { swr: 300 },
+    "/api/products/**": { swr: 300 },
 
     // Admin UI & API: NO CACHE (Security & Instant Auth State)
     "/admin/**": { ssr: false, headers: { "cache-control": "no-store, no-cache, must-revalidate" } },
