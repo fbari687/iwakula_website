@@ -165,7 +165,7 @@ usePageSeo({
 const { fetchCategories } = useCategories();
 const { fetchProducts } = useProducts();
 
-const [{ data: categoryResponse }, { data: productResponse, pending: productsPending }] = await Promise.all([
+const [{ data: categoryResponse }, { data: productResponse, pending: productsPending, refresh: refreshProducts }] = await Promise.all([
   fetchCategories(),
   fetchProducts(),
 ]);
@@ -173,6 +173,10 @@ const categories = computed(() => categoryResponse.value?.data || []);
 const allProducts = computed(() => productResponse.value?.data || []);
 const totalVariantsCount = computed(() => allProducts.value.length);
 const products = computed(() => allProducts.value.slice(0, 4));
+
+onMounted(() => {
+  refreshProducts();
+});
 
 const legalities = computed(() => [
   {

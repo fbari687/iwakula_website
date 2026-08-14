@@ -48,23 +48,23 @@ export default defineNuxtConfig({
     "/_nuxt/**": { headers: { "cache-control": "public, max-age=31536000, immutable" } },
 
     // Public SSR Pages: SWR (Stale-While-Revalidate) Caching
-    "/": { swr: 3600 },
-    "/en": { swr: 3600 },
+    "/": { swr: 60 },
+    "/en": { swr: 60 },
     "/about": { swr: 3600 },
     "/en/about": { swr: 3600 },
     "/services": { swr: 3600 },
     "/en/services": { swr: 3600 },
-    "/products": { swr: 300 },
-    "/en/products": { swr: 300 },
-    "/products/**": { swr: 300 },
-    "/en/products/**": { swr: 300 },
+    "/products": { swr: 60 },
+    "/en/products": { swr: 60 },
+    "/products/**": { swr: 60 },
+    "/en/products/**": { swr: 60 },
 
     // Public API SWR Caching
     "/api/categories": { swr: 3600 },
     "/api/achievements": { swr: 3600 },
     "/api/contacts": { swr: 3600 },
-    "/api/products": { swr: 300 },
-    "/api/products/**": { swr: 300 },
+    "/api/products": { swr: 60 },
+    "/api/products/**": { swr: 60 },
 
     // Admin UI & API: NO CACHE (Security & Instant Auth State)
     "/admin/**": { ssr: false, headers: { "cache-control": "no-store, no-cache, must-revalidate" } },
