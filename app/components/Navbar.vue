@@ -20,6 +20,10 @@
         <span>{{ $t("nav.products") }}</span>
         <div :class="['h-0.5 bg-white transition-all duration-300 group-hover:w-full', route.path.includes('/products') ? 'w-full' : 'w-0']"></div>
       </NuxtLink>
+      <NuxtLink :to="localePath('/dine-in')" class="text-white font-semibold flex flex-col gap-1 group whitespace-nowrap text-sm xl:text-base">
+        <span>{{ $t("nav.dineIn") }}</span>
+        <div :class="['h-0.5 bg-white transition-all duration-300 group-hover:w-full', route.path.includes('/dine-in') ? 'w-full' : 'w-0']"></div>
+      </NuxtLink>
       <NuxtLink :to="localePath('/services')" class="text-white font-semibold flex flex-col gap-1 group whitespace-nowrap text-sm xl:text-base">
         <span>{{ $t("nav.services") }}</span>
         <div :class="['h-0.5 bg-white transition-all duration-300 group-hover:w-full', route.path.includes('/services') ? 'w-full' : 'w-0']"></div>
@@ -98,6 +102,7 @@
             <nav class="flex flex-col gap-2 font-semibold text-lg text-gray-800" aria-label="Mobile Menu">
               <NuxtLink :to="localePath('/')" class="hover:text-primary transition-colors py-3 px-1" @click="isMobileMenuOpen = false"> {{ $t("nav.home") }} </NuxtLink>
               <NuxtLink :to="localePath('/products')" class="hover:text-primary transition-colors py-3 px-1" @click="isMobileMenuOpen = false"> {{ $t("nav.products") }} </NuxtLink>
+              <NuxtLink :to="localePath('/dine-in')" class="hover:text-primary transition-colors py-3 px-1" @click="isMobileMenuOpen = false"> {{ $t("nav.dineIn") }} </NuxtLink>
               <NuxtLink :to="localePath('/services')" class="hover:text-primary transition-colors py-3 px-1" @click="isMobileMenuOpen = false"> {{ $t("nav.services") }} </NuxtLink>
               <NuxtLink :to="localePath('/about')" class="hover:text-primary transition-colors py-3 px-1" @click="isMobileMenuOpen = false"> {{ $t("nav.about") }} </NuxtLink>
             </nav>

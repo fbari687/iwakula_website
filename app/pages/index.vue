@@ -51,8 +51,16 @@
         </div>
 
         <!-- Category Card Section -->
-        <div class="w-full grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-          <CategoryCard v-for="(item, index) in categories" :key="index" :image="item.image" :name="item.name" :description="item.description" :slug="item.slug" />
+        <div class="w-full flex flex-wrap justify-center gap-6">
+          <CategoryCard
+            v-for="(item, index) in categories"
+            :key="index"
+            :image="item.image"
+            :name="item.name"
+            :description="item.description"
+            :slug="item.slug"
+            class="w-full sm:w-[calc(50%-12px)] lg:w-[calc(33.333%-16px)] xl:w-[calc(25%-18px)] max-w-sm"
+          />
         </div>
       </div>
     </section>

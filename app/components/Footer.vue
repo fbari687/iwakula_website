@@ -14,6 +14,7 @@
         <h3 class="font-body text-accent text-sm font-bold">{{ $t("footer.navTitle") }}</h3>
         <div class="flex flex-col gap-2">
           <NuxtLink :to="localePath('/products')" class="text-base text-white hover:text-accent transition-colors">{{ $t("nav.products") }}</NuxtLink>
+          <NuxtLink :to="localePath('/dine-in')" class="text-base text-white hover:text-accent transition-colors">{{ $t("nav.dineIn") }}</NuxtLink>
           <NuxtLink :to="localePath('/services')" class="text-base text-white hover:text-accent transition-colors">{{ $t("nav.services") }}</NuxtLink>
           <NuxtLink :to="localePath('/about')" class="text-base text-white hover:text-accent transition-colors">{{ $t("nav.about") }}</NuxtLink>
         </div>

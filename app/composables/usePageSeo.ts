@@ -8,12 +8,13 @@ interface PageSeoOptions {
   noindex?: boolean;
   breadcrumbs?: BreadcrumbItemInput[];
   productSchema?: ProductSchemaInput;
+  includeRestaurantSchema?: boolean;
 }
 
 export const usePageSeo = (options: PageSeoOptions = {}) => {
   const { locale } = useI18n();
   const requestUrl = useRequestURL();
-  const { getOrganizationSchema, getWebSiteSchema, getBreadcrumbSchema, getProductSchema } = useJsonLd();
+  const { getOrganizationSchema, getWebSiteSchema, getBreadcrumbSchema, getProductSchema, getRestaurantSchema } = useJsonLd();
 
   const siteUrl = "https://iwakula.com";
   const currentPath = requestUrl.pathname;
@@ -52,6 +53,10 @@ export const usePageSeo = (options: PageSeoOptions = {}) => {
 
   if (options.productSchema) {
     schemas.push(getProductSchema(options.productSchema));
+  }
+
+  if (options.includeRestaurantSchema) {
+    schemas.push(getRestaurantSchema());
   }
 
   useSeoMeta({

@@ -69,6 +69,7 @@ const navItems = [
   { name: 'Dasbor', path: '/admin', icon: 'i-heroicons-squares-2x2' },
   { name: 'Produk', path: '/admin/products', icon: 'i-heroicons-cube' },
   { name: 'Kategori', path: '/admin/categories', icon: 'i-heroicons-tag' },
+  { name: 'Menu Kedai', path: '/admin/dine-in-menus', icon: 'i-heroicons-book-open' },
   { name: 'Achievement', path: '/admin/achievements', icon: 'i-heroicons-trophy' },
   { name: 'Kontak', path: '/admin/contacts', icon: 'i-heroicons-phone' }
 ]

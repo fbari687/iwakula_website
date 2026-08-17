@@ -4,6 +4,7 @@
     "products": "Product Catalog",
     "services": "Services & Partnership",
     "about": "About Us",
+    "dineIn": "Dine In Menu",
     "orderNow": "Order Now"
   },
   "hero": {
@@ -21,7 +22,7 @@
       "partners": "Active Reseller Partners",
       "quality": "Quality Ingredients"
     },
-    "menuTitle": "Favorite Processed Fish Products",
+    "menuTitle": "Favorite Processed Fish Category",
     "reasonsTitle": "Why Choose Iwakula?",
     "trustTitle": "Quality Assurance & Certified Excellence",
     "recommendationsTitle": "Iwakula Recommendations",
@@ -169,7 +170,7 @@
   },
   "footer": {
     "desc": "Convenient & Delicious Fish Meal Solution. Serving practical, healthy, and premium Spanish mackerel fish products.",
-    "address": "Wisma Harapan 2 Block H2 No. 14, RT. 03 RW. 20, Kel. Mekarsari, Kec Cimanggis, Depok City, West Java, Indonesia.",
+    "address": "Ruko Haya Village, Jl. Tipar Raya No.A27, Mekarsari, Kec. Cimanggis, Kota Depok, Jawa Barat 16452",
     "navTitle": "Navigation",
     "contactTitle": "Contact Us",
     "locationTitle": "Store Location",
@@ -180,5 +181,23 @@
     "uncategorized": "Uncategorized",
     "notFound": "Product Not Found",
     "backToCatalog": "Back to Catalog"
+  },
+  "dineIn": {
+    "seoTitle": "Iwakula Store Menu & Dine In Information",
+    "seoDesc": "Enjoy a variety of warm, hygienic, and delicious ready-to-eat Spanish mackerel fish dishes directly at our store in Cimanggis Depok.",
+    "heroTitle": "Iwakula Store Menu",
+    "heroSubtitle": "Enjoy a variety of warm, hygienic, and delicious ready-to-eat Spanish mackerel fish dishes directly at our store",
+    "menuTitle": "Ready-to-Eat Menu Choices",
+    "visitTitle": "Visit Our Store",
+    "operationalHours": "Operational Hours",
+    "monSat": "Monday - Saturday: 08:00 - 19:30 WIB",
+    "sun": "Sunday: 10:00 - 19:30 WIB",
+    "addressTitle": "Store Address",
+    "addressText": "Ruko Haya Village, Jl. Tipar Raya No.A27, Mekarsari, Cimanggis, Depok City, West Java 16452",
+    "directionsBtn": "Get Directions (Google Maps)",
+    "waBtn": "Order / Inquire Menu via WhatsApp",
+    "badgeDineIn": "Dine In Available",
+    "badgeTakeaway": "Takeaway Available",
+    "badgePayment": "QRIS / Cash Payment"
   }
 }

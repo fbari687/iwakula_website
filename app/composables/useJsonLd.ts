@@ -112,10 +112,47 @@ export const useJsonLd = () => {
     };
   };
 
+  const getRestaurantSchema = () => {
+    return {
+      "@context": "https://schema.org",
+      "@type": ["Restaurant", "FoodEstablishment"],
+      "@id": `${siteUrl}/dine-in/#restaurant`,
+      name: "Kedai IWAKULA",
+      description:
+        locale.value === "en"
+          ? "Dine-in location for IWAKULA serving fresh fish dishes and snacks."
+          : "Kedai IWAKULA tempat santap langsung olahan menu ikan lezat dan segar.",
+      url: `${siteUrl}/dine-in`,
+      hasMenu: `${siteUrl}/dine-in`,
+      servesCuisine: ["Indonesian", "Seafood", "Fish Dishes"],
+      openingHoursSpecification: [
+        {
+          "@type": "OpeningHoursSpecification",
+          dayOfWeek: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
+          opens: "08:00",
+          closes: "17:00",
+        },
+        {
+          "@type": "OpeningHoursSpecification",
+          dayOfWeek: ["Sunday"],
+          opens: "09:00",
+          closes: "15:00",
+        },
+      ],
+      address: {
+        "@type": "PostalAddress",
+        addressLocality: "Depok",
+        addressRegion: "Jawa Barat",
+        addressCountry: "ID",
+      },
+    };
+  };
+
   return {
     getOrganizationSchema,
     getWebSiteSchema,
     getBreadcrumbSchema,
     getProductSchema,
+    getRestaurantSchema,
   };
 };

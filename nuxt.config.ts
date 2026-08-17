@@ -63,6 +63,8 @@ export default defineNuxtConfig({
     "/en/about": { swr: 3600 },
     "/services": { swr: 3600 },
     "/en/services": { swr: 3600 },
+    "/dine-in": { swr: 3600 },
+    "/en/dine-in": { swr: 3600 },
     "/products": { swr: 60 },
     "/en/products": { swr: 60 },
     "/products/**": { swr: 60 },
@@ -72,6 +74,7 @@ export default defineNuxtConfig({
     "/api/categories": { swr: 3600 },
     "/api/achievements": { swr: 3600 },
     "/api/contacts": { swr: 3600 },
+    "/api/dine-in-menus": { swr: 3600 },
     "/api/products": { swr: 60 },
     "/api/products/**": { swr: 60 },
 

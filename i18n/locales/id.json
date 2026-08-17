@@ -4,6 +4,7 @@
     "products": "Katalog Produk",
     "services": "Layanan & Kemitraan",
     "about": "Tentang Kami",
+    "dineIn": "Menu Kedai",
     "orderNow": "Pesan Sekarang"
   },
   "hero": {
@@ -21,7 +22,7 @@
       "partners": "Mitra Reseller Aktif",
       "quality": "Bahan Berkualitas"
     },
-    "menuTitle": "Pilihan Menu Olahan Ikan Favorit",
+    "menuTitle": "Pilihan Kategori Olahan Ikan Favorit",
     "reasonsTitle": "Mengapa Memilih Iwakula?",
     "trustTitle": "Jaminan Mutu & Kualitas Terbina",
     "recommendationsTitle": "Rekomendasi Iwakula",
@@ -169,7 +170,7 @@
   },
   "footer": {
     "desc": "Solusi Enak Makan Ikan. Menyajikan olahan ikan tenggiri premium yang praktis, sehat, dan lezat.",
-    "address": "Wisma Harapan 2 Blok H2 No. 14, RT. 03 RW. 20, Kel. Mekarsari, Kec Cimanggis, Kota Depok, Jawa Barat.",
+    "address": "Ruko Haya Village, Jl. Tipar Raya No.A27, Mekarsari, Kec. Cimanggis, Kota Depok, Jawa Barat 16452",
     "navTitle": "Navigasi",
     "contactTitle": "Hubungi Kami",
     "locationTitle": "Lokasi Kedai",
@@ -180,5 +181,23 @@
     "uncategorized": "Tanpa Kategori",
     "notFound": "Produk Tidak Ditemukan",
     "backToCatalog": "Kembali ke Katalog"
+  },
+  "dineIn": {
+    "seoTitle": "Menu Kedai Iwakula & Informasi Santap di Tempat",
+    "seoDesc": "Nikmati aneka sajian olahan ikan hangat, higienis, dan lezat siap santap langsung di kedai Iwakula Cimanggis Depok.",
+    "heroTitle": "Menu Kedai Iwakula",
+    "heroSubtitle": "Nikmati aneka sajian olahan ikan hangat, higienis, dan lezat siap santap langsung di kedai kami",
+    "menuTitle": "Pilihan Menu Siap Saji",
+    "visitTitle": "Kunjungi Kedai Kami",
+    "operationalHours": "Jam Operasional",
+    "monSat": "Senin - Sabtu: 08.00 - 19.30 WIB",
+    "sun": "Minggu: 10.00 - 19.30 WIB",
+    "addressTitle": "Alamat Kedai",
+    "addressText": "Ruko Haya Village, Jl. Tipar Raya No.A27, Mekarsari, Kec. Cimanggis, Kota Depok, Jawa Barat 16452",
+    "directionsBtn": "Petunjuk Arah (Google Maps)",
+    "waBtn": "Pesan / Tanya Menu via WhatsApp",
+    "badgeDineIn": "Santap di Tempat",
+    "badgeTakeaway": "Bawa Pulang",
+    "badgePayment": "Pembayaran QRIS / Tunai"
   }
 }

@@ -188,6 +188,15 @@ export const productImagesRelations = relations(productImages, ({ one }) => ({
 //   }),
 // }));
 
+// Tabel dine_in_menu_images
+export const dineInMenuImages = mysqlTable("dine_in_menu_images", {
+  id: serial("id").primaryKey(),
+  imageUrl: varchar("image_url", { length: 255 }).notNull(),
+  displayOrder: int("display_order").default(0).notNull(),
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+  updatedAt: timestamp("updated_at").defaultNow().onUpdateNow().notNull(),
+});
+
 // Inferensi Tipe Data
 export type User = typeof users.$inferSelect;
 export type Category = typeof categories.$inferSelect;
@@ -197,3 +206,4 @@ export type ProductImage = typeof productImages.$inferSelect;
 // export type Credential = typeof credentials.$inferSelect;
 export type Contact = typeof contacts.$inferSelect;
 export type Achievement = typeof achievements.$inferSelect;
+export type DineInMenuImage = typeof dineInMenuImages.$inferSelect;
