@@ -11,6 +11,10 @@ useSeoMeta({
   title: "IWAKULA",
 });
 useHead({
-  link: [{ rel: "icon", type: "image/x-icon", href: "/images/logo.png" }],
+  link: [
+    { rel: "icon", type: "image/x-icon", href: "/favicon.ico" },
+    { rel: "icon", type: "image/png", href: "/images/logo.png" },
+    { rel: "apple-touch-icon", href: "/images/logo.png" },
+  ],
 });
 </script>
